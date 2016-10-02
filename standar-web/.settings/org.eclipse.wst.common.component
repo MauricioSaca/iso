@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?><project-modules id="moduleCoreId" project-version="1.5.0">
+    <wb-module deploy-name="standar-web">
+        <wb-resource deploy-path="/" source-path="/target/m2e-wtp/web-resources"/>
+        <wb-resource deploy-path="/" source-path="/src/main/webapp" tag="defaultRootSource"/>
+        <wb-resource deploy-path="/WEB-INF/classes" source-path="/src/main/java"/>
+        <wb-resource deploy-path="/WEB-INF/classes" source-path="/src/main/resources"/>
+        <wb-resource deploy-path="/WEB-INF/classes" source-path="/src/main/test"/>
+        <wb-resource deploy-path="/WEB-INF/classes" source-path="/target/generated-sources/java"/>
+        <dependent-module archiveName="standar-comun-1.0-SNAPSHOT.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/standar-comun/standar-comun">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="standar-utilidad-1.0-SNAPSHOT.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/standar-utilidad/standar-utilidad">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <property name="context-root" value="standar-web"/>
+        <property name="java-output-path" value="/standar-web/target/classes"/>
+    </wb-module>
+</project-modules>

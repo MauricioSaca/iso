@@ -1,0 +1,71 @@
+<ui:composition
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:p="http://primefaces.org/ui">
+
+
+    <!-- TOPBAR START -->
+    <div id="layout-topbar" style="display: none;">
+        <a id="menu-button" class="Animated1">
+            <span id="menuline1" class="Animated05"></span>
+            <span id="menuline2" class="Animated05"></span>
+            <span id="menuline3" class="Animated05"></span>
+        </a>
+<!--         <h:outputText title="SAFI-II" escape="false" styleClass="header-title-safi" value="SAFI-II" /> -->
+<!--         <h:outputText title="#{safiCommonBundle.AppName2}" escape="false" styleClass="header-title-definition" value="#{safiCommonBundle.AppName2}" /> -->
+
+        <a id="topmenu-button" class="Animated1">
+            <i class="icon-list2"></i>
+        </a>
+        <div class="estiloMenu">
+            <ul id="top-menu">
+                <!--            <li>
+                                <a class="menulink Animated05"><i class="icon-search"></i> <span>Search</span></a>
+                                <ul style="margin-left:-150px;">
+                                    <li><span class="PadWithBorder10 DispBlock"><p:inputText placeholder="Search here" styleClass="Wid60"/> <p:button icon="fa fa-search" styleClass="Fright"/></span></li>
+                                </ul>
+                            </li>
+                            <li>
+                                <a class="menulink Animated05"><i class="icon-chat"></i> <span>Messages</span></a>
+                                <ul style="margin-left:-130px;">
+                                    <li><a href="#"><i class="icon-comment-alt2-stroke Fs18 Blue Fright"></i> <span class="FontAdamantiumBold">Marlon Andrade</span><br/><span class="Fs12">Hola, Como va todo ?</span></a></li>
+                                    <li><a href="#"><i class="icon-comment-alt2-stroke Fs18 Red Fright"></i> <span class="FontAdamantiumBold">Alirio Gallegos</span><br/><span class="Fs12">La prueba Funciona</span></a></li>
+                                    <li><a href="#"><i class="icon-comment-alt2-stroke Fs18 Fright"></i> <span class="FontAdamantiumBold">Edwin Quinteros</span><br/><span class="Fs12">La prueba Funciona</span></a></li>
+                                    <li><a href="#"><i class="icon-comment-alt2-stroke Purple Fs18 Fright"></i> <span class="FontAdamantiumBold">Denis Moreno</span><br/><span class="Fs12">Se necesitan mas Pruebas</span></a></li>
+                                </ul>
+                            </li>
+                            <li>
+                                <a class="menulink Animated05"><i class="icon-calendar"></i> <span>Calendar</span></a>
+                                <ul style="margin-left:-135px;">
+                                    <li><a href="#"><i class="icon-alarmclock Fs18 Red Fright"></i> <span class="FontAdamantiumBold">Reunión Técnica</span><br/><span class="Fs12">13:30 - 18.08.2015</span></a></li>
+                                    <li><a href="#"><i class="icon-alarmclock Fs18 Red Fright"></i> <span class="FontAdamantiumBold">Reunión  Funcional</span><br/><span class="Fs12">14:45 - 18.08.2015</span></a></li>
+                                    <li><a href="#"><i class="icon-document-stroke Fs18 Fright"></i> <span class="FontAdamantiumBold">Enviar el Reporte</span><br/><span class="Fs12">15:30 - 18.08.2015</span></a></li>
+                                    <li><a href="#"><i class="icon-folder-stroke Fs18 Blue Fright"></i> <span class="FontAdamantiumBold">Sprint Review</span><br/><span class="Fs12">18:30 - 18.08.2015</span></a></li>
+                                </ul>
+                            </li>
+                            <li>
+                                <ul style="margin-left:-155px;">
+                                    <li><a href="#"><i class="icon-cd Fs20 Blue Fright"></i> <span class="FontAdamantiumBold Blue">Se ha creado el Reporte</span><br/><span class="Fs12">Se creo exitosamente</span></a></li>
+                                    <li><a href="#"><i class="icon-cd Fs20 Red Fright"></i> <span class="FontAdamantiumBold Red">Alerta de Bug</span><br/><span class="Fs12">Error en la definición</span></a></li>
+                                    <li><a href="#"><i class="icon-cd Fs20 Red Fright"></i> <span class="FontAdamantiumBold Red">Alerta de Bug</span><br/><span class="Fs12">Error en la exportación</span></a></li>
+                                    <li><a href="#"><i class="icon-cd Fs20 Orange Fright"></i> <span class="FontAdamantiumBold Orange">Descarga Completa</span><br/><span class="Fs12">Completa</span></a></li>
+                                </ul>
+                </li>
+                -->
+                <li>
+                    <a class="menulink Animated05"><i class="icon-settings"></i> <span>Opciones</span></a>
+                    <ul style="margin-left:-145px;">
+                        <h:form>
+                            <li><h:commandLink  action="#{segLoginController.doChangePassword}" style="color: #666f77;" > <i class="icon-users Fs18 Fleft MarRight10"></i><span class="FontAdamantiumBold"> #{safiCommonBundle.LoginChangePassword}</span></h:commandLink></li>
+                            <li><h:commandLink  id="logout" action="#{segLoginController.doLogout}" style="color: #666f77;"> <i class="icon-lock-stroke Fs18 Fleft MarRight10"></i><span class="FontAdamantiumBold"> #{safiCommonBundle.logout}</span></h:commandLink></li>
+                        </h:form>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <!-- TOPBAR END -->
+
+</ui:composition>
