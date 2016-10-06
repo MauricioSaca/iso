@@ -29,7 +29,7 @@ import lombok.Setter;
 import lombok.ToString;
 
 @Entity
-@Table()
+@Table(name = "CONTROLMEDICO")
 @SequenceGenerator(name = "SEQ_MEDICAL_CONTROL" ,sequenceName = "SEQ_MEDICAL_CONTROL", allocationSize = 1)
 @EqualsAndHashCode(of = { "id" })
 @ToString(of = {"id"})
@@ -69,8 +69,13 @@ public class MedicalControl implements BaseModelEntity<Long>{
 	private Date nextControl;
 	
 	@ManyToOne
-	@JoinColumns({ @JoinColumn(name = "PET_ID", referencedColumnName = "ID", nullable = false) })
+	@JoinColumns({ @JoinColumn(name = "DOG_ID", referencedColumnName = "ID", nullable = false) })
 	@NotFound(action = NotFoundAction.IGNORE)
-	private Pet pet;
+	private Dog dog;
+	
+	@ManyToOne
+	@JoinColumns({ @JoinColumn(name = "CAT_ID", referencedColumnName = "ID", nullable = false) })
+	@NotFound(action = NotFoundAction.IGNORE)
+	private Cat cat;
 
 }

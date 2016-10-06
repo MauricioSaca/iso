@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                template="/template/layout.xhtml">
+
+    <ui:define name="head">
+
+    </ui:define>
+
+    <ui:define name="subheader">
+        <h:outputText value="PRUEBAS"></h:outputText>
+    </ui:define>
+
+    <ui:define name="content">
+	
+		<h:form id="registerForm">
+	        <h2>Cuestionario de Adopcion</h2>
+	        <p:separator />
+	        
+	        <h:panelGrid id="pgTest" columns="2">
+		        <p:outputLabel value="Nombre Mascota" for="txtNombre" />
+		        <p:inputText id="txtNombre" />
+		        
+		        <p:outputLabel value="Razones para adoptarlo. Por que este?" for="taRazones" />
+		        <p:inputTextarea id="taRazones" />
+		        
+		        <p:outputLabel value="Profesion" for="txtProfesion" />
+				<p:inputText id="txtProfesion" />
+				
+		        <p:outputLabel value="Estudios" for="txtEstudios" />
+				<p:inputText id="txtEstudios" />
+				
+				<p:outputLabel value="Hobbies y deportes" for="txtHobbies" />
+				<p:inputText id="txtHobbies" />
+				
+				<p:outputLabel value="Tipo de vivienda" for="txtVivienda" />
+				<p:inputText id="txtVivienda" />
+				
+				<p:outputLabel value="Numero de Hijos" for="txtNumeroHijos" />
+				<p:inputText id="txtNumeroHijos" />
+								
+		        <p:outputLabel value="Otras Personas viven en la casa?" for="orPExtras" />
+				<p:selectOneRadio id="orPExtras">
+					<f:selectItem itemValue="1" itemLabel="Si"/>
+					<f:selectItem itemValue="2" itemLabel="No"/>
+				</p:selectOneRadio>
+				
+				<p:outputLabel value="Cuantas personas viven en la casa, cuales?" for="taPersonasExtras" />
+		        <p:inputTextarea id="taPersonasExtras" />
+				
+				<p:outputLabel value="Comparten contigo la decision de tener mascota?" for="orCompartenDecision" />
+				<p:selectOneRadio id="orCompartenDecision">
+					<f:selectItem itemValue="1" itemLabel="Si"/>
+					<f:selectItem itemValue="2" itemLabel="No"/>
+				</p:selectOneRadio>
+				
+				<p:outputLabel value="Puedes venir a recoger a la mascota a nuestro albergue?" for="orRecogerAlbergue" />
+				<p:selectOneRadio id="orRecogerAlbergue">
+					<f:selectItem itemValue="1" itemLabel="Si"/>
+					<f:selectItem itemValue="2" itemLabel="No"/>
+				</p:selectOneRadio>
+				
+				<p:outputLabel value="Que lugar tendria destinado la mascota" for="taLugarDestinado" />
+		        <p:inputTextarea id="taLugarDestinado" />
+		        
+		        <p:outputLabel value="Edad de la persona que cuidara la mascota" for="txtEdadCuidador" />
+		        <p:inputText id="txtEdadCuidador" />
+		        
+		        <p:outputLabel value="Hay otros animales en la casa?" for="orOtrosAnimales" />
+				<p:selectOneRadio id="orOtrosAnimales">
+					<f:selectItem itemValue="1" itemLabel="Si"/>
+					<f:selectItem itemValue="2" itemLabel="No"/>
+				</p:selectOneRadio>
+				
+				<p:outputLabel value="Cuantas horas va a estar el perro solo en la casa" for="txtHorasSolas" />
+		        <p:inputText id="txtHorasSolas" />
+		        
+		        <p:outputLabel value="La casa tiene jardin?" for="orTieneJardin" />
+				<p:selectOneRadio id="orTieneJardin">
+					<f:selectItem itemValue="1" itemLabel="Si"/>
+					<f:selectItem itemValue="2" itemLabel="No"/>
+				</p:selectOneRadio>
+				
+				<p:outputLabel value="Donde dormira la mascota? (en su camita, en la cama del amo, en el corredor, en una caseta fuera, etc)" for="taDormirMascota" />
+		        <p:inputTextarea id="taDormirMascota" />
+		        
+				<p:commandButton id="btnSave" value="Enviar" />
+
+			</h:panelGrid>
+		</h:form>
+    </ui:define>
+
+</ui:composition>

@@ -24,8 +24,8 @@ import lombok.Setter;
 import lombok.ToString;
 
 @Entity
-@Table()
-@SequenceGenerator(name = "SEQ_POSTULANT", sequenceName = "SEQ_POSTULANT", allocationSize = 1)
+@Table(name = "POSTULANTE")
+@SequenceGenerator(name = "SEQ_POSTULANTES", sequenceName = "SEQ_POSTULANTES", allocationSize = 1)
 @EqualsAndHashCode(of = { "id" })
 @ToString(of = { "id", "names", "lastNames", "email" })
 @Getter
@@ -38,7 +38,7 @@ public class Postulant implements BaseModelEntity<Long> {
 
 	@Id
 	@NonNull
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SEQ_POSTULANT")
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SEQ_POSTULANTES")
 	@Column(nullable = false)
 	private Long id;
 

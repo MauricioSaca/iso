@@ -44,7 +44,7 @@ public class Adopter implements BaseModelEntity<Long> {
 
 	@Id
 	@NonNull
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SEQ_POSTULANT")
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SEQ_ADOPTER")
 	@Column(nullable = false)
 	private Long id;
 

@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                template="/template/layout.xhtml">
+
+    <ui:define name="head">
+
+    </ui:define>
+
+    <ui:define name="subheader">
+        <h:outputText value="PRUEBAS"></h:outputText>
+    </ui:define>
+
+    <ui:define name="content">
+	
+		<h:form id="registerForm">
+	        <h2>Registro de Mascotas</h2>
+	        <p:separator />
+	        
+	        <h:panelGrid id="pgRegister" columns="2">
+		        <p:outputLabel value="Peso" />
+		        <p:inputText id="txtWeight" />
+		        
+		        <p:outputLabel value="Edad" />
+				<p:inputTextarea id="txtAge"/>
+				
+		        <p:outputLabel value="Raza" />
+				<p:inputText id="txtRaza" />
+				
+				<p:outputLabel value="Origen" />
+				<p:selectOneMenu id="cmbOrigen">
+					<f:selectItem itemValue="1" itemLabel="Abandonado" />
+					<f:selectItem itemValue="2" itemLabel="Adopcion" />
+				</p:selectOneMenu>
+				
+				<p:outputLabel value="Estado" for="cmbEstado"/>
+				<p:selectOneMenu id="cmbEstado">
+					<f:selectItem itemValue="1" itemLabel="Adopted" />
+					<f:selectItem itemValue="2" itemLabel="Adoption" />
+					<f:selectItem itemValue="2" itemLabel="Recuperacion" />
+					<f:selectItem itemValue="2" itemLabel="Ingresado" />
+				</p:selectOneMenu>
+				
+				<p:outputLabel value="Altura" />
+				<p:inputText id="txtHeight" />
+				
+		        <p:outputLabel value="Genero" />
+				<p:selectOneRadio id="orGender">
+					<f:selectItem itemValue="1" itemLabel="Macho"/>
+					<f:selectItem itemValue="2" itemLabel="Hembra"/>
+				</p:selectOneRadio>
+				
+				<p:commandButton id="btnSave" value="Guardar" />
+
+			</h:panelGrid>
+		</h:form>
+    </ui:define>
+
+</ui:composition>

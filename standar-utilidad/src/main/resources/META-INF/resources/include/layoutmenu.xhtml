@@ -7,8 +7,23 @@
 
 	<div class="layout-menu-cover-left Animated05" id="layout-menu-cover" style="display: none;">
 		<h:form id="menuform">
-			<pm:menu style="width:300px"
-				model="#{segSecurityController.menuModel}">
+			<pm:menu style="width:300px">
+<!-- 				<p:menuitem id="rm_dashboard" value=" Mascotas" icon="icon-feather" outcome="/mascotas/registro"/> -->
+                <p:submenu id="mascota" label=" Mascotas" icon="icon-menu">
+                    
+                    <p:menuitem id="petList" value=" Lista Mascotas" icon="fa fa-folder-open-o" outcome="/mascotas/listaMascotas.xhtml" />
+                    <p:menuitem id="petRegister" value=" Registro Mascotas" icon="fa fa-plus" outcome="/mascotas/registro.xhtml" />
+                    <p:menuitem id="petMedicalRegistry" value=" Control Medico" icon="fa fa-list-alt" outcome="/mascotas/registroMedico.xhtml" />
+                    
+                </p:submenu>
+                
+                <p:submenu id="postulante" label=" Adoptantes" icon="icon-menu">
+                    
+                    <p:menuitem id="posRegistry" value=" Registro Postulante" icon="fa fa-plus" outcome="/postulante/registro.xhtml" />
+                    <p:menuitem id="posAdoptions" value=" Adopciones" icon="fa fa-list-alt" outcome="/postulante/adopciones.xhtml" />
+                    <p:menuitem id="posTest" value=" Test" icon="fa fa-list-alt" outcome="/postulante/cuestionario.xhtml" />
+                    
+                </p:submenu>
 			</pm:menu>
 		</h:form>
 

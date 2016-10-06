@@ -11,7 +11,7 @@ public class HttpSecurityConfiguration {
 		 
 		SecurityConfigurationBuilder builder = event.getBuilder();
  
-		 builder
+		 /*builder
          .http()
              .allPaths()
                  .authenticateWith()
@@ -26,7 +26,7 @@ public class HttpSecurityConfiguration {
                  .logout()
                  .redirectTo("/index.xhtml")
              .forPath("/index.xhtml")
-                 .unprotected();
+                 .unprotected();*/
 		 
 	}
 	

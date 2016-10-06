@@ -6,6 +6,7 @@ import javax.annotation.PostConstruct;
 import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.inject.Named;
+import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.lang3.StringUtils;
 import org.omnifaces.cdi.ViewScoped;
@@ -23,7 +24,7 @@ import lombok.Setter;
 public class UserView implements Serializable {
 
 	private static final long serialVersionUID = 7294268880729237565L;
-
+	private static final String USER_NAME = "userName";
 	private String userName;
 	private String password;
 
@@ -39,6 +40,9 @@ public class UserView implements Serializable {
 	}
 
 	public void actionLogin() {
+		
+		HttpServletRequest request = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest();
+		
 		if (usuario != null) {
 			if (isNotNullAndNotEmpty(userName) && isNotNullAndNotEmpty(password)) {
 				if (usuario.getIsEnabled()) {
@@ -46,7 +50,7 @@ public class UserView implements Serializable {
 							&& password.equals(usuario.getLogin().getPassword())) {
 						
 						String uri = "/index.xhtml";
-						
+						request.getSession().setAttribute(USER_NAME, usuario.getLogin().getUserName());
 						FacesContext.getCurrentInstance().getApplication()
 								.getNavigationHandler()
 								.handleNavigation(FacesContext.getCurrentInstance(), null, uri);

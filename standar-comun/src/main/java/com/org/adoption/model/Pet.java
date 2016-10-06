@@ -77,7 +77,10 @@ public class Pet implements Serializable {
 		this.petGender = gender != null ? gender.getCode() : null;
 	}
 
-	@OneToMany(mappedBy = "pet" ,cascade = CascadeType.ALL)
-	private Set<MedicalControl> medicalControl;
+	@OneToMany(mappedBy = "dog" ,cascade = CascadeType.ALL)
+	private Set<MedicalControl> medicalControlDog;
+	
+	@OneToMany(mappedBy = "cat" ,cascade = CascadeType.ALL)
+	private Set<MedicalControl> medicalControlCat;
 	
 }
