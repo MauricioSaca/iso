@@ -29,7 +29,7 @@ import lombok.Setter;
 import lombok.ToString;
 
 @Entity
-@Table(name = "CONTROLMEDICO")
+@Table()
 @SequenceGenerator(name = "SEQ_MEDICAL_CONTROL" ,sequenceName = "SEQ_MEDICAL_CONTROL", allocationSize = 1)
 @EqualsAndHashCode(of = { "id" })
 @ToString(of = {"id"})
@@ -40,7 +40,7 @@ import lombok.ToString;
 public class MedicalControl implements BaseModelEntity<Long>{
 
 	
-	private static final long serialVersionUID = -50842084320L;
+	private static final long serialVersionUID = -75465465465484320L;
 
 	@Id
 	@NonNull
@@ -58,11 +58,11 @@ public class MedicalControl implements BaseModelEntity<Long>{
 	private Boolean tookVitamins;
 
 	@Column(nullable = true)
-	private Boolean wasVaccinated;
+	private Boolean isVaccunated;
 
 	@Column(nullable = true)
 	@Temporal(TemporalType.DATE)
-	private Date date;
+	private Date actualDay;
 
 	@Column(nullable = true)
 	@Temporal(TemporalType.DATE)
