@@ -68,7 +68,7 @@
   </context-param>
   <context-param>
       <param-name>javax.faces.FACELETS_REFRESH_PERIOD</param-name>
-      <param-value>-1</param-value> <!-- Should be -1 for production. -->
+      <param-value>0</param-value> <!-- Should be -1 for production. -->
   </context-param>
   <context-param>
       <param-name>javax.faces.FACELETS_SKIP_COMMENTS</param-name>

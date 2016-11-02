@@ -21,8 +21,9 @@
 	        <h2>Lista Mascotas</h2>
 	        <p:separator />
 	        
-	        <p:dataTable id="dtMascotas" value="pet">
+	        <p:dataTable id="dtMascotas" var="cat" value="#{petView.catLazyData}" rows="10" lazy="true">
 	        	<p:column headerText="Mascota">
+	        		#{cat.age}
 	        	</p:column>
 	        	
 	        	<p:column headerText="Edad">

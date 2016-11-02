@@ -42,7 +42,7 @@
     <converter>
         <description>jsfUniversalConverter</description>
         <converter-id>jsfUniversalConverter</converter-id>
-        <converter-class>com.org.util.web.jsf.JsfUniversalConverter</converter-class>
+        <converter-class>com.org.util.web.JsfUniversalConverter</converter-class>
     </converter>
     
 </faces-config>
