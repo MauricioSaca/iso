@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui" template="/template/layout.xhtml">
+
+	<ui:define name="head">
+
+	</ui:define>
+
+	<ui:define name="subheader">
+		<h:outputText value="PRUEBAS"></h:outputText>
+	</ui:define>
+
+	<ui:define name="content">
+
+		<h:form>
+			<h1>Adopta tu mascota</h1>
+			<p:separator />
+
+			<p:dataGrid id="dgPets" var="pet" value="#{petView.petLazyData}"
+				columns="3" layout="grid" rows="3" paginator="true"
+				paginatorPosition="bottom" rowsPerPageTemplate="3,6,12,16"
+				lazy="true">
+				<p:panelGrid>
+					<p:row>
+						<p:column colspan="2">
+							#{pet.petName}
+						</p:column>
+						<p:column colspan="2" rowspan="4">
+							<p:graphicImage />
+						</p:column>
+					</p:row>
+					<p:row>
+						<p:column colspan="2">
+							#{pet.description}
+						</p:column>
+					</p:row>
+					<p:row>
+						<p:column>
+							<p:outputLabel value="Raza" />
+						</p:column>
+						<p:column>
+							#{pet.breed}
+						</p:column>
+					</p:row>
+					<p:row>
+						<p:column>
+							<p:outputLabel value="Tamaño" />
+						</p:column>
+						<p:column>
+							#{pet.height}
+						</p:column>
+					</p:row>
+					<p:row>
+						<p:column>
+							<p:outputLabel value="Sexo" />
+						</p:column>
+						<p:column>
+							#{pet.petGender.description}
+						</p:column>
+						<p:column>
+							Link para ver ficha
+						</p:column>
+					</p:row>
+					
+				</p:panelGrid>
+			</p:dataGrid>
+
+		</h:form>
+	</ui:define>
+
+</ui:composition>

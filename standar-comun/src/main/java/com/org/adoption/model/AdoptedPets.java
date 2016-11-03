@@ -45,14 +45,9 @@ public class AdoptedPets implements BaseModelEntity<Long>{
 	Long id;
 
 	@ManyToOne
-	@JoinColumns({ @JoinColumn(name = "DOG_ID", referencedColumnName = "ID", nullable = false) })
+	@JoinColumns({ @JoinColumn(name = "PET_ID", referencedColumnName = "ID", nullable = false) })
 	@NotFound(action = NotFoundAction.IGNORE)
-	private Dog dog;
-
-	@ManyToOne
-	@JoinColumns({ @JoinColumn(name = "CAT_ID", referencedColumnName = "ID", nullable = false) })
-	@NotFound(action = NotFoundAction.IGNORE)
-	private Cat cat;
+	private Pet pet;
 	
 	@ManyToOne
 	@JoinColumns({ @JoinColumn(name = "ADOPTER_ID", referencedColumnName = "ID", nullable = false) })

@@ -22,8 +22,9 @@
 					<h2>Lista de Mascotas</h2>
 					<p:separator />
 
-					<p:dataTable id="dtCats" widgetVar="dtCats" var="cat"
-						value="#{petView.catLazyData}" rows="10" paginator="true"
+					<p:dataTable id="dtPets" widgetVar="dtPets" var="pet"
+						selection="#{petView.selectedPet}" selectionMode="single"
+						value="#{petView.petLazyData}" rows="10" paginator="true"
 						paginatorPosition="bottom" lazy="true">
 						<f:facet name="header">
 			        		Lista de Gatos
@@ -33,111 +34,63 @@
 							<p:commandButton icon="fa fa-pencil"
 								action="#{petView.prepareUpdate(true)}"
 								update="mascotasForm:contentPanel mascotasForm:pgRegister">
-								<f:setPropertyActionListener value="#{cat}"
-									target="#{petView.selectedCat}" />
+								<f:setPropertyActionListener value="#{pet}"
+									target="#{petView.selectedPet}" />
 							</p:commandButton>
-							<p:commandButton icon="fa fa-trash" update="dtCats"
-								action="#{petView.deleteCat(cat)}">
+							<p:commandButton icon="fa fa-trash" update="dtPets"
+								action="#{petView.delete(pet)}">
 								<p:confirm header="Eliminacion"
 									message="Desea eliminar este registro?" />
 							</p:commandButton>
 						</p:column>
 
-						<p:column headerText="Nombre" filterBy="#{cat.catName}">
-			        		#{cat.catName}
+						<p:column headerText="Nombre" filterBy="#{pet.petName}">
+			        		#{pet.petName}
 			        	</p:column>
 
-						<p:column headerText="Edad">
-							<!-- filterBy="#{cat.age}" filterMatchMode="equals" -->
-			        		#{cat.age}
+						<p:column headerText="Edad" filterBy="#{pet.age}" filterMatchMode="equals">
+			        		#{pet.age}
 			        	</p:column>
 
-						<p:column headerText="Descripcion" filterBy="#{cat.description}">
-			        		#{cat.description}
+						<p:column headerText="Descripcion" filterBy="#{pet.description}">
+			        		#{pet.description}
 			        	</p:column>
 
-						<p:column headerText="Estado" filterBy="#{cat.petStatus}"
+						<p:column headerText="Tipo" filterBy="#{pet.petType}"
 							filterMatchMode="in">
-							<!-- <f:facet name="filter">
+							<f:facet name="filter">
+								<p:selectCheckboxMenu label="Tipo" >
+									<f:selectItems value="#{petView.petTypeList}" var="type"
+										itemValue="#{type.code}" itemLabel="#{type.description}" />
+									<p:ajax event="toggleSelect" oncomplete="PF('dtPets').filter();" />
+									<p:ajax event="change" oncomplete="PF('dtPets').filter();"/>
+								</p:selectCheckboxMenu>
+							</f:facet>
+			        		#{pet.petType.description}
+			        	</p:column>
+
+						<p:column headerText="Estado" filterBy="#{pet.petStatus}"
+							filterMatchMode="in">
+							<f:facet name="filter">
 								<p:selectCheckboxMenu label="Estado" 
-									onchange="PF('dtCats').filter()">
+									onchange="PF('dtPets').filter()">
 									<f:selectItems value="#{petView.petStatusList}" var="status"
 										itemValue="#{status.code}" itemLabel="#{status.description}" />
 								</p:selectCheckboxMenu>
-							</f:facet>-->
-			        		#{cat.petStatus.description}
+							</f:facet>
+			        		#{pet.petStatus.description}
 			        	</p:column>
 
-						<p:column headerText="Origen" filterBy="#{cat.petOrigin}"
+						<p:column headerText="Origen" filterBy="#{pet.petOrigin}"
 							filterMatchMode="in">
-							<!--<f:facet name="filter">
+							<f:facet name="filter">
 								<p:selectCheckboxMenu label="Origen"
-									onchange="PF('dtCats').filter()">
+									onchange="PF('dtPets').filter()">
 									<f:selectItems value="#{petView.petOriginList}" var="origen"
-										itemValue="#{origen}" itemLabel="#{origen.description}" />
-									
+										itemValue="#{origen.code}" itemLabel="#{origen.description}" />
 								</p:selectCheckboxMenu>
-							</f:facet>-->
-			        		#{cat.petOrigin.description}
-			        	</p:column>
-					</p:dataTable>
-
-					<p:dataTable id="dtDogs" widgetVar="dtDogs" var="dog"
-						value="#{petView.dogLazyData}" rows="10" paginator="true"
-						paginatorPosition="bottom" lazy="true">
-						<f:facet name="header">
-			        		Lista de Perros
-			        	</f:facet>
-
-						<p:column>
-							<p:commandButton icon="fa fa-pencil"
-								action="#{petView.prepareUpdate(false)}" update="mascotasForm:contentPanel">
-								<f:setPropertyActionListener value="#{dog}"
-									target="#{petView.selectedDog}" />
-							</p:commandButton>
-							<p:commandButton icon="fa fa-trash" update="dtDogs"
-								action="#{petView.deleteDog(dog)}">
-								<p:confirm header="Eliminacion"
-									message="Desea eliminar este registro?" />
-							</p:commandButton>
-						</p:column>
-
-						<p:column headerText="Nombre" filterBy="#{cat.dogName}">
-			        		#{dog.dogName}
-			        	</p:column>
-
-						<p:column headerText="Edad">
-							<!-- filterBy="#{dog.age}" filterMatchMode="equals" -->
-			        		#{dog.age}
-			        	</p:column>
-
-						<p:column headerText="Descripcion" filterBy="#{dog.description}">
-			        		#{dog.description}
-			        	</p:column>
-
-						<p:column headerText="Estado" filterBy="#{dog.petStatus}"
-							filterMatchMode="in">
-							<!-- <f:facet name="filter">
-								<p:selectCheckboxMenu label="Estado" 
-									onchange="PF('dtCats').filter()">
-									<f:selectItems value="#{petView.petStatusList}" var="status"
-										itemValue="#{status.code}" itemLabel="#{status.description}" />
-								</p:selectCheckboxMenu>
-							</f:facet>-->
-			        		#{dog.petStatus.description}
-			        	</p:column>
-
-						<p:column headerText="Origen" filterBy="#{dog.petOrigin}"
-							filterMatchMode="in">
-							<!--<f:facet name="filter">
-								<p:selectCheckboxMenu label="Origen"
-									onchange="PF('dtCats').filter()">
-									<f:selectItems value="#{petView.petOriginList}" var="origen"
-										itemValue="#{origen}" itemLabel="#{origen.description}" />
-									
-								</p:selectCheckboxMenu>
-							</f:facet>-->
-			        		#{dog.petOrigin.description}
+							</f:facet>
+			        		#{pet.petOrigin.description}
 			        	</p:column>
 					</p:dataTable>
 

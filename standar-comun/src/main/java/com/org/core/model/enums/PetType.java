@@ -1,16 +1,16 @@
 package com.org.core.model.enums;
 
-public enum PetGender {
+public enum PetType {
 
-	FEMALE("M", "MACHO"),
+	CAT("cat", "Gato"),
 	 
-	MALE("H", "HEMBRA");
+	DOG("dog", "Perro");
 	
 	String code;
 
 	String description;
 
-	private PetGender(final String code, final String description) {
+	private PetType(final String code, final String description) {
 		this.code = code;
 		this.description = description;
 	}
@@ -23,9 +23,9 @@ public enum PetGender {
 		return description;
 	}
 	
-	public static PetGender getPetGender(final String code) {
-		PetGender ret = null;
-        for (PetGender activeEnum : values()) {
+	public static PetType getPetType(final String code) {
+		PetType ret = null;
+        for (PetType activeEnum : values()) {
             if (activeEnum.getCode().equals(code)) {
                 ret = activeEnum;
                 break;

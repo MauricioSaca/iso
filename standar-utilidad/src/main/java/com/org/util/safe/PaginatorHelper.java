@@ -1,6 +1,7 @@
 package com.org.util.safe;
 
 import java.io.Serializable;
+import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -113,32 +114,40 @@ public class PaginatorHelper implements Serializable {
     }
 
     public static final Set<ValueHolder> transformer(List<String> attributes, Map<String, ?> stuff) {
-
-        Set<ValueHolder> conditions = new HashSet<ValueHolder>();
-        Boolean hasGlobalFilter = stuff.containsKey(GF) && !((String) stuff.get(GF)).equals(UNDEFINED)
-                && !((String) stuff.get(GF)).isEmpty();
-        if (hasGlobalFilter) {
-            String value = (String) stuff.get(GF);
-            for (String attr : attributes) {
-                conditions.add(new ValueHolder(attr, value));
-            }
-        } else {
-            if (!stuff.isEmpty() && stuff.containsKey(GF)) {
-                stuff.remove(GF);
-            }
-            for (Map.Entry<String, ?> entry : stuff.entrySet()) {
-                if (entry.getValue() instanceof String[]) {
-                    String[] array = (String[]) entry.getValue();
-                    conditions.add(new ValueHolder(entry.getKey(), ValueHolder._IN, StringUtils.join(array, ',')));
-                } else if (entry.getValue() instanceof String) {
-                    conditions.add(new ValueHolder(entry.getKey(), ValueHolder._ILIKE, (String) entry.getValue()));
-                } else if (entry.getValue() instanceof Number) {
-                    conditions.add(new ValueHolder(entry.getKey(), ((Number) entry.getValue()).toString()));
-                }
-
-            }
-        }
-
+    	Set<ValueHolder> conditions = new HashSet<ValueHolder>();
+    	
+    	if(stuff != null){    	
+	        Boolean hasGlobalFilter = stuff.containsKey(GF) && !((String) stuff.get(GF)).equals(UNDEFINED)
+	                && !((String) stuff.get(GF)).isEmpty();
+	        if (hasGlobalFilter) {
+	            String value = (String) stuff.get(GF);
+	            for (String attr : attributes) {
+	                conditions.add(new ValueHolder(attr, value));
+	            }
+	        } else {
+	            if (!stuff.isEmpty() && stuff.containsKey(GF)) {
+	                stuff.remove(GF);
+	            }
+	            for (Map.Entry<String, ?> entry : stuff.entrySet()) {
+	                if (entry.getValue() instanceof String[]) {
+	                    String[] array = (String[]) entry.getValue();
+	                    if(array.length > 0){
+	                    	conditions.add(new ValueHolder(entry.getKey(), ValueHolder._IN, StringUtils.join(array, ',')));                    	
+	                    }
+	                } else if (entry.getValue() instanceof String) {
+	                	try {
+							Number num = NumberFormat.getInstance().parse(entry.getValue().toString());
+							conditions.add(new ValueHolder(entry.getKey(), num.toString()));
+						} catch (Exception e) {
+							conditions.add(new ValueHolder(entry.getKey(), ValueHolder._ILIKE, (String) entry.getValue()));
+						}            
+	                } else if (entry.getValue() instanceof Number) {
+	                    conditions.add(new ValueHolder(entry.getKey(), ((Number) entry.getValue()).toString()));
+	                }
+	
+	            }
+	        }
+    	}
         return conditions;
     }
 }

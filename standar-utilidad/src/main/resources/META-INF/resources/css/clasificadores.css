@@ -46,3 +46,7 @@ width: auto !important;
 .ui-datatable .ui-column-filter {
     height: 10px !important;
 }
+
+.ui-datalist {
+    border: 0 !important;
+}
