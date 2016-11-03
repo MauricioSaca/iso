@@ -1,28 +1,27 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <ui:composition xmlns="http://www.w3.org/1999/xhtml"
-                xmlns:ui="http://java.sun.com/jsf/facelets"
-                xmlns:h="http://java.sun.com/jsf/html"
-                xmlns:f="http://java.sun.com/jsf/core"
-                xmlns:p="http://primefaces.org/ui"
-                template="/template/layout.xhtml">
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui" template="/template/layout.xhtml">
 
-    <ui:define name="head">
+	<ui:define name="head">
 
-    </ui:define>
+	</ui:define>
 
-    <ui:define name="subheader">
-        <h:outputText value="PRUEBAS"></h:outputText>
-    </ui:define>
+	<ui:define name="subheader">
+		<h:outputText value="PRUEBAS"></h:outputText>
+	</ui:define>
 
-    <ui:define name="content">
-		<p:outputPanel id="contentPanel">
-			<p:outputPanel id="panelList" rendered="#{!petView.renderEditView}">
-		
-				<h:form id="listForm">
-			        <h2>Lista de Mascotas</h2>
-			        <p:separator />
-		
+	<ui:define name="content">
+		<h:form id="mascotasForm">
+			<p:outputPanel id="contentPanel">
+				<p:outputPanel id="panelList" rendered="#{!petView.renderEditView}">
+
+					<h2>Lista de Mascotas</h2>
+					<p:separator />
+
 					<p:dataTable id="dtCats" widgetVar="dtCats" var="cat"
 						value="#{petView.catLazyData}" rows="10" paginator="true"
 						paginatorPosition="bottom" lazy="true">
@@ -32,8 +31,10 @@
 
 						<p:column headerText="Acciones">
 							<p:commandButton icon="fa fa-pencil"
-								action="#{petView.prepareUpdate(true)}" update="contentPanel registerForm:pgRegister" >
-								<f:setPropertyActionListener value="#{cat}" target="#{petView.selectedCat}" />
+								action="#{petView.prepareUpdate(true)}"
+								update="mascotasForm:contentPanel mascotasForm:pgRegister">
+								<f:setPropertyActionListener value="#{cat}"
+									target="#{petView.selectedCat}" />
 							</p:commandButton>
 							<p:commandButton icon="fa fa-trash" update="dtCats"
 								action="#{petView.deleteCat(cat)}">
@@ -45,16 +46,16 @@
 						<p:column headerText="Nombre" filterBy="#{cat.catName}">
 			        		#{cat.catName}
 			        	</p:column>
-		
+
 						<p:column headerText="Edad">
 							<!-- filterBy="#{cat.age}" filterMatchMode="equals" -->
 			        		#{cat.age}
 			        	</p:column>
-		
+
 						<p:column headerText="Descripcion" filterBy="#{cat.description}">
 			        		#{cat.description}
 			        	</p:column>
-		
+
 						<p:column headerText="Estado" filterBy="#{cat.petStatus}"
 							filterMatchMode="in">
 							<!-- <f:facet name="filter">
@@ -66,7 +67,7 @@
 							</f:facet>-->
 			        		#{cat.petStatus.description}
 			        	</p:column>
-		
+
 						<p:column headerText="Origen" filterBy="#{cat.petOrigin}"
 							filterMatchMode="in">
 							<!--<f:facet name="filter">
@@ -80,7 +81,7 @@
 			        		#{cat.petOrigin.description}
 			        	</p:column>
 					</p:dataTable>
-					
+
 					<p:dataTable id="dtDogs" widgetVar="dtDogs" var="dog"
 						value="#{petView.dogLazyData}" rows="10" paginator="true"
 						paginatorPosition="bottom" lazy="true">
@@ -90,8 +91,9 @@
 
 						<p:column>
 							<p:commandButton icon="fa fa-pencil"
-								action="#{petView.prepareUpdate(false)}" update="contentPanel" >
-								<f:setPropertyActionListener value="#{dog}" target="#{petView.selectedDog}" />
+								action="#{petView.prepareUpdate(false)}" update="mascotasForm:contentPanel">
+								<f:setPropertyActionListener value="#{dog}"
+									target="#{petView.selectedDog}" />
 							</p:commandButton>
 							<p:commandButton icon="fa fa-trash" update="dtDogs"
 								action="#{petView.deleteDog(dog)}">
@@ -103,16 +105,16 @@
 						<p:column headerText="Nombre" filterBy="#{cat.dogName}">
 			        		#{dog.dogName}
 			        	</p:column>
-		
+
 						<p:column headerText="Edad">
 							<!-- filterBy="#{dog.age}" filterMatchMode="equals" -->
 			        		#{dog.age}
 			        	</p:column>
-		
+
 						<p:column headerText="Descripcion" filterBy="#{dog.description}">
 			        		#{dog.description}
 			        	</p:column>
-		
+
 						<p:column headerText="Estado" filterBy="#{dog.petStatus}"
 							filterMatchMode="in">
 							<!-- <f:facet name="filter">
@@ -124,7 +126,7 @@
 							</f:facet>-->
 			        		#{dog.petStatus.description}
 			        	</p:column>
-		
+
 						<p:column headerText="Origen" filterBy="#{dog.petOrigin}"
 							filterMatchMode="in">
 							<!--<f:facet name="filter">
@@ -140,16 +142,18 @@
 					</p:dataTable>
 
 					<p:commandButton value="Nuevo" icon="fa fa-plus"
-						action="#{petView.showEditPanel}" update="contentPanel"/>
+						action="#{petView.showEditPanel}" update="mascotasForm:contentPanel" />
 					<!-- <p:panel id="panelTest" header="test">
 						text
 						<p:effect type="clip" event="click" />
 					</p:panel> -->
-				</h:form>
-			</p:outputPanel>
-			
-			<p:outputPanel id="panelAddEdit" rendered="#{petView.renderEditView}">
-				<ui:include src="./registro.xhtml" />
+				</p:outputPanel>
+
+				<p:outputPanel id="panelAddEdit"
+					rendered="#{petView.renderEditView}">
+					<ui:include src="./registro.xhtml" />
+				</p:outputPanel>
+
 			</p:outputPanel>
 
 			<p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
@@ -158,7 +162,7 @@
 				<p:commandButton value="No" type="button"
 					styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
 			</p:confirmDialog>
-		</p:outputPanel>
+		</h:form>
 	</ui:define>
 
 </ui:composition>
