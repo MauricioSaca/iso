@@ -20,10 +20,10 @@
         
         <el-resolver>org.primefaces.application.exceptionhandler.PrimeExceptionHandlerELResolver</el-resolver>
         
-<!--         <resource-bundle> -->
-<!--             <base-name>/i18n/safiCommonBundle</base-name> -->
-<!--             <var>safiCommonBundle</var> -->
-<!--         </resource-bundle> -->
+        <resource-bundle>
+            <base-name>/i18n/safiCommonBundle</base-name>
+            <var>safiCommonBundle</var>
+        </resource-bundle>
         
         <resource-bundle>
             <base-name>/i18n/applicationBundle</base-name>

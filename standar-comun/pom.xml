@@ -21,6 +21,12 @@
 	    <type>pom</type>
 	  </dependency>
 	  
+	<dependency>
+      <groupId>org.picketlink</groupId>
+      <artifactId>picketlink</artifactId>
+      <scope>compile</scope>
+    </dependency>
+	  
 	  	
 	<dependency>
     	<groupId>${project.groupId}</groupId>

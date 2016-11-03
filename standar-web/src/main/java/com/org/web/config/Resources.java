@@ -13,7 +13,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
 @Singleton
-public class Resources implements Serializable{
+public class Resources implements Serializable {
 
 	private static final long serialVersionUID = 1839516307970118696L;
 	
@@ -21,16 +21,15 @@ public class Resources implements Serializable{
 	@Dependent
 	@PersistenceContext(unitName = "dbPU")
 	private EntityManager em;
-	
+
 	@Produces
-    @RequestScoped
-    public FacesContext produceFacesContext() {
-        return FacesContext.getCurrentInstance();
-    }
+	@RequestScoped
+	public FacesContext produceFacesContext() {
+		return FacesContext.getCurrentInstance();
+	}
 
-    @Produces
-    public Logger produceLog(InjectionPoint injectionPoint) {
-        return Logger.getLogger(injectionPoint.getMember().getDeclaringClass().getName());
-    }
-
+	@Produces
+	public Logger produceLog(InjectionPoint injectionPoint) {
+		return Logger.getLogger(injectionPoint.getMember().getDeclaringClass().getName());
+	}
 }

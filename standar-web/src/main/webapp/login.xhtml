@@ -43,14 +43,14 @@
 
 						<div class="Card SoftGrayBack">
 							<p:inputText id="j_username" placeholder="Usuario"
-								styleClass="Wid90 TexAlCenter" value="#{userView.userName}"
+								styleClass="Wid90 TexAlCenter" value="#{loginCredentials.userId}"
 								title="digite su nombre de usuario" required="true"
 								requiredMessage="campo requerido*" />
 
 							<div class="EmptyBox10"></div>
 
 							<p:password id="j_password" placeholder="Password"
-								styleClass="Wid90 TexAlCenter" value="#{userView.password}"
+								styleClass="Wid90 TexAlCenter" value="#{loginCredentials.password}"
 								title="digite su password" required="true" autocomplete="off"
 								requiredMessage="campo requerido*" />
 
@@ -59,7 +59,8 @@
 							<div class="EmptyBox30"></div>
 
 							<p:commandButton value="Ingresar" styleClass="CyanButton"
-								actionListener="#{userView.actionLogin()}"
+								type="submit"
+								action="#{loginController.login}" ajax="false"
 								icon="fa fa-sign-in" update=":growl" />
 							<div class="EmptyBox10 ShowOnMobile"></div>
 						</div>

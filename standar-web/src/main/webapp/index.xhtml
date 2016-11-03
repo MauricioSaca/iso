@@ -22,13 +22,19 @@
 	            <p>
 	                <h:outputText value="HOLA MUNDO aaa test funcionaaaaa shit"></h:outputText>
 	            </p>
-	            
-	            <h:form>
-	            	<p:commandButton value="Test" actionListener="#{usuarioView.testAction()}" process="@this" />
-	            </h:form>
-	            
+	              
 	            <p:spacer height="400" />
 	        </p:panel>	
+	        
+	        
+	        <ui:fragment rendered="#{identity.loggedIn}">
+		        Welcome <b>#{identity.account.userName}</b>!
+		
+		        <ui:fragment rendered="#{authorizationChecker.hasGroup('admins')}">
+		            <div>You are a member of the 'admins' group.</div>
+		        </ui:fragment>
+			</ui:fragment>
+	        
 	        
 	        <p:dataTable>
 	        	<p:row>
