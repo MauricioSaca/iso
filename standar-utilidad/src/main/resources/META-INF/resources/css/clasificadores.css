@@ -33,83 +33,16 @@ width: auto !important;
 	display: none;
 }
 
-.claseTabla .default td{color: black !important;font-weight: normal !important}
-.claseTabla .new td{color:#00b700 !important; font-weight: normal !important}
-.claseTabla .ui-datatable .ui-state-highlight > td{color: #044b7b !important}
-.claseTabla .mod td{color:blue !important; font-weight: normal !important}
-.claseTabla .del td{color:red !important; font-weight: normal !important}
-.claseTabla td.left{text-align:left}
-.claseTabla td.center{text-align:center}
-.claseTabla .disableDisplay td{display: none !important;}
-td.ui-panelgrid-cell.property {
-    width: 30%;
+/*Sobre escritura de filtros prime*/
+.ui-datatable {
+    border: 0!important;
+    margin: 0 0 1em 0 !important;
 }
 
-#reportsForm .gridReports{
-	width: 70%;
-    text-align: center;
-    margin: auto;
+.ui-datatable-tablewrapper {
+    margin: 10px 0 !important;
 }
 
-#reportsForm .ui-tabs .ui-tabs-navscroller-btn {
-    position: absolute;
-    height: 51px !important;
-    z-index: 100;
-    cursor: pointer;
-    display: block;
-}
-
-#reportsForm .ui-panelgrid {
-    border: 0;
-    background-color: #ffffff;
-    font-size: 14px;
-    font-family: 'latoregular';
-}
-
-#reportsForm .ui-panelgrid td{
-    border: 0;
-}
-
-#reportsForm .icon-style {
-    margin: 0 10px 0 0;
-}
-
-#reportsForm .icon-style-first {
-    margin: 0 10px 0 25px;
-}
-
-#reportsForm  .bPeriodosPanel{
-    width: 50%;
-}
-
-#reportsForm  .first{
- 	width: 65%;
-}
-
-#reportsForm  .second{
- 	width: 15%;
-}
-
-#reportsForm  .third{
- 	width: 30%;
-}
-
-#reportsForm .ejeReports {
-    width: 70%;
-    text-align: center;
-}
-
-#reportsEjecForm .ui-panelgrid {
-    border: 0;
-    background-color: #ffffff;
-    font-size: 14px;
-    font-family: 'latoregular';
-    width:100%;
-}
-
-#reportsEjecForm .ui-panelgrid .ui-panelgrid-cell {
-    border-width: 0;
-    border-style: solid;
-    border-color: inherit;
-    padding: 4px 10px;
+.ui-datatable .ui-column-filter {
+    height: 10px !important;
 }

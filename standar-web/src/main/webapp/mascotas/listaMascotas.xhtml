@@ -16,23 +16,149 @@
     </ui:define>
 
     <ui:define name="content">
-	
-		<h:form id="registerForm">
-	        <h2>Lista Mascotas</h2>
-	        <p:separator />
-	        
-	        <p:dataTable id="dtMascotas" var="cat" value="#{petView.catLazyData}" rows="10" lazy="true">
-	        	<p:column headerText="Mascota">
-	        		#{cat.age}
-	        	</p:column>
-	        	
-	        	<p:column headerText="Edad">
-	        	</p:column>
-	        	
-	        	<p:column headerText="Descripcion">
-	        	</p:column>
-	        </p:dataTable>
-		</h:form>
-    </ui:define>
+		<p:outputPanel id="contentPanel">
+			<p:outputPanel id="panelList" rendered="#{!petView.renderEditView}">
+		
+				<h:form id="listForm">
+			        <h2>Lista de Mascotas</h2>
+			        <p:separator />
+		
+					<p:dataTable id="dtCats" widgetVar="dtCats" var="cat"
+						value="#{petView.catLazyData}" rows="10" paginator="true"
+						paginatorPosition="bottom" lazy="true">
+						<f:facet name="header">
+			        		Lista de Gatos
+			        	</f:facet>
+
+						<p:column headerText="Acciones">
+							<p:commandButton icon="fa fa-pencil"
+								action="#{petView.prepareUpdate(true)}" update="contentPanel registerForm:pgRegister" >
+								<f:setPropertyActionListener value="#{cat}" target="#{petView.selectedCat}" />
+							</p:commandButton>
+							<p:commandButton icon="fa fa-trash" update="dtCats"
+								action="#{petView.deleteCat(cat)}">
+								<p:confirm header="Eliminacion"
+									message="Desea eliminar este registro?" />
+							</p:commandButton>
+						</p:column>
+
+						<p:column headerText="Nombre" filterBy="#{cat.catName}">
+			        		#{cat.catName}
+			        	</p:column>
+		
+						<p:column headerText="Edad">
+							<!-- filterBy="#{cat.age}" filterMatchMode="equals" -->
+			        		#{cat.age}
+			        	</p:column>
+		
+						<p:column headerText="Descripcion" filterBy="#{cat.description}">
+			        		#{cat.description}
+			        	</p:column>
+		
+						<p:column headerText="Estado" filterBy="#{cat.petStatus}"
+							filterMatchMode="in">
+							<!-- <f:facet name="filter">
+								<p:selectCheckboxMenu label="Estado" 
+									onchange="PF('dtCats').filter()">
+									<f:selectItems value="#{petView.petStatusList}" var="status"
+										itemValue="#{status.code}" itemLabel="#{status.description}" />
+								</p:selectCheckboxMenu>
+							</f:facet>-->
+			        		#{cat.petStatus.description}
+			        	</p:column>
+		
+						<p:column headerText="Origen" filterBy="#{cat.petOrigin}"
+							filterMatchMode="in">
+							<!--<f:facet name="filter">
+								<p:selectCheckboxMenu label="Origen"
+									onchange="PF('dtCats').filter()">
+									<f:selectItems value="#{petView.petOriginList}" var="origen"
+										itemValue="#{origen}" itemLabel="#{origen.description}" />
+									
+								</p:selectCheckboxMenu>
+							</f:facet>-->
+			        		#{cat.petOrigin.description}
+			        	</p:column>
+					</p:dataTable>
+					
+					<p:dataTable id="dtDogs" widgetVar="dtDogs" var="dog"
+						value="#{petView.dogLazyData}" rows="10" paginator="true"
+						paginatorPosition="bottom" lazy="true">
+						<f:facet name="header">
+			        		Lista de Perros
+			        	</f:facet>
+
+						<p:column>
+							<p:commandButton icon="fa fa-pencil"
+								action="#{petView.prepareUpdate(false)}" update="contentPanel" >
+								<f:setPropertyActionListener value="#{dog}" target="#{petView.selectedDog}" />
+							</p:commandButton>
+							<p:commandButton icon="fa fa-trash" update="dtDogs"
+								action="#{petView.deleteDog(dog)}">
+								<p:confirm header="Eliminacion"
+									message="Desea eliminar este registro?" />
+							</p:commandButton>
+						</p:column>
+
+						<p:column headerText="Nombre" filterBy="#{cat.dogName}">
+			        		#{dog.dogName}
+			        	</p:column>
+		
+						<p:column headerText="Edad">
+							<!-- filterBy="#{dog.age}" filterMatchMode="equals" -->
+			        		#{dog.age}
+			        	</p:column>
+		
+						<p:column headerText="Descripcion" filterBy="#{dog.description}">
+			        		#{dog.description}
+			        	</p:column>
+		
+						<p:column headerText="Estado" filterBy="#{dog.petStatus}"
+							filterMatchMode="in">
+							<!-- <f:facet name="filter">
+								<p:selectCheckboxMenu label="Estado" 
+									onchange="PF('dtCats').filter()">
+									<f:selectItems value="#{petView.petStatusList}" var="status"
+										itemValue="#{status.code}" itemLabel="#{status.description}" />
+								</p:selectCheckboxMenu>
+							</f:facet>-->
+			        		#{dog.petStatus.description}
+			        	</p:column>
+		
+						<p:column headerText="Origen" filterBy="#{dog.petOrigin}"
+							filterMatchMode="in">
+							<!--<f:facet name="filter">
+								<p:selectCheckboxMenu label="Origen"
+									onchange="PF('dtCats').filter()">
+									<f:selectItems value="#{petView.petOriginList}" var="origen"
+										itemValue="#{origen}" itemLabel="#{origen.description}" />
+									
+								</p:selectCheckboxMenu>
+							</f:facet>-->
+			        		#{dog.petOrigin.description}
+			        	</p:column>
+					</p:dataTable>
+
+					<p:commandButton value="Nuevo" icon="fa fa-plus"
+						action="#{petView.showEditPanel}" update="contentPanel"/>
+					<!-- <p:panel id="panelTest" header="test">
+						text
+						<p:effect type="clip" event="click" />
+					</p:panel> -->
+				</h:form>
+			</p:outputPanel>
+			
+			<p:outputPanel id="panelAddEdit" rendered="#{petView.renderEditView}">
+				<ui:include src="./registro.xhtml" />
+			</p:outputPanel>
+
+			<p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+				<p:commandButton value="Si" type="button"
+					styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+				<p:commandButton value="No" type="button"
+					styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+			</p:confirmDialog>
+		</p:outputPanel>
+	</ui:define>
 
 </ui:composition>

@@ -1,69 +1,98 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <ui:composition xmlns="http://www.w3.org/1999/xhtml"
-                xmlns:ui="http://java.sun.com/jsf/facelets"
-                xmlns:h="http://java.sun.com/jsf/html"
-                xmlns:f="http://java.sun.com/jsf/core"
-                xmlns:p="http://primefaces.org/ui"
-                template="/template/layout.xhtml">
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
 
-    <ui:define name="head">
+	<h2>#{petView.createOrEdit ? 'Agregar' : 'Editar'} Mascota</h2>
+	<p:separator />
 
-    </ui:define>
+	<h:form id="registerForm">
+		<p:selectOneButton value="#{petView.catDogFlag}">
+			<f:converter converterId="javax.faces.Boolean" />
+			<f:selectItem itemLabel="Gato" itemValue="true" />
+			<f:selectItem itemLabel="Perro" itemValue="false" />
+		</p:selectOneButton>
 
-    <ui:define name="subheader">
-        <h:outputText value="PRUEBAS"></h:outputText>
-    </ui:define>
+		<p:messages id="messages" showDetail="true" autoUpdate="true"
+			closable="true" />
 
-    <ui:define name="content">
+		<h:panelGrid id="pgRegister" columns="4" style="width:80%;"
+			columnClasses="label, fields, label, fields">
+			<p:column>
+				<p:outputLabel value="Nombre" for="txtNombre" />
+			</p:column>
 
-		<h2>Registro de Mascotas</h2>
-		<p:separator />
-		
-		<h:form id="registerForm">
+			<p:column>
+				<p:inputText id="txtNombre" required="true"
+					value="#{petView.selectedCat.catName}" />
+			</p:column>
 
-			<h:panelGrid id="pgRegister" columns="2">
-		        <p:outputLabel value="Peso" />
-		        <p:inputText id="txtWeight" value="#{petView.selectedCat.weight}" />
-		        
-		        <p:outputLabel value="Edad" />
-				<p:inputTextarea id="txtAge" value="#{petView.selectedCat.age}"/>
-				
-		        <p:outputLabel value="Raza" />
-				<p:inputText id="txtRaza" value="#{petView.selectedCat.breed}" />
-				
-				<p:outputLabel value="Origen" />
-				<p:selectOneMenu id="cmbOrigen" value="#{petView.selectedCat.petOrigin}">
-					<f:selectItem itemValue="" itemLabel="Seleccione Origen" />
-					<f:selectItems value="#{petView.petOriginList}" var="origen" 
-						itemValue="#{origen}" itemLabel="#{origen.description}" />
-					<f:converter converterId="jsfUniversalConverter" />
-				</p:selectOneMenu>
-				
-				<p:outputLabel value="Estado" for="cmbEstado"/>
-				<p:selectOneMenu id="cmbEstado" value="#{petView.selectedCat.petStatus}">
-					<f:selectItem itemValue="" itemLabel="Seleccione" />
-					<f:selectItems value="#{petView.petStatusList}" var="status" 
-						itemValue="#{status}" itemLabel="#{status.description}" />
-					<f:converter converterId="jsfUniversalConverter" />
-				</p:selectOneMenu>
-				
-				<p:outputLabel value="Altura" />
-				<p:inputText id="txtHeight" value="#{petView.selectedCat.height}"/>
-				
-		        <p:outputLabel value="Genero" />
-				<p:selectOneRadio id="orGender" value="#{petView.selectedCat.petGender}">
-					<f:selectItems value="#{petView.petGenderList}" var="gender" 
-						itemValue="#{gender}" itemLabel="#{gender.description}" />
-				</p:selectOneRadio>
+			<p:outputLabel value="Peso" />
+			<!-- 				<p:spinner min="0" /> -->
+			<p:inputText id="txtWeight" value="#{petView.selectedCat.weight}" />
 
-				<p:selectBooleanCheckbox value="#{petView.catDogFlag}" />
-					
-				<p:commandButton id="btnSave" value="Guardar"
-					process="@form" action="#{petView.registerPet}" />
+			<p:outputLabel value="Raza" for="txtRaza" />
+			<p:inputText id="txtRaza" required="true"
+				value="#{petView.selectedCat.breed}" />
 
-			</h:panelGrid>
-		</h:form>
-    </ui:define>
+			<p:outputLabel value="Edad" />
+			<!-- 				<p:spinner /> -->
+			<p:inputText id="txtAge" value="#{petView.selectedCat.age}" />
+
+			<p:outputLabel value="Origen" />
+			<p:selectOneMenu id="cmbOrigen"
+				value="#{petView.selectedCat.petOrigin}">
+				<f:selectItem itemValue="" itemLabel="Seleccione Origen" />
+				<f:selectItems value="#{petView.petOriginList}" var="origen"
+					itemValue="#{origen}" itemLabel="#{origen.description}" />
+				<f:converter converterId="jsfUniversalConverter" />
+			</p:selectOneMenu>
+
+			<p:outputLabel value="Altura" />
+			<!-- 				<p:spinner /> -->
+			<p:inputText id="txtHeight" value="#{petView.selectedCat.height}" />
+
+			<p:outputLabel value="Estado" for="cmbEstado" />
+			<p:selectOneMenu id="cmbEstado"
+				value="#{petView.selectedCat.petStatus}">
+				<f:selectItem itemValue="" itemLabel="Seleccione" />
+				<f:selectItems value="#{petView.petStatusList}" var="status"
+					itemValue="#{status}" itemLabel="#{status.description}" />
+				<f:converter converterId="jsfUniversalConverter" />
+			</p:selectOneMenu>
+
+			<p:outputLabel value="Genero" />
+			<p:selectOneRadio id="orGender"
+				value="#{petView.selectedCat.petGender}" layout="grid" columns="1">
+				<f:selectItems value="#{petView.petGenderList}" var="gender"
+					itemValue="#{gender}" itemLabel="#{gender.description}" />
+			</p:selectOneRadio>
+
+			<p:outputLabel value="Descripcion" />
+			<p:column colspan="3">
+				<p:inputTextarea id="txtaDescription"
+					value="#{petView.selectedCat.description}" />
+			</p:column>
+
+			<p:outputLabel value="Observaciones &lt;br/&gt; (Comportamiento)"
+				escape="false" />
+			<p:column colspan="3">
+				<p:inputTextarea id="txtaBehavior"
+					value="#{petView.selectedCat.behavior}" />
+			</p:column>
+		</h:panelGrid>
+
+		<p:commandButton id="btnSave" value="Guardar" process="@form"
+			update="registerForm:pgRegister contentPanel"
+			rendered="#{petView.createOrEdit}" action="#{petView.registerPet}" />
+
+		<p:commandButton id="btnUpdate" value="Guardar" process="@form"
+			update="registerForm:pgRegister contentPanel"
+			rendered="#{!petView.createOrEdit}" action="#{petView.updatePet}" />
+
+	</h:form>
 
 </ui:composition>
