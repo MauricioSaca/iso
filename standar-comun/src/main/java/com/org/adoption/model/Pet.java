@@ -1,14 +1,21 @@
 package com.org.adoption.model;
 
+import java.io.ByteArrayInputStream;
 import java.io.Serializable;
 
+import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Lob;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+
+import org.primefaces.model.DefaultStreamedContent;
+import org.primefaces.model.StreamedContent;
 
 import com.org.core.model.enums.PetGender;
 import com.org.core.model.enums.PetOrigin;
@@ -53,6 +60,11 @@ public class Pet implements BaseModelEntity<Long>{
 
 	@Column(nullable = false)
 	private Double height;
+	
+	@Column(nullable = true)
+	@Lob
+	@Basic(fetch = FetchType.LAZY)
+	private byte[] img;
 
 	@Column(length = 255, nullable = false)
 	private String behavior;
@@ -105,5 +117,4 @@ public class Pet implements BaseModelEntity<Long>{
 	public void setPetGender(PetGender gender) {
 		this.petGender = gender != null ? gender.getCode() : null;
 	}
-	
 }

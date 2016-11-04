@@ -19,7 +19,19 @@
 			<p:outputPanel id="contentPanel">
 				<p:outputPanel id="panelList" rendered="#{!petView.renderEditView}">
 
-					<h2>Lista de Mascotas</h2>
+					<p:contextMenu id="ctxMascotas" for="mascotasForm:dtPets">
+						<p:menuitem value="Editar" icon="fa fa-pencil"
+							action="#{petView.prepareUpdate(true)}"
+							update="mascotasForm:contentPanel" />
+						<p:menuitem value="Eliminar" icon="fa fa-trash" 
+							action="#{petView.delete}">
+								<p:confirm header="Eliminacion"
+									message="Desea eliminar este registro?" />
+						</p:menuitem>
+						<p:menuitem value="Control medico" icon="fa fa-eye" />
+					</p:contextMenu>
+					
+					<h2>Lista de Mascotas #{applicationBundle.saveFormulacionUESummary}</h2>
 					<p:separator />
 
 					<p:dataTable id="dtPets" widgetVar="dtPets" var="pet"

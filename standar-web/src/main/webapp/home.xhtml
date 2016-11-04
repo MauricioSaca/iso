@@ -4,6 +4,7 @@
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:o="http://omnifaces.org/ui"
 	xmlns:p="http://primefaces.org/ui" template="/template/layout.xhtml">
 
 	<ui:define name="head">
@@ -30,7 +31,7 @@
 							#{pet.petName}
 						</p:column>
 						<p:column colspan="2" rowspan="4">
-							<p:graphicImage />
+							<o:graphicImage style="width: 100%;" value="#{imageBean.getBytes(pet.id)}" />
 						</p:column>
 					</p:row>
 					<p:row>
