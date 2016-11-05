@@ -88,15 +88,19 @@ public class AdoptanteView implements Serializable {
 		createOrEdit = true;
 	}
 
+	public void replaceChar(){
+		if(!Strings.isNullOrEmpty(selectedAdoptante.getPhone())){
+			selectedAdoptante.setPhone(selectedAdoptante.getPhone().replaceAll("-", ""));
+		}
+		
+		selectedAdoptante.setCellPhone(selectedAdoptante.getCellPhone().replaceAll("-", ""));
+		selectedAdoptante.setDui(selectedAdoptante.getDui().replaceAll("-", ""));
+	}
+	
 	public void add() {
 		try {
 			
-			if(!Strings.isNullOrEmpty(selectedAdoptante.getPhone())){
-				selectedAdoptante.setPhone(selectedAdoptante.getPhone().replaceAll("-", ""));
-			}
-			
-			selectedAdoptante.setCellPhone(selectedAdoptante.getCellPhone().replaceAll("-", ""));
-			selectedAdoptante.setDui(selectedAdoptante.getDui().replaceAll("-", ""));
+			replaceChar();
 			postulantService.save(selectedAdoptante);
 
 			Messages.create("REGISTRO").detail("Registro agregado exitosamente").add();
@@ -116,6 +120,7 @@ public class AdoptanteView implements Serializable {
 
 	public void update() {
 		try {
+			replaceChar();
 			postulantService.save(selectedAdoptante);
 			Messages.create("REGISTRO").detail("Registro actualizado exitosamente").add();
 			renderEditView = false;
