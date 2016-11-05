@@ -11,7 +11,7 @@
 
 	<h:panelGrid id="pgRegister" columns="4" style="width:80%;">
 		<p:outputLabel value="DUI" for="txtDUI" />
-		<p:inputText id="txtDUI" maxlength="10"
+		<p:inputText id="txtDUI" maxlength="10" required="true"
 			value="#{adoptanteView.selectedAdoptante.dui}" />
 
 		<p:outputLabel value="Nombres" for="txtNombres" />
@@ -35,7 +35,7 @@
 			value="#{adoptanteView.selectedAdoptante.email}" />
 
 		<p:outputLabel value="Celular" for="txtMovil" />
-		<p:inputMask id="txtMovil" mask="9999-9999"
+		<p:inputMask id="txtMovil" mask="9999-9999" required="true"
 			value="#{adoptanteView.selectedAdoptante.cellPhone}" />
 
 		<p:outputLabel value="Telefono" for="txtTelefono" />

@@ -135,12 +135,12 @@ public class PaginatorHelper implements Serializable {
 	                    	conditions.add(new ValueHolder(entry.getKey(), ValueHolder._IN, StringUtils.join(array, ',')));                    	
 	                    }
 	                } else if (entry.getValue() instanceof String) {
-	                	try {
-							Number num = NumberFormat.getInstance().parse(entry.getValue().toString());
-							conditions.add(new ValueHolder(entry.getKey(), num.toString()));
-						} catch (Exception e) {
+	                	//try {
+							//Number num = NumberFormat.getInstance().parse(entry.getValue().toString());
+							//conditions.add(new ValueHolder(entry.getKey(), num.toString()));
+						//} catch (Exception e) {
 							conditions.add(new ValueHolder(entry.getKey(), ValueHolder._ILIKE, (String) entry.getValue()));
-						}            
+						//}            
 	                } else if (entry.getValue() instanceof Number) {
 	                    conditions.add(new ValueHolder(entry.getKey(), ((Number) entry.getValue()).toString()));
 	                }

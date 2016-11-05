@@ -19,6 +19,7 @@ import org.omnifaces.util.Faces;
 import org.omnifaces.util.Messages;
 import org.primefaces.event.FileUploadEvent;
 
+import com.google.common.base.Strings;
 import com.org.adoption.model.Pet;
 import com.org.adoption.model.Postulant;
 import com.org.adoption.service.PetService;
@@ -89,7 +90,13 @@ public class AdoptanteView implements Serializable {
 
 	public void add() {
 		try {
-
+			
+			if(!Strings.isNullOrEmpty(selectedAdoptante.getPhone())){
+				selectedAdoptante.setPhone(selectedAdoptante.getPhone().replaceAll("-", ""));
+			}
+			
+			selectedAdoptante.setCellPhone(selectedAdoptante.getCellPhone().replaceAll("-", ""));
+			selectedAdoptante.setDui(selectedAdoptante.getDui().replaceAll("-", ""));
 			postulantService.save(selectedAdoptante);
 
 			Messages.create("REGISTRO").detail("Registro agregado exitosamente").add();
