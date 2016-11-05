@@ -1,58 +1,77 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <ui:composition xmlns="http://www.w3.org/1999/xhtml"
-                xmlns:ui="http://java.sun.com/jsf/facelets"
-                xmlns:h="http://java.sun.com/jsf/html"
-                xmlns:f="http://java.sun.com/jsf/core"
-                xmlns:p="http://primefaces.org/ui"
-                template="/template/layout.xhtml">
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
 
-    <ui:define name="head">
+	<h2>#{adoptanteView.createOrEdit ? 'Agregar' : 'Editar'} Postulante</h2>
+	<p:separator />
 
-    </ui:define>
+	<h:panelGrid id="pgRegister" columns="4" style="width:80%;">
+		<p:outputLabel value="DUI" for="txtDUI" />
+		<p:inputText id="txtDUI" maxlength="10"
+			value="#{adoptanteView.selectedAdoptante.dui}" />
 
-    <ui:define name="subheader">
-        <h:outputText value="PRUEBAS"></h:outputText>
-    </ui:define>
+		<p:outputLabel value="Nombres" for="txtNombres" />
+		<p:inputText id="txtNombres"
+			value="#{adoptanteView.selectedAdoptante.names}" />
 
-    <ui:define name="content">
-	
-		<h:form id="registerForm">
-	        <h2>Registro de Mascotas</h2>
-	        <p:separator />
-	        
-	        <h:panelGrid id="pgRegister" columns="2">
-		        <p:outputLabel value="Nombres" for="txtNombres" />
-		        <p:inputText id="txtNombres" />
-		        
-		        <p:outputLabel value="Apellidos" for="txtApellidos" />
-		        <p:inputText id="txtApellidos" />
-		        
-		        <p:outputLabel value="DUI" for="txtDUI" />
-				<p:inputText id="txtDUI" maxlength="10" />
-				
-		        <p:outputLabel value="Direccion" for="txtAddress" />
-				<p:inputTextarea id="txtAddress" />
-				
-				<p:outputLabel value="Email" for="txtEmail" />
-				<p:inputText id="txtEmail" />
-								
-		        <p:outputLabel value="Genero" for="orGender" />
-				<p:selectOneRadio id="orGender">
-					<f:selectItem itemValue="1" itemLabel="Masculino"/>
-					<f:selectItem itemValue="2" itemLabel="Femenino"/>
-				</p:selectOneRadio>
-				
-				<p:outputLabel value="Estado" for="omEstado" />
-				<p:selectOneMenu id="omEstado">
-					<f:selectItem itemValue="1" itemLabel="Masculino"/>
-					<f:selectItem itemValue="2" itemLabel="Femenino"/>
-				</p:selectOneMenu>
-				
-				<p:commandButton id="btnSave" value="Guardar" />
+		<p:outputLabel value="Apellidos" for="txtApellidos" />
+		<p:inputText id="txtApellidos"
+			value="#{adoptanteView.selectedAdoptante.lastNames}" />
 
-			</h:panelGrid>
-		</h:form>
-    </ui:define>
+		<p:outputLabel value="Edad" for="txtEdad" />
+		<p:inputText id="txtEdad"
+			value="#{adoptanteView.selectedAdoptante.age}" />
+
+		<p:outputLabel value="Direccion" for="txtAddress" />
+		<p:inputTextarea id="txtAddress"
+			value="#{adoptanteView.selectedAdoptante.address}" />
+
+		<p:outputLabel value="Email" for="txtEmail" />
+		<p:inputText id="txtEmail"
+			value="#{adoptanteView.selectedAdoptante.email}" />
+
+		<p:outputLabel value="Celular" for="txtMovil" />
+		<p:inputMask id="txtMovil" mask="9999-9999"
+			value="#{adoptanteView.selectedAdoptante.cellPhone}" />
+
+		<p:outputLabel value="Telefono" for="txtTelefono" />
+		<p:inputMask id="txtTelefono" mask="9999-9999"
+			value="#{adoptanteView.selectedAdoptante.phone}" />
+
+		<p:outputLabel value="Genero" for="orGender" />
+		<p:selectOneRadio id="orGender"
+			value="#{adoptanteView.selectedAdoptante.postulantGender}"
+			layout="grid" columns="1">
+			<f:selectItems value="#{adoptanteView.postulantGenderList}"
+				var="gender" itemValue="#{gender}" itemLabel="#{gender.description}" />
+		</p:selectOneRadio>
+
+		<p:outputLabel value="Estado" for="omEstado" />
+		<p:selectOneMenu id="omEstado"
+			value="#{adoptanteView.selectedAdoptante.postulantStatus}">
+			<f:selectItem itemValue="" itemLabel="Seleccione" />
+			<f:selectItems value="#{adoptanteView.adoptanteStatusList}"
+				var="adopt" itemValue="#{adopt}" itemLabel="#{adopt.description}" />
+			<f:converter converterId="jsfUniversalConverter" />
+		</p:selectOneMenu>
+
+
+	</h:panelGrid>
+
+	<p:commandButton id="btnSave" value="Guardar" process="@form"
+		update="adoptantesForm:pgRegister adoptantesForm:contentPanel"
+		rendered="#{adoptanteView.createOrEdit}" action="#{adoptanteView.add}" />
+
+	<p:commandButton id="btnUpdate" value="Guardar" process="@form"
+		update="adoptantesForm:pgRegister adoptantesForm:contentPanel"
+		rendered="#{!adoptanteView.createOrEdit}"
+		action="#{adoptanteView.update}" />
+
+	<p:commandButton id="btnBack" value="Regresar" immediate="true"
+		update="adoptantesForm:contentPanel" action="#{adoptanteView.getBack}" />
 
 </ui:composition>

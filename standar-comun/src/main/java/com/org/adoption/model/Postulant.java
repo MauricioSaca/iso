@@ -12,6 +12,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
+import com.org.core.model.enums.PostulantGender;
 import com.org.core.model.enums.PostulantStatus;
 import com.org.util.domain.BaseModelEntity;
 
@@ -53,6 +54,9 @@ public class Postulant implements BaseModelEntity<Long> {
 
 	@Column(length = 255, nullable = false, unique = true)
 	private String email;
+	
+	@Column(nullable = false)
+	private Integer age;
 
 	@Column(length = 255, nullable = false)
 	private String cellPhone;
@@ -65,18 +69,28 @@ public class Postulant implements BaseModelEntity<Long> {
 
 	@Column(length = 255, nullable = false)
 	private String postulantStatus;
-
-	// Relacion por enum
-
-	public PostulantStatus getPostulantStatus() {
-		return PostulantStatus.getPetStatus(this.postulantStatus);
-	}
-
-	public void setPetOrigin(PostulantStatus status) {
-		this.postulantStatus = status != null ? status.getCode() : null;
-	}
+	
+	@Column(length = 255, nullable = false)
+	private String postulantGender;
 
 	@OneToMany(mappedBy = "postulant" ,cascade = CascadeType.ALL)
 	private Set<PostulantAnswerEvaluation> postulantAnswerEvaluation;
 	
+	// Relacion por enum
+	
+	public PostulantStatus getPostulantStatus() {
+		return PostulantStatus.getPetStatus(this.postulantStatus);
+	}
+	
+	public void setPostulantStatus(PostulantStatus status) {
+		this.postulantStatus = status != null ? status.getCode() : null;
+	}
+	
+	public PostulantGender getPostulantGender() {
+		return PostulantGender.getPostulantGender(this.postulantGender);
+	}
+	
+	public void setPostulantGender(PostulantGender status) {
+		this.postulantGender = status != null ? status.getCode() : null;
+	}
 }
