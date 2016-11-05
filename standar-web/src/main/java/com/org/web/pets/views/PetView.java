@@ -50,7 +50,7 @@ public class PetView implements Serializable {
 	private List<PetStatus> petStatusList;
 	private List<PetGender> petGenderList;
 	private List<PetType> petTypeList;
-	
+
 	private byte[] file;
 	/**
 	 * TRUE for create FALSE for edit
@@ -89,27 +89,32 @@ public class PetView implements Serializable {
 
 	public void add() {
 		try {
-			
-			selectedPet.setImg(file);
-			petService.save(selectedPet);
 
-			Messages.create("REGISTRO").detail("Registro agregado exitosamente").add();
-			renderEditView = false;
+			if (file == null || file.length == 0) {
+				Messages.create("IMAGEN").detail("Cargue imagen").error().add();
+			} else {
+				selectedPet.setImg(file);
+				petService.save(selectedPet);
+
+				Messages.create("REGISTRO").detail("Registro agregado exitosamente").add();
+				renderEditView = false;
+				selectedPet = new Pet();
+			}
 		} catch (Exception e) {
 			selectedPet = new Pet();
 			Messages.create("EXCEPTION").detail("ERROR: " + e.getMessage()).error().add();
 		}
-
-		selectedPet = new Pet();
 	}
 
-	public void prepareUpdate(boolean isCat) {
+	public void prepareUpdate() {
 		createOrEdit = false;
 		renderEditView = true;
+		file = selectedPet.getImg();
 	}
 
 	public void update() {
 		try {
+			selectedPet.setImg(file);
 			petService.save(selectedPet);
 			Messages.create("REGISTRO").detail("Registro actualizado exitosamente").add();
 			renderEditView = false;
@@ -127,21 +132,22 @@ public class PetView implements Serializable {
 
 	public void upload(FileUploadEvent event) {
 		try {
-			
+
 			file = IOUtils.toByteArray(event.getFile().getInputstream());
-            //copyFile(event.getFile().getFileName(), event.getFile().getInputstream());
+			// copyFile(event.getFile().getFileName(),
+			// event.getFile().getInputstream());
 			event.getFile().getInputstream().close();
 		} catch (IOException e) {
-        	
-        }
+
+		}
 	}
 
 	public void copyFile(String fileName, InputStream in) {
 		try {
 
-	        String contextPath = Faces.getRequest().getSession().getServletContext().getRealPath("");
-	        contextPath = contextPath + "\\img\\";
-	        
+			String contextPath = Faces.getRequest().getSession().getServletContext().getRealPath("");
+			contextPath = contextPath + "\\img\\";
+
 			// write the inputStream to a FileOutputStream
 			OutputStream out = new FileOutputStream(new File(contextPath + fileName));
 

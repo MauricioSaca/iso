@@ -1,8 +1,5 @@
 package com.org.adoption.model;
 
-import java.io.ByteArrayInputStream;
-import java.io.Serializable;
-
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -13,9 +10,6 @@ import javax.persistence.Id;
 import javax.persistence.Lob;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
-
-import org.primefaces.model.DefaultStreamedContent;
-import org.primefaces.model.StreamedContent;
 
 import com.org.core.model.enums.PetGender;
 import com.org.core.model.enums.PetOrigin;

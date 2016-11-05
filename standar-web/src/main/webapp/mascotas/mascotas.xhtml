@@ -21,7 +21,7 @@
 
 					<p:contextMenu id="ctxMascotas" for="mascotasForm:dtPets">
 						<p:menuitem value="Editar" icon="fa fa-pencil"
-							action="#{petView.prepareUpdate(true)}"
+							action="#{petView.prepareUpdate}"
 							update="mascotasForm:contentPanel" />
 						<p:menuitem value="Eliminar" icon="fa fa-trash" 
 							action="#{petView.delete}">
@@ -44,7 +44,7 @@
 
 						<p:column headerText="Acciones">
 							<p:commandButton icon="fa fa-pencil"
-								action="#{petView.prepareUpdate(true)}"
+								action="#{petView.prepareUpdate}"
 								update="mascotasForm:contentPanel mascotasForm:pgRegister">
 								<f:setPropertyActionListener value="#{pet}"
 									target="#{petView.selectedPet}" />
