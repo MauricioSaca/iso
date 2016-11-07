@@ -2,6 +2,7 @@ package com.org.security.utils;
 
 import java.util.List;
 
+import javax.annotation.PostConstruct;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -14,11 +15,9 @@ import org.picketlink.idm.model.Account;
 import org.picketlink.idm.query.IdentityQueryBuilder;
 import org.picketlink.idm.query.RelationshipQuery;
 
-import com.org.security.enums.ApplicationRealmNames;
 import com.org.security.identity.stereotype.Grant;
 import com.org.security.identity.stereotype.Group;
 import com.org.security.identity.stereotype.GroupMembership;
-import com.org.security.identity.stereotype.Realm;
 import com.org.security.identity.stereotype.Role;
 
 @Named
@@ -31,13 +30,18 @@ public class AuthorizationChecker {
 	@Inject
 	private PartitionManager partitionManager;
 
+	@Inject
+	private IdentityManager identityManager;
+
+	private IdentityQueryBuilder queryBuilder;
+
+	@PostConstruct
+	public void init() {
+		queryBuilder = identityManager.getQueryBuilder();
+	}
+
 	public boolean hasGroup(String groupName) {
-
-		IdentityManager identityManager = partitionManager
-				.createIdentityManager(partitionManager.getPartition(Realm.class, ApplicationRealmNames.ADOPTION.getCode()));
-
-		IdentityQueryBuilder queryBuilder = identityManager.getQueryBuilder();
-
+		
 		List<Group> groups = queryBuilder.createIdentityQuery(Group.class)
 				.where(queryBuilder.equal(Group.NAME, groupName)).getResultList();
 
@@ -60,11 +64,6 @@ public class AuthorizationChecker {
 	}
 
 	public boolean hasRole(String roleName) {
-
-		IdentityManager identityManager = partitionManager
-				.createIdentityManager(partitionManager.getPartition(Realm.class, ApplicationRealmNames.ADOPTION.getCode()));
-
-		IdentityQueryBuilder queryBuilder = identityManager.getQueryBuilder();
 
 		List<Role> roles = queryBuilder.createIdentityQuery(Role.class).where(queryBuilder.equal(Role.NAME, roleName))
 				.getResultList();

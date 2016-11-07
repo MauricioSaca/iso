@@ -23,7 +23,7 @@ public class ApplicationTypeEntity extends AbstractIdentityTypeEntity {
 	private String name;
 
 	@OwnerReference
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.EAGER)
 	private RealmTypeEntity realm;
 
 }

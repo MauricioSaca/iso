@@ -15,7 +15,7 @@ public class OmniFacesMessageResolverInitializer implements ServletContainerInit
 
 		Messages.setResolver(new Messages.Resolver() {
 			private static final String BASE_COMMON_NAME = "i18n.safiCommonBundle";
-			private static final String BASE_NAME = "i18n.safiBundle";
+			private static final String BASE_NAME = "i18n.applicationBundle";
 			private static final String BASE_PROGRAMATICO = "i18n.programaticaBundle";
 			private static final String ERROR_BASE_NAME = "i18n.safiErrorMessage";
 			private static final String SECURITY_ERROR_BASE_NAME = "i18n.securityErrorMessage";

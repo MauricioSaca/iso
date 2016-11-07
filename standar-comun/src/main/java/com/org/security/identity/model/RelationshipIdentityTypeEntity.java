@@ -3,6 +3,7 @@ package com.org.security.identity.model;
 import java.io.Serializable;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
@@ -33,7 +34,7 @@ public class RelationshipIdentityTypeEntity implements Serializable {
 	private String identityType;
 
 	@OwnerReference
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.EAGER)
 	private RelationshipTypeEntity owner;
 
 }

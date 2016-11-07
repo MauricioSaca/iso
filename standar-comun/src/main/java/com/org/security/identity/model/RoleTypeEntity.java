@@ -23,7 +23,7 @@ public class RoleTypeEntity extends AbstractIdentityTypeEntity {
 	private String name;
 
 	@OwnerReference
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.EAGER)
 	private PartitionTypeEntity partition;
 
 }

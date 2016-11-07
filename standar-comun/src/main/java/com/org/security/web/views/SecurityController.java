@@ -82,20 +82,35 @@ public class SecurityController implements Serializable {
 	}
 
 	private void adminMenu() {
-		DefaultSubMenu firstSubmenu = new DefaultSubMenu("Usuarios");
+		DefaultSubMenu firstSubmenu = new DefaultSubMenu("Administracion de seguridad");
 		firstSubmenu.setIcon("icon-menu");
-		
+
 		DefaultMenuItem item = new DefaultMenuItem();
-		item.setValue("crear");
-		item.setTarget("direccion");
+		item.setValue("Lista de Usuarios");
+		item.setTarget("/security/list.xhtml");
 		item.setIcon("icon-hyperlink");
 		item.setCommand("#{securityController.onMenuSelect}");
-		item.setFragment("1");
-
 		firstSubmenu.addElement(item);
+		
+		item = new DefaultMenuItem();
+		item.setValue("Lista de grupos");
+		item.setTarget("/security/group/list.xhtml");
+		item.setIcon("icon-hyperlink");
+		item.setCommand("#{securityController.onMenuSelect}");
+		firstSubmenu.addElement(item);
+		
+		item = new DefaultMenuItem();
+		item.setValue("Lista de roles");
+		item.setTarget("/security/role/list.xhtml");
+		item.setIcon("icon-hyperlink");
+		item.setCommand("#{securityController.onMenuSelect}");
+		firstSubmenu.addElement(item);;
+		
+		
 
 		model.addElement(firstSubmenu);
 	}
+
 
 	public MenuModel getMenuModel() {
 		try {
@@ -111,7 +126,8 @@ public class SecurityController implements Serializable {
 				.getResponse();
 
 		String urlWithSessionID = response.encodeRedirectURL(menu.getTarget());
-		facesContext.getExternalContext().redirect(urlWithSessionID);
+		String uri = facesContext.getExternalContext().getRequestContextPath() + urlWithSessionID;
+		facesContext.getExternalContext().redirect(uri);
 	}
 
 }

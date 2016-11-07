@@ -61,7 +61,6 @@ public class IDMInitializer {
 		if (users.size() == 0) {
 			// if admin doesn't exist create
 			User adminUser = new User(adminLoginName);
-			adminUser.setAdmin(true);
 			adminUser.setEmail(adminEmail);
 			adminUser.setFirstName(adminFirstName);
 			adminUser.setLastName(adminLastName);

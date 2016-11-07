@@ -55,16 +55,10 @@ public class User extends AbstractIdentityType implements Account {
 	@AttributeProperty
 	private Date lastVisitDate;
 
-	@AttributeProperty
-	private boolean isOrganizer;
-
-	@AttributeProperty
-	private boolean isAdmin;
-
 	private User() {
 		this(null);
 	}
-
+	
 	public User(String userName) {
 		this.userName = userName;
 	}

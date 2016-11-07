@@ -23,11 +23,11 @@ public class GroupTypeEntity extends AbstractIdentityTypeEntity {
 	private String name;
 
 	@AttributeValue
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.EAGER)
 	private GroupTypeEntity parent;
 
 	@OwnerReference
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.EAGER)
 	private PartitionTypeEntity partition;
 
 }

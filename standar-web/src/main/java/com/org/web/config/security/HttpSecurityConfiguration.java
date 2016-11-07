@@ -4,7 +4,6 @@ import javax.enterprise.event.Observes;
 
 import org.picketlink.config.SecurityConfigurationBuilder;
 import org.picketlink.event.SecurityConfigurationEvent;
-import org.picketlink.http.AuthenticationRequiredException;
 
 import com.org.security.enums.GroupsSecurityRolesNames;
 /**
@@ -19,41 +18,42 @@ public class HttpSecurityConfiguration {
 		
 		builder
          .http()
-             .forPath("/*.xhtml")
+         	.forGroup("Authentication") // group definition  
                  .authenticateWith()
                      .form()
                          .authenticationUri("/login.xhtml")
                          .loginPage("/login.xhtml")
                          .errorPage("/error.xhtml")
                          .restoreOriginalRequest()
-             .forPath("/logout")
+             .forPath("/*.xhtml","Authentication")
+             .forPath("/logout", "Authentication")
              	.logout()
              	.redirectTo("/login.xhtml")
-             .forPath("/mascotas/*") //postulant
+             .forPath("/mascotas/*","Authentication") //postulant
              	.authorizeWith()
              		.group(GroupsSecurityRolesNames.POSTULANDS.getCode())
              			.redirectTo("/errors/access-denied.xhtml")
-             				.whenException(AuthenticationRequiredException.class)
-              .forPath("/postulante/*")
+             				.whenForbidden()
+              .forPath("/postulante/*","Authentication")
               	.authorizeWith()
               		.group(GroupsSecurityRolesNames.POSTULANDS.getCode())
               			.redirectTo("/errors/access-denied.xhtml")
-              				.whenException(AuthenticationRequiredException.class)
-              .forPath("/security/*") //Admins
+              				.whenForbidden()
+              .forPath("/security/*","Authentication") //Admins
               	.authorizeWith()
               		.group(GroupsSecurityRolesNames.ADMINS.getCode())
               			.redirectTo("/errors/access-denied.xhtml")
-              				.whenException(AuthenticationRequiredException.class)
-              .forPath("/indicadores_metas/*") //Manager
+              				.whenForbidden()
+              .forPath("/indicadores_metas/*","Authentication") //Manager
               	.authorizeWith()
               		.group(GroupsSecurityRolesNames.MANAGERS.getCode())
               			.redirectTo("/errors/access-denied.xhtml")
-              				.whenException(AuthenticationRequiredException.class)
-              .forPath("/validacion_postulante/*") //Organizacional
+              				.whenForbidden()
+              .forPath("/validacion_postulante/*","Authentication") //Organizacional
               	.authorizeWith() 
               		.group(GroupsSecurityRolesNames.ORGANIZERS.getCode())
               			.redirectTo("/errors/access-denied.xhtml")
-              				.whenException(AuthenticationRequiredException.class)
+              				.whenForbidden()
 //              .forPath("/index.xhtml")
 //                .redirectTo("/login.xhtml")
              .forPath("/javax.faces.resource/*")

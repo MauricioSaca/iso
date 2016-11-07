@@ -28,7 +28,7 @@ public class UserTypeEntity extends AbstractIdentityTypeEntity {
 	private String userName;
 
 	@OwnerReference
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.EAGER)
 	private RealmTypeEntity realm;
 
 	@AttributeProperty
@@ -59,11 +59,5 @@ public class UserTypeEntity extends AbstractIdentityTypeEntity {
 
 	@AttributeProperty
 	private Date lastVisitDate;
-
-	@AttributeProperty
-	private boolean isOrganizer;
-
-	@AttributeProperty
-	private boolean isAdmin;
 
 }
