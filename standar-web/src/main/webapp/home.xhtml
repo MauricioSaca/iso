@@ -4,8 +4,8 @@
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:o="http://omnifaces.org/ui"
-	xmlns:p="http://primefaces.org/ui" template="/template/layout.xhtml">
+	xmlns:o="http://omnifaces.org/ui" xmlns:p="http://primefaces.org/ui"
+	template="/template/layout.xhtml">
 
 	<ui:define name="head">
 
@@ -31,7 +31,8 @@
 							#{pet.petName}
 						</p:column>
 						<p:column colspan="2" rowspan="4">
-							<o:graphicImage style="width: 100%;" value="#{imageBean.getBytes(pet.id)}" />
+							<o:graphicImage style="width: 100%;"
+								value="#{imageBean.getBytes(pet.id)}" />
 						</p:column>
 					</p:row>
 					<p:row>
@@ -63,14 +64,80 @@
 							#{pet.petGender.description}
 						</p:column>
 						<p:column>
-							Link para ver ficha
+							<p:commandLink value="Ver Ficha" update="dlgFicha"
+								oncomplete="PF('dlgFicha').show();">
+								<f:setPropertyActionListener value="#{pet}"
+									target="#{petView.selectedPet}" />
+							</p:commandLink>
 						</p:column>
 					</p:row>
-					
+
 				</p:panelGrid>
 			</p:dataGrid>
-
 		</h:form>
-	</ui:define>
 
+		<p:dialog id="dlgFicha"
+			header="Ficha - #{petView.selectedPet.petName}" widgetVar="dlgFicha"
+			responsive="true" position="center" closeOnEscape="true"
+			draggable="false" modal="true">
+
+			<h:form id="fichaForm">
+
+<!-- 				<p:galleria var="img" value="#{petView.galery}"> -->
+<!-- 					<o:graphicImage style="width: 100%;" -->
+<!-- 						rendered="#{not empty img.img}" -->
+<!-- 						value="#{imageBean.getBytesImg(img.id)}" /> -->
+<!-- 				</p:galleria> -->
+
+				<p:panelGrid id="pgFicha" style="margin:0 0 1em 0;">
+					<p:row>
+						<p:column colspan="2">
+							#{petView.selectedPet.petName}
+						</p:column>
+						<p:column colspan="2" rowspan="4">
+							<o:graphicImage style="width: 100%;"
+								rendered="#{petView.selectedPet.id ne null}"
+								value="#{imageBean.getBytes(petView.selectedPet.id)}" />
+						</p:column>
+					</p:row>
+					<p:row>
+						<p:column colspan="2">
+							#{petView.selectedPet.description}
+						</p:column>
+					</p:row>
+					<p:row>
+						<p:column>
+							<p:outputLabel value="Raza" />
+						</p:column>
+						<p:column>
+							#{petView.selectedPet.breed}
+						</p:column>
+					</p:row>
+					<p:row>
+						<p:column>
+							<p:outputLabel value="Tamaño" />
+						</p:column>
+						<p:column>
+							#{petView.selectedPet.height}
+						</p:column>
+					</p:row>
+					<p:row>
+						<p:column>
+							<p:outputLabel value="Sexo" />
+						</p:column>
+						<p:column>
+							#{petView.selectedPet.petGender.description}
+						</p:column>
+						<p:column>
+							here
+						</p:column>
+					</p:row>
+				</p:panelGrid>
+				
+				<p:commandButton value="Solicitar Proceso" />
+				
+			</h:form>
+		</p:dialog>
+
+	</ui:define>
 </ui:composition>

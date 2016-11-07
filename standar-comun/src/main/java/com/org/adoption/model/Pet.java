@@ -1,6 +1,9 @@
 package com.org.adoption.model;
 
+import java.util.Set;
+
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -8,6 +11,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Lob;
+import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
@@ -77,6 +81,9 @@ public class Pet implements BaseModelEntity<Long>{
 	
 	@Column(length = 255, nullable = true)
 	private String petGender;
+	
+	@OneToMany(mappedBy = "pet" ,cascade = CascadeType.ALL)
+	private Set<PetImages> petImagesSet;
 	
 	//Relacion por enum
 	
