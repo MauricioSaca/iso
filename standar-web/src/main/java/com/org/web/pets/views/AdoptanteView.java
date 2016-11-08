@@ -1,35 +1,26 @@
 package com.org.web.pets.views;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
+
 import javax.annotation.PostConstruct;
 import javax.inject.Inject;
 import javax.inject.Named;
 
-import java.io.File;
-import java.io.FileOutputStream;
-
-import org.apache.commons.io.IOUtils;
 import org.omnifaces.cdi.ViewScoped;
-import org.omnifaces.util.Faces;
 import org.omnifaces.util.Messages;
-import org.primefaces.event.FileUploadEvent;
 
 import com.google.common.base.Strings;
-import com.org.adoption.model.Pet;
 import com.org.adoption.model.Postulant;
-import com.org.adoption.service.PetService;
+import com.org.adoption.model.PostulantAnswerEvaluation;
+import com.org.adoption.service.PostulantAnswerEvaluationService;
+import com.org.adoption.service.PostulantQuestionsService;
 import com.org.adoption.service.PostulantService;
-import com.org.core.model.enums.PetGender;
-import com.org.core.model.enums.PetOrigin;
-import com.org.core.model.enums.PetStatus;
-import com.org.core.model.enums.PetType;
 import com.org.core.model.enums.PostulantGender;
 import com.org.core.model.enums.PostulantStatus;
+import com.org.security.service.SecurityManagedService;
 import com.org.util.web.BaseLazyModel;
 
 import lombok.Getter;
@@ -49,11 +40,20 @@ public class AdoptanteView implements Serializable {
 	@Inject
 	private transient PostulantService postulantService;
 
+	@Inject
+	private transient PostulantQuestionsService postulantQuestionsService;
+	
+	@Inject
+	private transient PostulantAnswerEvaluationService postulantAnswerEvaluationService;
+	
+	@Inject
+	private transient SecurityManagedService securityManagedService;
+
 	private transient BaseLazyModel<Postulant, Long> adoptanteLazyData;
 	private Postulant selectedAdoptante;
 	private List<PostulantStatus> adoptanteStatusList;
 	private List<PostulantGender> postulantGenderList;
-
+	private List<PostulantAnswerEvaluation> questions;
 	private byte[] file;
 	/**
 	 * TRUE for create FALSE for edit
@@ -71,6 +71,9 @@ public class AdoptanteView implements Serializable {
 		this.loadData();
 		adoptanteStatusList = Arrays.asList(PostulantStatus.values());
 		postulantGenderList = Arrays.asList(PostulantGender.values());
+
+		// postulantService.findQuestions();//agarra usuario de la seguridad
+		questions = postulantQuestionsService.getQuestions();
 	}
 
 	public void loadData() {
@@ -88,19 +91,21 @@ public class AdoptanteView implements Serializable {
 		createOrEdit = true;
 	}
 
-	public void replaceChar(){
-		if(!Strings.isNullOrEmpty(selectedAdoptante.getPhone())){
+	public void replaceChar() {
+		if (!Strings.isNullOrEmpty(selectedAdoptante.getPhone())) {
 			selectedAdoptante.setPhone(selectedAdoptante.getPhone().replaceAll("-", ""));
 		}
-		
+
 		selectedAdoptante.setCellPhone(selectedAdoptante.getCellPhone().replaceAll("-", ""));
 		selectedAdoptante.setDui(selectedAdoptante.getDui().replaceAll("-", ""));
 	}
-	
+
 	public void add() {
 		try {
-			
+
 			replaceChar();
+			//selectedAdoptante.setUserTypeEntity(userTypeEntity); 
+			//FIXME guardar usuario y setearlo
 			postulantService.save(selectedAdoptante);
 
 			Messages.create("REGISTRO").detail("Registro agregado exitosamente").add();
@@ -134,5 +139,21 @@ public class AdoptanteView implements Serializable {
 	public void delete(Postulant postulant) {
 		postulantService.deleteOne(postulant);
 		Messages.create("REGISTRO").detail("Eliminado exitosamente").add();
+	}
+
+	public void saveQuiz() {
+		PostulantAnswerEvaluation postulantAnswerEvaluation = new PostulantAnswerEvaluation();
+		List<PostulantAnswerEvaluation> postulantAnswerEvaluationList = new ArrayList<PostulantAnswerEvaluation>();
+
+		for (PostulantAnswerEvaluation evaluation : questions) {
+			postulantAnswerEvaluation = new PostulantAnswerEvaluation();
+			postulantAnswerEvaluation.setPostulant(new Postulant(1L));
+			postulantAnswerEvaluation.setPostulantQuestions(evaluation.getPostulantQuestions());
+			postulantAnswerEvaluation.setAnswer(evaluation.getAnswer());
+			postulantAnswerEvaluationList.add(postulantAnswerEvaluation);
+		}
+		
+		postulantAnswerEvaluationService.save(postulantAnswerEvaluationList);
+		Messages.create("PREGUNTAS").detail("Guardado satisfactoriamente").add();
 	}
 }

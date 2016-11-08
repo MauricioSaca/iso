@@ -4,9 +4,9 @@ public enum TypeQuestion {
 
 	OPEN("OP", "ABIERTA"),
 	 
-	YES_NO("YN", "SI O NO RESPUESTA"),
+	YES_NO("YN", "SI O NO"),
 	
-	MULTIPLE_OPTION("MULTI","MULTIPLE SELECCION");
+	MULTIPLE_OPTION("MULTI","SELECCION MULTIPLE");
 	
 	String code;
 

@@ -8,12 +8,19 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinColumns;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.NotFound;
+import org.hibernate.annotations.NotFoundAction;
+
 import com.org.core.model.enums.PostulantGender;
 import com.org.core.model.enums.PostulantStatus;
+import com.org.security.identity.model.UserTypeEntity;
 import com.org.util.domain.BaseModelEntity;
 
 import lombok.EqualsAndHashCode;
@@ -73,6 +80,11 @@ public class Postulant implements BaseModelEntity<Long> {
 	@Column(length = 255, nullable = false)
 	private String postulantGender;
 
+	@ManyToOne
+	@JoinColumns({ @JoinColumn(name = "USER_ID", referencedColumnName = "ID", nullable = false) })
+	@NotFound(action = NotFoundAction.IGNORE)
+	private UserTypeEntity userTypeEntity;
+	
 	@OneToMany(mappedBy = "postulant" ,cascade = CascadeType.ALL)
 	private Set<PostulantAnswerEvaluation> postulantAnswerEvaluation;
 	

@@ -31,7 +31,7 @@ public class HttpSecurityConfiguration {
              	.redirectTo("/login.xhtml")
              .forPath("/mascotas/*","Authentication") //postulant
              	.authorizeWith()
-             		.group(GroupsSecurityRolesNames.POSTULANDS.getCode())
+             		.group(GroupsSecurityRolesNames.ORGANIZERS.getCode())
              			.redirectTo("/errors/access-denied.xhtml")
              				.whenForbidden()
               .forPath("/postulante/*","Authentication")

@@ -50,3 +50,70 @@ width: auto !important;
 .ui-datalist {
     border: 0 !important;
 }
+
+.progress ul li {
+    border: 2px solid #fff;
+    width: 25%;
+    background: #edeff0;
+    color: #000;
+    position: relative;
+  	padding: 11px 15px;
+    text-align: center!important;
+}
+
+.mis_aplicaciones ul li {
+    display: table-cell;
+    vertical-align: middle;
+    text-align: left;
+    line-height: 21px;
+}
+
+.progress ul li.activa {
+    background: #ff5b00;
+   	color: #fff;
+}
+
+.progress ul li.first {
+    border-radius: 8px 0 0 8px; 
+    -webkit-border-radius: 8px 0 0 8px;
+    -moz-border-radius: 8px 0 0 8px;
+}
+
+.progress ul li.finalista {
+    border-radius: 0 8px 8px 0;
+    -webkit-border-radius: 0 8px 8px 0;
+    -moz-border-radius: 0 8px 8px 0;
+}
+
+.progress ul li:before {
+    -moz-transform: scale(.9999);
+    height: 0;
+    border-top: 22px solid transparent;
+    border-left: 12px solid #fff;
+    border-bottom: 21px solid transparent;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 8;
+    content: "";
+}
+
+.progress ul li.activa:before {
+    background: #ff5b00;
+}
+
+.progress ul li.activa .triangulo {
+    border-left: 12px solid #ff5b00;
+}
+
+.progress ul li .triangulo {
+    -moz-transform: scale(.9999);
+    height: 0;
+    border-top: 22px solid transparent;
+    border-left: 12px solid #edeff0;
+    border-bottom: 22px solid transparent;
+    position: absolute;
+    top: 0;
+    right: -11.9px;
+    z-index: 9;
+}

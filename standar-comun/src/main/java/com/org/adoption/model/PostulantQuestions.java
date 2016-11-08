@@ -14,7 +14,6 @@ import javax.persistence.Table;
 import org.hibernate.annotations.NotFound;
 import org.hibernate.annotations.NotFoundAction;
 
-import com.mysema.query.annotations.QueryProjection;
 import com.org.core.model.enums.TypeQuestion;
 import com.org.util.domain.BaseModelEntity;
 
@@ -28,38 +27,37 @@ import lombok.ToString;
 
 @Entity
 @Table()
-@SequenceGenerator(name = "SEQ_POSTULANT_ANSWER", sequenceName = "SEQ_POSTULANT_ANSWER", allocationSize = 1)
+@SequenceGenerator(name = "SEQ_POSTULANT_QUESTIONS", sequenceName = "SEQ_POSTULANT_QUESTIONS", allocationSize = 1)
 @EqualsAndHashCode(of = { "id" })
 @ToString(of = { "id" })
 @Getter
 @Setter
 @RequiredArgsConstructor
 @NoArgsConstructor
-public class PostulantAnswerEvaluation implements BaseModelEntity<Long> {
+public class PostulantQuestions implements BaseModelEntity<Long> {
 
 	private static final long serialVersionUID = -3123210988L;
 
 	@Id
 	@NonNull
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SEQ_POSTULANT_ANSWER")
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SEQ_POSTULANT_QUESTIONS")
 	@Column(nullable = false)
 	private Long id;
 
 	@Column(length = 255, nullable = false)
-	private String answer;
+	private String question;
 
-	@ManyToOne
-	@JoinColumns({ @JoinColumn(name = "POSTULANT_ID", referencedColumnName = "ID", nullable = false) })
-	@NotFound(action = NotFoundAction.IGNORE)
-	private Postulant postulant;
+	@Column(length = 255, nullable = false)
+	private String typeQuestion;
 
-	@ManyToOne
-	@JoinColumns({ @JoinColumn(name = "QUESTION_ID", referencedColumnName = "ID", nullable = false) })
-	@NotFound(action = NotFoundAction.IGNORE)
-	private PostulantQuestions postulantQuestions;
+	// Relacion por enum
 
-	@QueryProjection
-	public PostulantAnswerEvaluation(PostulantQuestions question){
-		this.postulantQuestions = question;
+	public TypeQuestion getTypeQuestion() {
+		return TypeQuestion.getTypeQuestion(this.typeQuestion);
 	}
+
+	public void setTypeQuestion(TypeQuestion typeQuestion) {
+		this.typeQuestion = typeQuestion != null ? typeQuestion.getCode() : null;
+	}
+
 }
