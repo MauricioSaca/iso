@@ -16,75 +16,13 @@
     </ui:define>
 
     <ui:define name="content">
-	
 		<h:form>
 	        <p:panel header="BIENVENIDO">
 	            <p>
-	                <h:outputText value="HOLA MUNDO aaa test funcionaaaaa shit"></h:outputText>
+	                <b>#{identity.account.userName}</b>!
 	            </p>
-	              
 	            <p:spacer height="400" />
 	        </p:panel>	
-	        
-	        
-	        <ui:fragment rendered="#{identity.loggedIn}">
-		        Welcome <b>#{identity.account.userName}</b>!
-		
-		        <ui:fragment rendered="#{authorizationChecker.hasGroup('admins')}">
-		            <div>You are a member of the 'admins' group.</div>
-		        </ui:fragment>
-			</ui:fragment>
-	        
-	        
-	        <p:dataTable>
-	        	<p:row>
-		        	<p:column headerText="Column 1">
-		        		Column 1
-		        	</p:column>
-		        	
-		        	<p:column headerText="Column 2">
-		        		Column 2
-		        	</p:column>
-		        	
-		        	<p:column headerText="Column 3">
-		        		Column 3
-		        	</p:column>
-	        	</p:row>
-	        	
-	        	<p:row>
-		        	<p:column headerText="Column 1">
-		        		Column 1
-		        	</p:column>
-		        	
-		        	<p:column headerText="Column 2">
-		        		Column 2
-		        	</p:column>
-		        	
-		        	<p:column headerText="Column 3">
-		        		Column 3
-		        	</p:column>
-	        	</p:row>
-	        </p:dataTable>
-	        
-	        <h:panelGrid columns="2">
-		        <p:outputLabel value="Input text" />
-		        <p:inputText id="txtxExample" />
-		        
-		        <p:outputLabel value="text area" />
-				<p:inputTextarea id="textArea"/>
-				
-		        <p:outputLabel value="Combobox" />
-				<p:selectOneMenu>
-					<f:selectItem itemLabel="example 1"/>
-					<f:selectItem itemLabel="example 2"/>
-				</p:selectOneMenu>
-				
-		        <p:outputLabel value="Check" />
-				<p:selectBooleanCheckbox />
-				
-				<p:commandButton value="Ejemplo" />
-
-			</h:panelGrid>
 		</h:form>
     </ui:define>
 

@@ -21,13 +21,14 @@
 		
 			 <p:contextMenu id="ctxUser" for="registerUserForm:userTable">
 				<p:menuitem value="Editar" icon="fa fa-pencil"
-							actionListener="#{roleView.preparedUpdateRole}"
+							process="@this userTable"
+							actionListener="#{userView.preparedUpdateUser}"
 							update="createUpdateUserForm" 
 							oncomplete="PF('userDialog').show()"/>
 				
 				<p:menuitem value="Eliminar" icon="fa fa-trash"
 					process="@this userTable" update="userTable" 
-					actionListener="#{roleView.deleteRole}">
+					actionListener="#{userView.deleteUser}">
 						<p:confirm header="Eliminacion"
 							message="Desea eliminar este registro?" />
 				</p:menuitem>
@@ -47,36 +48,34 @@
                         currentPageReportTemplate="| #{safiCommonBundle.page} {currentPage} #{safiCommonBundle.of} {totalPages} |" 
                         rowsPerPageTemplate="10,20,30,40"> 
 	        		
-	        		<p:column headerText="#{safiBundle.userColumnTableLoginName}" filterBy="#{user.userName}">
+	        		<p:column headerText="Nombre de usuario" filterBy="#{user.userName}">
 			        	#{user.userName}
 			        </p:column>
 
-					<p:column headerText="#{safiBundle.userColumnTableName}"  >
+					<p:column headerText="Primer Nombre"  >
 			        	#{user.firstName}
 			        </p:column>
 			        
-			        <p:column headerText="#{safiBundle.userColumnTableMiddleName}"  >
+			        <p:column headerText="Segundo Nombre"  >
 			        	#{user.middleName}
 			        </p:column>
 			        
-			        <p:column headerText="#{safiBundle.userColumnTableLastName}"  >
+			        <p:column headerText="Apellidos"  >
 			        	#{user.lastName}
 			        </p:column>
 			        
-			        <p:column headerText="#{safiBundle.userColumnTableEmail}" >
+			        <p:column headerText="Correo electrónico" >
 			        	#{user.email}
 			        </p:column>
 			        
-			        <p:column headerText="#{safiBundle.userColumnTableAddress}" >
+			        <p:column headerText="Dirección" >
 			        	#{user.address}
 			        </p:column>
 			        
-			        <p:column headerText="#{safiBundle.userColumnTablePhone}" >
+			        <p:column headerText="Teléfono" >
 			        	#{user.telephone}
 			        </p:column>
-			        
 	        </p:dataTable>
-	        
 	        
 	        <p:commandButton
 				value="#{safiCommonBundle.addLabel}"

@@ -6,12 +6,12 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.ManyToOne;
-import javax.validation.constraints.Size;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 import org.picketlink.idm.jpa.annotations.AttributeValue;
 import org.picketlink.idm.jpa.annotations.OwnerReference;
 import org.picketlink.idm.jpa.annotations.entity.IdentityManaged;
-import org.picketlink.idm.model.annotation.AttributeProperty;
 
 import com.org.security.identity.stereotype.User;
 
@@ -25,39 +25,43 @@ import lombok.Setter;
 public class UserTypeEntity extends AbstractIdentityTypeEntity {
 
 	@AttributeValue
+	@Column
 	private String userName;
 
 	@OwnerReference
 	@ManyToOne(fetch = FetchType.EAGER)
 	private RealmTypeEntity realm;
 
-	@AttributeProperty
+	@AttributeValue
+	@Column
 	private String firstName;
 
-	@AttributeProperty
+	@AttributeValue
+	@Column
 	private String lastName;
 
-	@AttributeProperty
+	@AttributeValue
+	@Column
 	private String email;
 
-	@AttributeProperty
+	@AttributeValue
 	@Column(length = 255)
 	private String middleName;
 
-	@AttributeProperty
-	@Size(max = 12)
-	@Column(length = 12)
+	@AttributeValue
+	@Column(length = 25)
 	private String telephone;
 
-	@AttributeProperty
-	@Column(length = 5000)
-	@Size(max = 5000)
+	@AttributeValue
+	@Column(length = 500)
 	private String address;
 
-	@AttributeProperty
+	@AttributeValue
+	@Column
 	private int postIndex;
 
-	@AttributeProperty
+	@AttributeValue
+	@Temporal(TemporalType.TIMESTAMP)
 	private Date lastVisitDate;
 
 }

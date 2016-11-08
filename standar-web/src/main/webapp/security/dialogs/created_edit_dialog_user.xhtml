@@ -227,7 +227,7 @@
 						</h:panelGroup>
 						
 				
-						<p:outputLabel value="Password:" for="password" />
+						<p:outputLabel value="Password:" for="password" rendered="#{userView.status.code == 1}"/>
 						<h:panelGroup rendered="#{userView.status.code == 1}">
 							<p:password 
 								id="password" 
@@ -239,7 +239,7 @@
 							<p:message for="password" />
 						</h:panelGroup>
 						
-						<p:outputLabel value="Password confirmacion:" for="passwordConfirmation" />
+						<p:outputLabel value="Password confirmacion:" for="passwordConfirmation" rendered="#{userView.status.code == 1}" />
 						<h:panelGroup rendered="#{userView.status.code == 1}">
 							<p:password 
 								id="passwordConfirmation" 
@@ -267,12 +267,12 @@
 						</p:commandButton>
 						
 						<p:commandButton
-							actionListener="#{roleView.updateRole}"
+							actionListener="#{userView.updateUser}"
 							value="Actualizar"
 							update=":registerUserForm:userTable :createUpdateUserForm"
-							oncomplete="PF('roleDialog').hide();"
+							oncomplete="PF('userDialog').hide();"
 							validateClient="true"
-							rendered="#{roleView.status.code ==  2}">
+							rendered="#{userView.status.code ==  2}">
 							<p:confirm header="#{safiCommonBundle.ConfirmationHeader}"
 								message="#{safiCommonBundle.ConfirmCreateMessage}" icon="ui-icon-alert" />
 						</p:commandButton>

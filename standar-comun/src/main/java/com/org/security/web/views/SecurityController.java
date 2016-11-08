@@ -65,7 +65,7 @@ public class SecurityController implements Serializable {
 		}
 
 		if (isPostulantUser) {
-
+			postulanteMenu();
 		}
 
 		if (isManagerUser) {
@@ -73,7 +73,7 @@ public class SecurityController implements Serializable {
 		}
 
 		if (isOrganizacionalUser) {
-
+			organizacionalMenu();
 		}
 
 		if (isReportUser) {
@@ -82,7 +82,7 @@ public class SecurityController implements Serializable {
 	}
 
 	private void adminMenu() {
-		DefaultSubMenu firstSubmenu = new DefaultSubMenu("Administracion de seguridad");
+		DefaultSubMenu firstSubmenu = new DefaultSubMenu("administración de seguridad");
 		firstSubmenu.setIcon("icon-menu");
 
 		DefaultMenuItem item = new DefaultMenuItem();
@@ -91,26 +91,81 @@ public class SecurityController implements Serializable {
 		item.setIcon("icon-hyperlink");
 		item.setCommand("#{securityController.onMenuSelect}");
 		firstSubmenu.addElement(item);
-		
+
 		item = new DefaultMenuItem();
 		item.setValue("Lista de grupos");
 		item.setTarget("/security/group/list.xhtml");
 		item.setIcon("icon-hyperlink");
 		item.setCommand("#{securityController.onMenuSelect}");
 		firstSubmenu.addElement(item);
-		
+
 		item = new DefaultMenuItem();
 		item.setValue("Lista de roles");
 		item.setTarget("/security/role/list.xhtml");
 		item.setIcon("icon-hyperlink");
 		item.setCommand("#{securityController.onMenuSelect}");
-		firstSubmenu.addElement(item);;
-		
-		
+		firstSubmenu.addElement(item);
 
 		model.addElement(firstSubmenu);
 	}
 
+	private void postulanteMenu() {
+		DefaultSubMenu firstSubmenu = new DefaultSubMenu("Administración");
+		firstSubmenu.setIcon("icon-menu");
+
+		DefaultMenuItem item = new DefaultMenuItem();
+
+		item.setValue("Perfil");
+		item.setTarget("/postulante/perfil.xhtml");
+		item.setIcon("icon-hyperlink");
+		item.setCommand("#{securityController.onMenuSelect}");
+		firstSubmenu.addElement(item);
+
+		item = new DefaultMenuItem();
+		item.setValue("Solicitudes");
+		item.setTarget("/postulante/solicitudes.xhtml");
+		item.setIcon("fa fa-list-alt");
+		item.setCommand("#{securityController.onMenuSelect}");
+		firstSubmenu.addElement(item);
+
+		item = new DefaultMenuItem();
+		item.setValue("Cuestionario");
+		item.setTarget("/postulante/cuestionario.xhtml");
+		item.setIcon("icon-hyperlink");
+		item.setCommand("#{securityController.onMenuSelect}");
+		firstSubmenu.addElement(item);
+
+		model.addElement(firstSubmenu);
+	}
+
+	private void organizacionalMenu() {
+
+		DefaultSubMenu firstSubmenu = new DefaultSubMenu("Menú");
+		firstSubmenu.setIcon("icon-menu");
+
+		DefaultMenuItem item = new DefaultMenuItem();
+		item.setValue("Registro Mascotas");
+		item.setTarget("/mascotas/registro.xhtml");
+		item.setIcon("icon-feather");
+		item.setCommand("#{securityController.onMenuSelect}");
+		firstSubmenu.addElement(item);
+
+		item = new DefaultMenuItem();
+		item.setValue("Listado de Mascotas");
+		item.setTarget("/mascotas/mascotas.xhtml");
+		item.setIcon("fa fa-folder-open-o");
+		item.setCommand("#{securityController.onMenuSelect}");
+		firstSubmenu.addElement(item);
+
+		item = new DefaultMenuItem();
+		item.setValue("Control Medico");
+		item.setTarget("/mascotas/registroMedico.xhtml");
+		item.setIcon("fa fa-list-alt");
+		item.setCommand("#{securityController.onMenuSelect}");
+		firstSubmenu.addElement(item);
+
+		model.addElement(firstSubmenu);
+	}
 
 	public MenuModel getMenuModel() {
 		try {
@@ -122,8 +177,7 @@ public class SecurityController implements Serializable {
 
 	public void onMenuSelect(ActionEvent actionEvent) throws IOException {
 		MenuItem menu = ((MenuActionEvent) actionEvent).getMenuItem();
-		HttpServletResponse response = (HttpServletResponse) facesContext.getExternalContext()
-				.getResponse();
+		HttpServletResponse response = (HttpServletResponse) facesContext.getExternalContext().getResponse();
 
 		String urlWithSessionID = response.encodeRedirectURL(menu.getTarget());
 		String uri = facesContext.getExternalContext().getRequestContextPath() + urlWithSessionID;

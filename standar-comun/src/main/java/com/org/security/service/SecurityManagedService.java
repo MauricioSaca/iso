@@ -80,8 +80,20 @@ public class SecurityManagedService {
 
 	public void updateUser(User user, GroupMembership group, Grant grant) {
 		identityManager.update(user);
-		relationshipManager.update(group);
-		relationshipManager.update(grant);
+		boolean isNewGroupRelations = group.getId() == null;		
+		if (isNewGroupRelations) {
+			relationshipManager.add(group);
+		} else {
+			relationshipManager.update(group);
+		}
+		
+		boolean isNewRoleRelations = grant.getId() == null;
+		if (isNewRoleRelations) {
+			relationshipManager.add(grant);
+		} else {
+			relationshipManager.update(grant);
+		}
+				
 	}
 
 	public void updatePassword(User user, Password password) {

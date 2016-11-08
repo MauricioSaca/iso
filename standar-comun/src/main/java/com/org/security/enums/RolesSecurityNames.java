@@ -3,7 +3,15 @@ package com.org.security.enums;
 public enum RolesSecurityNames {
 
 	
-	ADMIN("admin","Administrador");
+	ADMIN("admin","Administrador"),
+	
+	POSTULANTE("postulante","Postulante"),
+	
+	ORGANIZACIONAL("organizacional","Organizacional"),
+	
+	REPORTERIA("report","Reportes"),
+	
+	MANAGER("manager","Gerente");
 	
 	String code;
 
