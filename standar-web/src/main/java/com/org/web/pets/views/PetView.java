@@ -63,6 +63,7 @@ public class PetView implements Serializable {
 	 * TRUE for add/edit, FALSE for list view
 	 */
 	private boolean renderEditView = false;
+	private boolean renderFichaDetail = false;
 
 	@PostConstruct
 	public void init() {
@@ -157,9 +158,9 @@ public class PetView implements Serializable {
 			if(flagFirst){
 				file = IOUtils.toByteArray(event.getFile().getInputstream());	
 				flagFirst = false;
-			} else {
-				files.add(IOUtils.toByteArray(event.getFile().getInputstream()));
 			}
+			
+			files.add(IOUtils.toByteArray(event.getFile().getInputstream()));
 			
 			event.getFile().getInputstream().close();
 		} catch (IOException e) {
@@ -168,13 +169,20 @@ public class PetView implements Serializable {
 	}
 	
 	public List<PetImages> getGalery(){
-		List<PetImages> list = new ArrayList<PetImages>();
 		if(selectedPet != null && selectedPet.getId() != null){
 			
 			//list.add(new PetImages(selectedPet, selectedPet.getImg()));
 			return petService.findImagesGallery(selectedPet);
 		}
 		return new ArrayList<>();
+	}
+	
+	public void seeFicha(){
+		renderFichaDetail = true;
+	}
+	
+	public void getBackAdopta(){
+		renderFichaDetail = false;
 	}
 
 }
