@@ -19,11 +19,13 @@ import org.picketlink.idm.credential.Password;
 import com.google.common.base.Strings;
 import com.org.adoption.model.Postulant;
 import com.org.adoption.model.PostulantAnswerEvaluation;
+import com.org.adoption.service.AdoptedPetsService;
 import com.org.adoption.service.PostulantAnswerEvaluationService;
 import com.org.adoption.service.PostulantQuestionsService;
 import com.org.adoption.service.PostulantService;
 import com.org.core.model.enums.PostulantGender;
 import com.org.core.model.enums.PostulantStatus;
+import com.org.core.model.enums.ProcessStatus;
 import com.org.security.enums.GroupsSecurityRolesNames;
 import com.org.security.enums.RolesSecurityNames;
 import com.org.security.identity.model.UserTypeEntity;
@@ -58,9 +60,13 @@ public class AdoptanteView implements Serializable {
 
 	@Inject
 	private transient SecurityManagedService securityManagedService;
+	
+	@Inject
+	private transient AdoptedPetsService adoptedPetsService;
 
 	private transient BaseLazyModel<Postulant, Long> adoptanteLazyData;
 	private Postulant selectedAdoptante;
+	private Postulant postulanteSession;
 
 	// security
 	private String userName;
@@ -92,14 +98,17 @@ public class AdoptanteView implements Serializable {
 		postulantGenderList = Arrays.asList(PostulantGender.values());
 		this.loadData();
 
-		User currentUser = (User) identity.getAccount();
-		// postulantService.findQuestions();//agarra usuario de la seguridad
+		User currentUser = (User) identity.getAccount(); //agarra usuario de la seguridad
 		questions = postulantQuestionsService.getQuestions();
 
+		//Postulante que pertece al usuario de la session
+		postulanteSession = postulantService.findByUser(currentUser);
+		
 		// User
 		random = new SecureRandom();
 		postulantGroup = securityManagedService.findGroupByName(GroupsSecurityRolesNames.POSTULANDS.getCode());
 		porstulantRole = securityManagedService.findRoleByName(RolesSecurityNames.POSTULANTE.getCode());
+
 	}
 
 	public void loadData() {
@@ -205,5 +214,22 @@ public class AdoptanteView implements Serializable {
 
 	private String generateRandomPass() {
 		return new BigInteger(130, random).toString(32);
+	}
+	
+	public void prepareEditarPerfil(){
+		selectedAdoptante = postulanteSession;
+	}
+	
+	public void updatePerfil(){
+		try {
+			replaceChar();
+			postulantService.save(selectedAdoptante);
+			postulanteSession = selectedAdoptante;
+			Messages.create("REGISTRO").detail("Registro actualizado exitosamente").add();
+		} catch (Exception e) {
+			selectedAdoptante = new Postulant();
+			Messages.create("EXCEPTION").detail("ERROR: " + e.getMessage()).error().add();
+		}
+		selectedAdoptante = new Postulant();
 	}
 }

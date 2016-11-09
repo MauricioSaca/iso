@@ -14,6 +14,7 @@ import javax.persistence.Table;
 import org.hibernate.annotations.NotFound;
 import org.hibernate.annotations.NotFoundAction;
 
+import com.org.core.model.enums.ProcessStatus;
 import com.org.util.domain.BaseModelEntity;
 
 import lombok.EqualsAndHashCode;
@@ -50,8 +51,23 @@ public class AdoptedPets implements BaseModelEntity<Long>{
 	private Pet pet;
 	
 	@ManyToOne
-	@JoinColumns({ @JoinColumn(name = "ADOPTER_ID", referencedColumnName = "ID", nullable = false) })
+	@JoinColumns({ @JoinColumn(name = "POSTULANT_ID", referencedColumnName = "ID", nullable = true) })
 	@NotFound(action = NotFoundAction.IGNORE)
-	private Adopter adopter;
+	private Postulant postulant;
+	
+	@Column(length = 255, nullable = false)
+	private String processStatus;
+	
+//	@ManyToOne
+//	@JoinColumns({ @JoinColumn(name = "ADOPTER_ID", referencedColumnName = "ID", nullable = false) })
+//	@NotFound(action = NotFoundAction.IGNORE)
+//	private Adopter adopter;
 
+	public ProcessStatus getProcessStatus(){
+		return ProcessStatus.getProcessStatus(processStatus);
+	}
+	
+	public void setProcessStatus(ProcessStatus status){
+		this.processStatus = status != null ? status.getCode() : null;
+	}
 }

@@ -18,49 +18,40 @@
 		<h:form id="solicitudesForm">
 
 
-			<h2>Mascotas a las que has aplicado xd</h2>
+			<h2>Solicitudes de Adopci&oacute;n</h2>
 			<p:separator />
 
 			<p:dataList id="dtAdopts" widgetVar="dtAdopts" var="adopt"
-				selection="#{adoptanteView.selectedAdoptante}" type="definition"
-				selectionMode="single" value="#{adoptanteView.adoptanteLazyData}"
-				rows="10" paginator="true" paginatorPosition="bottom" lazy="true">
-								
+				type="definition" value="#{petAdopterView.listaSolicitudes}">
+
 				<p:outputPanel styleClass="mis_aplicaciones">
-					
+
 					<p:outputPanel style="float:left;margin: 1em;">
-						
-						<h3>Dog Name or anything else</h3>
-						<p:outputLabel value="dont know here" />
-						<br/>
+
+						<h3>#{adopt.pet.petName}</h3>
+						<p:outputLabel value="#{adopt.pet.description}" />
+						<br />
 						<p:outputLabel value="dont know here 2" />
 					</p:outputPanel>
-					
+
 					<p:outputPanel style="float:left;" styleClass="progress">
 						<ul>
-							<li class="first">
-								PROCESS
-								<span class="triangulo"></span>
-							</li>
-							<li class="activa">
-								SEEN
-								<span class="triangulo"></span>
-							</li>
-							<li class="finalista">
-								END
-							</li>
+							<ui:repeat varStatus="i" var="status"
+								value="#{petAdopterView.processStatusList}">
+								<li
+									class="#{status.code eq adopt.processStatus.code ? 'activa ' : ''}#{i.index eq petAdopterView.processStatusList.size() - 1 ? 'last' : ''}">
+									#{status.description} <span class="triangulo" style="#{i.index eq petAdopterView.processStatusList.size() - 1 ? 'display:none;' : ''}"></span>
+								</li>
+							</ui:repeat>
 						</ul>
-						
+
 					</p:outputPanel>
-					
+
 					<p:outputPanel style="clear:both;" />
-					
+
 				</p:outputPanel>
-				
+
 			</p:dataList>
-			
-			<br/>
-			<p:commandButton value="Nuevo" icon="fa fa-plus" />
 
 			<p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
 				<p:commandButton value="Si" type="button"

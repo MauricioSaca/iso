@@ -82,7 +82,7 @@ public class Pet implements BaseModelEntity<Long>{
 	@Column(length = 255, nullable = true)
 	private String petGender;
 	
-	@OneToMany(mappedBy = "pet" ,cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "pet" ,cascade = CascadeType.REMOVE)
 	private Set<PetImages> petImagesSet;
 	
 	//Relacion por enum

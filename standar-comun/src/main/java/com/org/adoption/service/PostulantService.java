@@ -7,8 +7,10 @@ import javax.inject.Inject;
 
 import com.org.adoption.model.Postulant;
 import com.org.adoption.model.PostulantAnswerEvaluation;
+import com.org.adoption.model.QPostulant;
 import com.org.adoption.model.QPostulantAnswerEvaluation;
 import com.org.adoption.repository.PostulantRepository;
+import com.org.security.identity.stereotype.User;
 import com.org.util.repository.BaseRepository;
 import com.org.util.service.BaseService;
 
@@ -18,6 +20,7 @@ public class PostulantService extends BaseService<Postulant, Long> {
 	@Inject
 	private PostulantRepository postulantRepository;
 	private QPostulantAnswerEvaluation qPostulantAnswerEvaluation = QPostulantAnswerEvaluation.postulantAnswerEvaluation;
+	private QPostulant qPostulant = QPostulant.postulant;
 	
 	@Override
 	public BaseRepository<Postulant, Long> getRepository() {
@@ -29,5 +32,12 @@ public class PostulantService extends BaseService<Postulant, Long> {
 		return newJpaQuery().from(qPostulantAnswerEvaluation)
 				.where(qPostulantAnswerEvaluation.postulant.id.eq(postulant.getId()))
 				.list(qPostulantAnswerEvaluation);
+	}
+	
+	public Postulant findByUser(User user) {
+		
+		return newJpaQuery().from(qPostulant)
+				.where(qPostulant.userTypeEntity.id.eq(user.getId()))
+				.singleResult(qPostulant);
 	}
 }

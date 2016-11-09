@@ -59,6 +59,15 @@ public class MedicalControl implements BaseModelEntity<Long>{
 
 	@Column(nullable = true)
 	private Boolean isVaccunated;
+	
+	@Column(nullable = true)
+	private Boolean deworming;
+	
+	@Column(nullable = true)
+	private Boolean diseases;
+	
+	@Column(length = 255, nullable = true)
+	private String which;
 
 	@Column(nullable = true)
 	@Temporal(TemporalType.DATE)

@@ -73,18 +73,6 @@ width: auto !important;
    	color: #fff;
 }
 
-.progress ul li.first {
-    border-radius: 8px 0 0 8px; 
-    -webkit-border-radius: 8px 0 0 8px;
-    -moz-border-radius: 8px 0 0 8px;
-}
-
-.progress ul li.finalista {
-    border-radius: 0 8px 8px 0;
-    -webkit-border-radius: 0 8px 8px 0;
-    -moz-border-radius: 0 8px 8px 0;
-}
-
 .progress ul li:before {
     -moz-transform: scale(.9999);
     height: 0;
@@ -116,4 +104,16 @@ width: auto !important;
     top: 0;
     right: -11.9px;
     z-index: 9;
+}
+
+.progress ul li.first {
+    border-radius: 8px 0 0 8px; 
+    -webkit-border-radius: 8px 0 0 8px;
+    -moz-border-radius: 8px 0 0 8px;
+}
+
+.progress ul li.last {
+    border-radius: 0 8px 8px 0;
+    -webkit-border-radius: 0 8px 8px 0;
+    -moz-border-radius: 0 8px 8px 0;
 }

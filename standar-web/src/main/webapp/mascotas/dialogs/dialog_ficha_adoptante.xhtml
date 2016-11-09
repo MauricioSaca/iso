@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+	<p:outputPanel id="contentficha">
+		<p:outputPanel id="fichaDetail">
+
+			<p:panelGrid columns="2">
+				<p:outputLabel value="Nombre" />
+				<h:outputText
+					value="#{petAdopterView.selectedAdoptedPet.postulant.names} 
+					#{petAdopterView.selectedAdoptedPet.postulant.lastNames}" />
+
+				<p:outputLabel value="Edad" />
+				<h:outputText
+					value="#{petAdopterView.selectedAdoptedPet.postulant.age}" />
+
+				<p:outputLabel value="Direccion" />
+				<h:outputText
+					value="#{petAdopterView.selectedAdoptedPet.postulant.address}" />
+			</p:panelGrid>
+
+		</p:outputPanel>
+
+		<p:outputPanel id="cuestionarioDetail">
+
+		</p:outputPanel>
+
+		<p:outputPanel id="btnPanel"
+			rendered="#{petAdopterView.selectedAdoptedPet.processStatus.code ne 'APR' and 
+				petAdopterView.selectedAdoptedPet.processStatus.code ne 'DEN'}">
+			<p:commandButton id="btnAprobar" value="Aprobar" update="solicitudesForm:content"
+				actionListener="#{petAdopterView.aprobar}" />
+			<p:commandButton id="btnDenegar" value="Denegar" update="solicitudesForm:content"
+				actionListener="#{petAdopterView.denegar}" />
+		</p:outputPanel>
+	</p:outputPanel>
+
+
+
+</ui:composition>

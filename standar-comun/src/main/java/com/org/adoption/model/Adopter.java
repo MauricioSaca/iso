@@ -56,7 +56,7 @@ public class Adopter implements BaseModelEntity<Long> {
 	@NotFound(action = NotFoundAction.IGNORE)
 	private Postulant postulant;
 	
-	@OneToMany(mappedBy = "adopter" ,cascade = CascadeType.ALL)
-	private Set<AdoptedPets> adoptedPets;
+//	@OneToMany(mappedBy = "adopter" ,cascade = CascadeType.ALL)
+//	private Set<AdoptedPets> adoptedPets;
 	
 }

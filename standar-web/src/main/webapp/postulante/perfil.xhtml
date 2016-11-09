@@ -20,6 +20,41 @@
 			<h2>Perfil</h2>
 			<p:separator />
 
+			<h2>Datos Personales</h2>
+			<p:separator />
+
+			<p:panelGrid columns="2" id="pgDatosPerfil">
+				<p:outputLabel value="DUI" />
+				<h:outputText value="#{adoptanteView.postulanteSession.dui}" />
+
+				<p:outputLabel value="Nombre" />
+				<h:outputText value="#{adoptanteView.postulanteSession.names}" />
+
+				<p:outputLabel value="Apellidos" />
+				<h:outputText value="#{adoptanteView.postulanteSession.lastNames}" />
+
+				<p:outputLabel value="Edad" />
+				<h:outputText value="#{adoptanteView.postulanteSession.age}" />
+
+				<p:outputLabel value="Email" />
+				<h:outputText value="#{adoptanteView.postulanteSession.email}" />
+
+				<p:outputLabel value="Direccion" />
+				<h:outputText value="#{adoptanteView.postulanteSession.address}" />
+
+				<p:outputLabel value="Celular" />
+				<h:outputText value="#{adoptanteView.postulanteSession.cellPhone}" />
+
+				<p:outputLabel value="Casa" />
+				<h:outputText value="#{adoptanteView.postulanteSession.phone}" />
+			</p:panelGrid>
+
+			<br />
+			
+			<p:commandButton value="Editar" update="dlgEditPerfil"
+				oncomplete="PF('dlgEditPerfil').show();"
+				actionListener="#{adoptanteView.prepareEditarPerfil}" />
+
 			<p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
 				<p:commandButton value="Si" type="button"
 					styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
@@ -27,6 +62,8 @@
 					styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
 			</p:confirmDialog>
 		</h:form>
+		
+		<ui:include src="./datosAdop.xhtml" />
 	</ui:define>
 
 </ui:composition>

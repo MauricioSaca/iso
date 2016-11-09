@@ -89,8 +89,8 @@ public class QuestionsView implements Serializable {
 		}
 	}
 
-	public void delete(PostulantQuestions question) {
-		postulantQuestionsService.deleteOne(question);
+	public void delete() {
+		postulantQuestionsService.deleteOne(selectedQuestion);
 		Messages.create("REGISTRO").detail("Eliminado exitosamente").add();
 	}
 }

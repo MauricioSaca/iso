@@ -158,6 +158,13 @@ public class SecurityController implements Serializable {
 		firstSubmenu.addElement(item);
 		
 		item = new DefaultMenuItem();
+		item.setValue("Solicitudes de Adopcion");
+		item.setTarget("/mascotas/solicitudes.xhtml");
+		item.setIcon("fa fa-folder-open-o");
+		item.setCommand("#{securityController.onMenuSelect}");
+		firstSubmenu.addElement(item);
+		
+		item = new DefaultMenuItem();
 		item.setValue("Cuestionario");
 		item.setTarget("/mascotas/preguntas.xhtml");
 		item.setIcon("fa fa-folder-open-o");

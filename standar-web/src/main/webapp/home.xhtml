@@ -25,10 +25,10 @@
 					<h1>Adopta tu mascota</h1>
 					<p:separator />
 
-					<p:dataGrid id="dgPets" widgetVar="dgPets" var="pet" value="#{petView.petLazyData}"
-						columns="3" layout="grid" rows="3" paginator="true"
-						paginatorPosition="bottom" rowsPerPageTemplate="3,6,12,16"
-						lazy="true">
+					<p:dataGrid id="dgPets" widgetVar="dgPets" var="pet"
+						value="#{petView.petLazyData}" columns="3" layout="grid" rows="3"
+						paginator="true" paginatorPosition="bottom"
+						rowsPerPageTemplate="3,6,12,16" lazy="true">
 
 						<p:panelGrid>
 							<p:row>
@@ -83,10 +83,10 @@
 
 				<p:outputPanel id="panelFicha"
 					rendered="#{petView.renderFichaDetail}">
-				
+
 					<h1>Titulo adecuado aqui</h1>
 					<p:separator />
-					
+
 					<p:galleria var="img" value="#{petView.galery}" autoPlay="true"
 						style="float:left; width:400px!important; margin: 0 1em 0 0;">
 						<o:graphicImage rendered="#{not empty img.img}"
@@ -131,7 +131,9 @@
 							</p:row>
 						</p:panelGrid>
 
-						<p:commandButton value="Solicitar Proceso" />
+						<p:commandButton id="btnSolicitarProceso" update="adoptaForm:panelContent"
+							value="Solicitar Proceso"
+							actionListener="#{petView.solicitarProceso}" />
 						<p:commandButton value="Regresar"
 							action="#{petView.getBackAdopta}"
 							update="adoptaForm:panelContent" />

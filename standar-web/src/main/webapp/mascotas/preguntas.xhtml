@@ -18,10 +18,10 @@
 		<h:form id="questionsForm">
 
 			<p:contextMenu id="ctxMascotas" for="questionsForm:dtQuestions">
-				<p:menuitem value="Editar" icon="fa fa-pencil"
-					action="#{petView.prepareUpdate}" update="preguntasForm:pgQuestion" />
+				<p:menuitem value="Editar" icon="fa fa-pencil" oncomplete="PF('dlgAddEdit').show();"
+					action="#{questionsView.prepareUpdate}" update="dlgAddEdit" />
 				<p:menuitem value="Eliminar" icon="fa fa-trash"
-					action="#{petView.delete}">
+					action="#{questionsView.delete}" update="questionsForm:dtQuestions">
 					<p:confirm header="Eliminacion"
 						message="Desea eliminar este registro?" />
 				</p:menuitem>
@@ -86,11 +86,11 @@
 					rendered="#{questionsView.createOrEdit}" />
 
 				<p:commandButton id="btnUpdate" value="Guardar"
-					actionListener="#{questionsView.add}"
+					actionListener="#{questionsView.update}"
 					oncomplete="PF('dlgAddEdit').hide();"
 					update="questionsForm:dtQuestions"
 					rendered="#{!questionsView.createOrEdit}" />
-
+				
 				<p:commandButton value="Salir" onclick="PF('dlgAddEdit').hide();" />
 			</h:form>
 		</p:dialog>
