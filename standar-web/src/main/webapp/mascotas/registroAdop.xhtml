@@ -10,6 +10,11 @@
 	<p:separator />
 
 	<h:panelGrid id="pgRegister" columns="4" style="width:80%;">
+		
+		<p:outputLabel value="Nombre de usuario" for="txtNombreUsuario" />
+		<p:inputText id="txtNombreUsuario" required="true"
+			value="#{adoptanteView.userName}" />
+		
 		<p:outputLabel value="DUI" for="txtDUI" />
 		<p:inputText id="txtDUI" maxlength="10" required="true"
 			value="#{adoptanteView.selectedAdoptante.dui}" />

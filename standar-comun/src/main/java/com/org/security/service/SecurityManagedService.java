@@ -80,20 +80,20 @@ public class SecurityManagedService {
 
 	public void updateUser(User user, GroupMembership group, Grant grant) {
 		identityManager.update(user);
-		boolean isNewGroupRelations = group.getId() == null;		
+		boolean isNewGroupRelations = group.getId() == null;
 		if (isNewGroupRelations) {
 			relationshipManager.add(group);
 		} else {
 			relationshipManager.update(group);
 		}
-		
+
 		boolean isNewRoleRelations = grant.getId() == null;
 		if (isNewRoleRelations) {
 			relationshipManager.add(grant);
 		} else {
 			relationshipManager.update(grant);
 		}
-				
+
 	}
 
 	public void updatePassword(User user, Password password) {
@@ -124,6 +124,17 @@ public class SecurityManagedService {
 		}
 	}
 
+	public Group findGroupByName(String groupName) {
+
+		List<Group> groups = queryBuilder.createIdentityQuery(Group.class)
+				.where(queryBuilder.equal(Group.NAME, groupName)).getResultList();
+
+		if (groups.size() == 0) {
+			return null;
+		}
+		return groups.get(0);
+	}
+
 	public void saveGroup(Group group) {
 		identityManager.add(group);
 	}
@@ -144,6 +155,17 @@ public class SecurityManagedService {
 		} else {
 			return new ArrayList<Role>();
 		}
+	}
+
+	public Role findRoleByName(String roleName) {
+
+		List<Role> roles = queryBuilder.createIdentityQuery(Role.class).where(queryBuilder.equal(Role.NAME, roleName))
+				.getResultList();
+
+		if (roles.size() == 0) {
+			return null;
+		}
+		return roles.get(0);
 	}
 
 	public void saveRole(Role role) {

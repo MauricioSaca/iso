@@ -1,6 +1,8 @@
 package com.org.web.pets.views;
 
 import java.io.Serializable;
+import java.math.BigInteger;
+import java.security.SecureRandom;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -11,6 +13,8 @@ import javax.inject.Named;
 
 import org.omnifaces.cdi.ViewScoped;
 import org.omnifaces.util.Messages;
+import org.picketlink.Identity;
+import org.picketlink.idm.credential.Password;
 
 import com.google.common.base.Strings;
 import com.org.adoption.model.Postulant;
@@ -20,6 +24,12 @@ import com.org.adoption.service.PostulantQuestionsService;
 import com.org.adoption.service.PostulantService;
 import com.org.core.model.enums.PostulantGender;
 import com.org.core.model.enums.PostulantStatus;
+import com.org.security.enums.GroupsSecurityRolesNames;
+import com.org.security.enums.RolesSecurityNames;
+import com.org.security.identity.model.UserTypeEntity;
+import com.org.security.identity.stereotype.Group;
+import com.org.security.identity.stereotype.Role;
+import com.org.security.identity.stereotype.User;
 import com.org.security.service.SecurityManagedService;
 import com.org.util.web.BaseLazyModel;
 
@@ -32,29 +42,39 @@ import lombok.Setter;
 @Setter
 public class AdoptanteView implements Serializable {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 456787809L;
+
+	@Inject
+	private Identity identity;
 
 	@Inject
 	private transient PostulantService postulantService;
 
 	@Inject
 	private transient PostulantQuestionsService postulantQuestionsService;
-	
+
 	@Inject
 	private transient PostulantAnswerEvaluationService postulantAnswerEvaluationService;
-	
+
 	@Inject
 	private transient SecurityManagedService securityManagedService;
 
 	private transient BaseLazyModel<Postulant, Long> adoptanteLazyData;
 	private Postulant selectedAdoptante;
+
+	// security
+	private String userName;
+	private User postulandUser;
+	private String randomPassWord; // random string for organizational user
+	private SecureRandom random;
+	private Group postulantGroup;
+	private Role porstulantRole;
+
 	private List<PostulantStatus> adoptanteStatusList;
 	private List<PostulantGender> postulantGenderList;
 	private List<PostulantAnswerEvaluation> questions;
 	private byte[] file;
+
 	/**
 	 * TRUE for create FALSE for edit
 	 */
@@ -68,12 +88,18 @@ public class AdoptanteView implements Serializable {
 	@PostConstruct
 	public void init() {
 		selectedAdoptante = new Postulant();
-		this.loadData();
 		adoptanteStatusList = Arrays.asList(PostulantStatus.values());
 		postulantGenderList = Arrays.asList(PostulantGender.values());
+		this.loadData();
 
+		User currentUser = (User) identity.getAccount();
 		// postulantService.findQuestions();//agarra usuario de la seguridad
 		questions = postulantQuestionsService.getQuestions();
+
+		// User
+		random = new SecureRandom();
+		postulantGroup = securityManagedService.findGroupByName(GroupsSecurityRolesNames.POSTULANDS.getCode());
+		porstulantRole = securityManagedService.findRoleByName(RolesSecurityNames.POSTULANTE.getCode());
 	}
 
 	public void loadData() {
@@ -102,10 +128,9 @@ public class AdoptanteView implements Serializable {
 
 	public void add() {
 		try {
-
 			replaceChar();
-			//selectedAdoptante.setUserTypeEntity(userTypeEntity); 
-			//FIXME guardar usuario y setearlo
+			UserTypeEntity postulandUserType = createUserForPostuland();
+			selectedAdoptante.setUserTypeEntity(postulandUserType);
 			postulantService.save(selectedAdoptante);
 
 			Messages.create("REGISTRO").detail("Registro agregado exitosamente").add();
@@ -152,8 +177,33 @@ public class AdoptanteView implements Serializable {
 			postulantAnswerEvaluation.setAnswer(evaluation.getAnswer());
 			postulantAnswerEvaluationList.add(postulantAnswerEvaluation);
 		}
-		
+
 		postulantAnswerEvaluationService.save(postulantAnswerEvaluationList);
 		Messages.create("PREGUNTAS").detail("Guardado satisfactoriamente").add();
+	}
+
+	private UserTypeEntity createUserForPostuland() {
+		
+		postulandUser = new User(userName);
+		postulandUser.setFirstName(selectedAdoptante.getNames());
+		postulandUser.setLastName(selectedAdoptante.getLastNames());
+		postulandUser.setEmail(selectedAdoptante.getEmail());
+		postulandUser.setAddress(selectedAdoptante.getAddress());
+		postulandUser.setTelephone(selectedAdoptante.getCellPhone());
+
+		randomPassWord = generateRandomPass();
+		Password randomPass = new Password(randomPassWord);
+		UserTypeEntity user = new UserTypeEntity();
+		boolean areNotNullRoleAndGroup = postulantGroup != null && porstulantRole != null;
+		if (areNotNullRoleAndGroup) {
+			securityManagedService.saveUser(postulandUser, randomPass, postulantGroup, porstulantRole);
+			user.setId(postulandUser.getId());
+		}
+
+		return user;
+	}
+
+	private String generateRandomPass() {
+		return new BigInteger(130, random).toString(32);
 	}
 }
