@@ -7,6 +7,7 @@ import javax.inject.Inject;
 
 import com.mysema.query.types.Projections;
 import com.mysema.query.types.expr.BooleanExpression;
+import com.org.adoption.model.Postulant;
 import com.org.adoption.model.PostulantAnswerEvaluation;
 import com.org.adoption.model.PostulantQuestions;
 import com.org.adoption.model.QPostulantAnswerEvaluation;
@@ -29,8 +30,13 @@ public class PostulantQuestionsService extends BaseService<PostulantQuestions, L
 	}
 
 	public List<PostulantAnswerEvaluation> getQuestions() {
-		BooleanExpression id = qPostulantQuestions.id.eq(qPostulantQuestions.id);
-		return newJpaQuery().from(qPostulantQuestions).list(Projections
-				.constructor(PostulantAnswerEvaluation.class, qPostulantQuestions));
+		return newJpaQuery().from(qPostulantQuestions)
+				.list(Projections.constructor(PostulantAnswerEvaluation.class, qPostulantQuestions));
+	}
+
+	public List<PostulantAnswerEvaluation> findQuestionsAnswerByPostulant(Postulant postulant) {
+		BooleanExpression idPost = qPostulantAnswerEvaluation.postulant.id.eq(postulant.getId());
+		return newJpaQuery().from(qPostulantAnswerEvaluation).where(idPost)
+				.list(qPostulantAnswerEvaluation);
 	}
 }

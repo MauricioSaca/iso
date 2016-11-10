@@ -68,13 +68,13 @@ public class Postulant implements BaseModelEntity<Long> {
 	@Column(length = 255, nullable = false)
 	private String cellPhone;
 
-	@Column(length = 255, nullable = false)
+	@Column(length = 255, nullable = true)
 	private String phone;
 
 	@Column(length = 255, nullable = false)
 	private String address;
 
-	@Column(length = 255, nullable = false)
+	@Column(length = 255, nullable = true)
 	private String postulantStatus;
 	
 	@Column(length = 255, nullable = false)

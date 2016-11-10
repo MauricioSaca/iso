@@ -21,16 +21,12 @@
 			<h2>Cuestionario de Adopcion</h2>
 			<p:separator />
 
-			<p:outputLabel value="Nombre Mascota" for="txtNombre" />
-			<p:inputText id="txtNombre" />
-
-
-			<h:dataTable var="question" value="#{adoptanteView.questions}">
+			<h:dataTable var="question" value="#{adoptanteView.questions}" columnClasses="question, answer">
 				<h:column>
 					<p:outputLabel value="#{question.postulantQuestions.question}" />
 				</h:column>
 				<h:column>
-					<p:inputText value="#{question.answer}"
+					<p:inputText value="#{question.answer}" style="width: 60%;"
 						rendered="#{question.postulantQuestions.typeQuestion.code eq 'OP'}" />
 
 					<p:selectOneRadio value="#{question.answer}"

@@ -1,5 +1,7 @@
 package com.org.adoption.model;
 
+import java.util.Date;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -10,11 +12,14 @@ import javax.persistence.JoinColumns;
 import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 import org.hibernate.annotations.NotFound;
 import org.hibernate.annotations.NotFoundAction;
 
 import com.org.core.model.enums.ProcessStatus;
+import com.org.security.identity.model.UserTypeEntity;
 import com.org.util.domain.BaseModelEntity;
 
 import lombok.EqualsAndHashCode;
@@ -55,13 +60,21 @@ public class AdoptedPets implements BaseModelEntity<Long>{
 	@NotFound(action = NotFoundAction.IGNORE)
 	private Postulant postulant;
 	
+	@ManyToOne
+	@JoinColumns({ @JoinColumn(name = "USER_ID", referencedColumnName = "ID", nullable = true) })
+	@NotFound(action = NotFoundAction.IGNORE)
+	private UserTypeEntity userTypeEntity;
+	
+	@Column(nullable = true)
+	@Temporal(TemporalType.DATE)
+	private Date fechaEnProceso;
+	
+	@Column(nullable = true)
+	@Temporal(TemporalType.DATE)
+	private Date fechaAprobacion;
+	
 	@Column(length = 255, nullable = false)
 	private String processStatus;
-	
-//	@ManyToOne
-//	@JoinColumns({ @JoinColumn(name = "ADOPTER_ID", referencedColumnName = "ID", nullable = false) })
-//	@NotFound(action = NotFoundAction.IGNORE)
-//	private Adopter adopter;
 
 	public ProcessStatus getProcessStatus(){
 		return ProcessStatus.getProcessStatus(processStatus);

@@ -115,23 +115,30 @@ public class SecurityController implements Serializable {
 
 		DefaultMenuItem item = new DefaultMenuItem();
 
-		item.setValue("Perfil");
+		item.setValue(" Buscar");
+		item.setTarget("/postulante/buscar.xhtml");
+		item.setIcon("icon-search");
+		item.setCommand("#{securityController.onMenuSelect}");
+		firstSubmenu.addElement(item);
+		
+		item = new DefaultMenuItem();
+		item.setValue(" Perfil");
 		item.setTarget("/postulante/perfil.xhtml");
 		item.setIcon("icon-hyperlink");
 		item.setCommand("#{securityController.onMenuSelect}");
 		firstSubmenu.addElement(item);
 
 		item = new DefaultMenuItem();
-		item.setValue("Solicitudes");
+		item.setValue(" Solicitudes");
 		item.setTarget("/postulante/solicitudes.xhtml");
 		item.setIcon("fa fa-list-alt");
 		item.setCommand("#{securityController.onMenuSelect}");
 		firstSubmenu.addElement(item);
 
 		item = new DefaultMenuItem();
-		item.setValue("Cuestionario");
+		item.setValue(" Cuestionario");
 		item.setTarget("/postulante/cuestionario.xhtml");
-		item.setIcon("icon-hyperlink");
+		item.setIcon("icon-book");
 		item.setCommand("#{securityController.onMenuSelect}");
 		firstSubmenu.addElement(item);
 
@@ -144,21 +151,21 @@ public class SecurityController implements Serializable {
 		firstSubmenu.setIcon("icon-menu");
 
 		DefaultMenuItem item = new DefaultMenuItem();
-		item.setValue("Mascotas");
+		item.setValue(" Mascotas");
 		item.setTarget("/mascotas/mascotas.xhtml");
 		item.setIcon("icon-feather");
 		item.setCommand("#{securityController.onMenuSelect}");
 		firstSubmenu.addElement(item);
 
 		item = new DefaultMenuItem();
-		item.setValue("Adoptantes");
+		item.setValue(" Adoptantes");
 		item.setTarget("/mascotas/adoptantes.xhtml");
 		item.setIcon("fa fa-folder-open-o");
 		item.setCommand("#{securityController.onMenuSelect}");
 		firstSubmenu.addElement(item);
 		
 		item = new DefaultMenuItem();
-		item.setValue("Solicitudes de Adopcion");
+		item.setValue(" Solicitudes de Adopcion");
 		item.setTarget("/mascotas/solicitudes.xhtml");
 		item.setIcon("fa fa-folder-open-o");
 		item.setCommand("#{securityController.onMenuSelect}");
@@ -167,14 +174,7 @@ public class SecurityController implements Serializable {
 		item = new DefaultMenuItem();
 		item.setValue("Cuestionario");
 		item.setTarget("/mascotas/preguntas.xhtml");
-		item.setIcon("fa fa-folder-open-o");
-		item.setCommand("#{securityController.onMenuSelect}");
-		firstSubmenu.addElement(item);
-
-		item = new DefaultMenuItem();
-		item.setValue("Control Medico");
-		item.setTarget("/mascotas/registroMedico.xhtml");
-		item.setIcon("fa fa-list-alt");
+		item.setIcon("icon-book");
 		item.setCommand("#{securityController.onMenuSelect}");
 		firstSubmenu.addElement(item);
 

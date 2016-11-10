@@ -21,7 +21,7 @@ public class PostulantService extends BaseService<Postulant, Long> {
 	private PostulantRepository postulantRepository;
 	private QPostulantAnswerEvaluation qPostulantAnswerEvaluation = QPostulantAnswerEvaluation.postulantAnswerEvaluation;
 	private QPostulant qPostulant = QPostulant.postulant;
-	
+
 	@Override
 	public BaseRepository<Postulant, Long> getRepository() {
 		return postulantRepository;
@@ -30,14 +30,24 @@ public class PostulantService extends BaseService<Postulant, Long> {
 	public List<PostulantAnswerEvaluation> findQuestions(Postulant postulant) {
 
 		return newJpaQuery().from(qPostulantAnswerEvaluation)
-				.where(qPostulantAnswerEvaluation.postulant.id.eq(postulant.getId()))
-				.list(qPostulantAnswerEvaluation);
+				.where(qPostulantAnswerEvaluation.postulant.id.eq(postulant.getId())).list(qPostulantAnswerEvaluation);
 	}
-	
+
 	public Postulant findByUser(User user) {
-		
-		return newJpaQuery().from(qPostulant)
-				.where(qPostulant.userTypeEntity.id.eq(user.getId()))
+
+		return newJpaQuery().from(qPostulant).where(qPostulant.userTypeEntity.id.eq(user.getId()))
 				.singleResult(qPostulant);
+	}
+
+	public boolean existDui(String dui) {
+		List<Postulant> list = newJpaQuery().from(qPostulant).where(qPostulant.dui.eq(dui)).list(qPostulant);
+
+		return list != null && !list.isEmpty();
+	}
+
+	public boolean existMail(String email) {
+		List<Postulant> list = newJpaQuery().from(qPostulant).where(qPostulant.email.eq(email)).list(qPostulant);
+
+		return list != null && !list.isEmpty();
 	}
 }

@@ -4,7 +4,9 @@ import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import javax.annotation.PostConstruct;
 import javax.inject.Inject;
@@ -32,6 +34,8 @@ import com.org.core.model.enums.PetStatus;
 import com.org.core.model.enums.PetType;
 import com.org.core.model.enums.ProcessStatus;
 import com.org.security.identity.stereotype.User;
+import com.org.util.enumeration.OperationType;
+import com.org.util.safe.ValueHolder;
 import com.org.util.web.BaseLazyModel;
 
 import lombok.Getter;
@@ -67,6 +71,7 @@ public class PetView implements Serializable {
 	private transient MedicalControlService medicalControlService;
 
 	private transient BaseLazyModel<Pet, Long> petLazyData;
+	private transient BaseLazyModel<Pet, Long> petLazyDataDisponible;
 	private Pet selectedPet;
 	private MedicalControl selectedMedicalControl;
 	private List<PetOrigin> petOriginList;
@@ -101,6 +106,14 @@ public class PetView implements Serializable {
 
 	public void loadData() {
 		petLazyData = new BaseLazyModel<Pet, Long>(getPetService());
+		
+		petLazyDataDisponible = new BaseLazyModel<Pet, Long>(getPetService());
+		
+		Set<ValueHolder> filter = new HashSet<ValueHolder>();
+		filter.add(new ValueHolder("petStatus", OperationType.NOT_IN.getCode(), Arrays.asList(PetStatus.ADOPTED.getCode())));
+		
+		petLazyDataDisponible.setCustomFilters(filter);
+		
 	}
 
 	public void showEditPanel() {

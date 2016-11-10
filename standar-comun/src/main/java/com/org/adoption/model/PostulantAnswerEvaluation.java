@@ -15,7 +15,6 @@ import org.hibernate.annotations.NotFound;
 import org.hibernate.annotations.NotFoundAction;
 
 import com.mysema.query.annotations.QueryProjection;
-import com.org.core.model.enums.TypeQuestion;
 import com.org.util.domain.BaseModelEntity;
 
 import lombok.EqualsAndHashCode;

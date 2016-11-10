@@ -30,8 +30,6 @@
 
 						<h3>#{adopt.pet.petName}</h3>
 						<p:outputLabel value="#{adopt.pet.description}" />
-						<br />
-						<p:outputLabel value="dont know here 2" />
 					</p:outputPanel>
 
 					<p:outputPanel style="float:left;" styleClass="progress">
@@ -40,7 +38,13 @@
 								value="#{petAdopterView.processStatusList}">
 								<li
 									class="#{status.code eq adopt.processStatus.code ? 'activa ' : ''}#{i.index eq petAdopterView.processStatusList.size() - 1 ? 'last' : ''}">
-									#{status.description} <span class="triangulo" style="#{i.index eq petAdopterView.processStatusList.size() - 1 ? 'display:none;' : ''}"></span>
+									
+									#{status.description}
+									<h:outputText value="- #{adopt.fechaAprobacion}" rendered="#{status.code eq 'APR' and status.code eq adopt.processStatus.code}" />
+									<h:outputText value="- #{adopt.fechaAprobacion}" rendered="#{status.code eq 'DEN' and status.code eq adopt.processStatus.code}" />
+									<h:outputText value="- #{adopt.fechaEnProceso}" rendered="#{status.code eq 'ENP'}" />
+									
+									<span class="triangulo" style="#{i.index eq petAdopterView.processStatusList.size() - 1 ? 'display:none;' : ''}"></span>
 								</li>
 							</ui:repeat>
 						</ul>

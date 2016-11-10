@@ -19,11 +19,11 @@
 		<h:form id="solicitudesForm">
 
 			<p:outputPanel id="content">
-				<p:outputPanel id="listadoPanel">
+				<p:outputPanel id="listadoPanel" rendered="#{!petAdopterView.renderDetail}">
 
 					<p:contextMenu id="ctxSoli" widgetVar="ctxSoli" beforeShow="return true;"
 						for="solicitudesForm:dtSolicitudes">
-						<p:menuitem value="Ver Ficha Adoptante" icon="fa fa-pencil"
+						<p:menuitem value="Ver Ficha Adoptante" icon="fa fa-pencil" 
 							actionListener="#{petAdopterView.enProceso}" disabled="#{petAdopterView.selectedAdoptedPet.processStatus.code eq 'APR' or petAdopterView.selectedAdoptedPet.processStatus.code eq 'DEN'}"
 							update="solicitudesForm:content" />
 					</p:contextMenu>
@@ -71,7 +71,7 @@
 						styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
 				</p:confirmDialog>
 
-				<p:outputPanel id="fichaPanel">
+				<p:outputPanel id="fichaPanel" rendered="#{petAdopterView.renderDetail}">
 					<ui:include src="./dialogs/dialog_ficha_adoptante.xhtml" />
 				</p:outputPanel>
 			</p:outputPanel>

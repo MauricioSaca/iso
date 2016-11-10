@@ -117,3 +117,8 @@ width: auto !important;
     -webkit-border-radius: 0 8px 8px 0;
     -moz-border-radius: 0 8px 8px 0;
 }
+
+.question{
+	width: 35%;
+	text-align: justify;
+}
