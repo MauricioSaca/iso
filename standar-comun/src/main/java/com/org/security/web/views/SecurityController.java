@@ -58,8 +58,7 @@ public class SecurityController implements Serializable {
 		boolean isPostulantUser = authorizationChecker.hasGroup(GroupsSecurityRolesNames.POSTULANDS.getCode());
 		boolean isManagerUser = authorizationChecker.hasGroup(GroupsSecurityRolesNames.MANAGERS.getCode());
 		boolean isOrganizacionalUser = authorizationChecker.hasGroup(GroupsSecurityRolesNames.ORGANIZERS.getCode());
-		boolean isReportUser = authorizationChecker.hasGroup(GroupsSecurityRolesNames.REPORTS.getCode());
-
+		
 		if (isAdminUser) {
 			adminMenu();
 		}
@@ -69,20 +68,17 @@ public class SecurityController implements Serializable {
 		}
 
 		if (isManagerUser) {
-
+			managerMenu();
 		}
 
 		if (isOrganizacionalUser) {
 			organizacionalMenu();
 		}
 
-		if (isReportUser) {
-
-		}
 	}
 
 	private void adminMenu() {
-		DefaultSubMenu firstSubmenu = new DefaultSubMenu("administración de seguridad");
+		DefaultSubMenu firstSubmenu = new DefaultSubMenu("Administración de seguridad");
 		firstSubmenu.setIcon("icon-menu");
 
 		DefaultMenuItem item = new DefaultMenuItem();
@@ -107,6 +103,30 @@ public class SecurityController implements Serializable {
 		firstSubmenu.addElement(item);
 
 		model.addElement(firstSubmenu);
+
+		DefaultSubMenu secondSubmenu = new DefaultSubMenu("Administración de indicadores");
+		secondSubmenu.setIcon("icon-menu");
+
+		item = new DefaultMenuItem();
+		item.setValue("Lista de indicadores");
+		item.setTarget("/indicadores/list.xhtml");
+		item.setIcon("icon-hyperlink");
+		item.setCommand("#{securityController.onMenuSelect}");
+		secondSubmenu.addElement(item);
+
+		model.addElement(secondSubmenu);
+
+		DefaultSubMenu thirdSubmenu = new DefaultSubMenu("Asignación de metas a indicadores");
+		thirdSubmenu.setIcon("icon-menu");
+
+		item = new DefaultMenuItem();
+		item.setValue("Indicadores");
+		item.setTarget("/metas/indicador_list.xhtml");
+		item.setIcon("icon-hyperlink");
+		item.setCommand("#{securityController.onMenuSelect}");
+		thirdSubmenu.addElement(item);
+
+		model.addElement(thirdSubmenu);
 	}
 
 	private void postulanteMenu() {
@@ -163,7 +183,7 @@ public class SecurityController implements Serializable {
 		item.setIcon("fa fa-folder-open-o");
 		item.setCommand("#{securityController.onMenuSelect}");
 		firstSubmenu.addElement(item);
-		
+
 		item = new DefaultMenuItem();
 		item.setValue(" Solicitudes de Adopcion");
 		item.setTarget("/mascotas/solicitudes.xhtml");
@@ -178,6 +198,20 @@ public class SecurityController implements Serializable {
 		item.setCommand("#{securityController.onMenuSelect}");
 		firstSubmenu.addElement(item);
 
+		model.addElement(firstSubmenu);
+	}
+
+	private void managerMenu() {
+		DefaultSubMenu firstSubmenu = new DefaultSubMenu("Verificación de metas");
+		firstSubmenu.setIcon("icon-menu");
+
+		DefaultMenuItem item = new DefaultMenuItem();
+		item.setValue("Indicador/Metas");
+		item.setTarget("/metas_compativos/list_indicador_metas.xhtml");
+		item.setIcon("fa fa-list-alt");
+		item.setCommand("#{securityController.onMenuSelect}");
+		firstSubmenu.addElement(item);
+		
 		model.addElement(firstSubmenu);
 	}
 

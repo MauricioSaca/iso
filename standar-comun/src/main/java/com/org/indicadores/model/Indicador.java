@@ -13,6 +13,7 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 import com.org.indicadores.enums.EvaluationPeriod;
+import com.org.indicadores.enums.UnidadMedida;
 import com.org.util.domain.BaseModelEntity;
 
 import lombok.EqualsAndHashCode;
@@ -53,21 +54,32 @@ public class Indicador implements BaseModelEntity<Long> {
 
 	@Column(length = 255, nullable = false)
 	private String meaning;
-	
+
 	@Column(length = 255, nullable = false)
 	private String evaluationPeriod;
+
+	@Column(length = 255, nullable = false)
+	private String unidadMedida;
 
 	@OneToMany(mappedBy = "indicador", cascade = CascadeType.ALL)
 	private Set<Metas> metas;
 
 	// Relacion por enum
 
-	public EvaluationPeriod getEvaluarionPeriod() {
+	public EvaluationPeriod getEvaluationPeriod() {
 		return EvaluationPeriod.getEvaluationPeriod(this.evaluationPeriod);
 	}
 
-	public void setEvaluarionPeriod(EvaluationPeriod evaluation) {
+	public void setEvaluationPeriod(EvaluationPeriod evaluation) {
 		this.evaluationPeriod = evaluation != null ? evaluation.getCode() : null;
+	}
+
+	public UnidadMedida getUnidadMedida() {
+		return UnidadMedida.getUnidadMedida(this.unidadMedida);
+	}
+
+	public void setUnidadMedida(UnidadMedida unidad) {
+		this.unidadMedida = unidad != null ? unidad.getCode() : null;
 	}
 
 }

@@ -15,7 +15,6 @@ import org.hibernate.annotations.NotFound;
 import org.hibernate.annotations.NotFoundAction;
 
 import com.org.indicadores.enums.EvaluationLevel;
-import com.org.indicadores.enums.UnidadMedida;
 import com.org.util.domain.BaseModelEntity;
 
 import lombok.EqualsAndHashCode;
@@ -45,20 +44,20 @@ public class Metas implements BaseModelEntity<Long> {
 	@Column(nullable = false)
 	private Long id;
 
-	@Column(precision = 10, scale = 2, nullable = true)
+	@Column(precision = 10, scale = 2, nullable = false)
 	private Double meta;
 
 	@Column(precision = 10, scale = 2, nullable = true)
 	private Double resultadoMeta;
 
 	@Column(nullable = true)
-	private Boolean alncanzada;
+	private Boolean alcanzada;
 
-	@Column(length = 255, nullable = false)
+	@Column(length = 255, nullable = true)
 	private String evaluationLevel;
 
 	@Column(length = 255, nullable = false)
-	private String unidadMedida;
+	private String ordinalDate;
 
 	@ManyToOne
 	@JoinColumns({ @JoinColumn(name = "INDICADOR_ID", referencedColumnName = "ID", nullable = false) })
@@ -73,14 +72,6 @@ public class Metas implements BaseModelEntity<Long> {
 
 	public void setEvaluationLevel(EvaluationLevel evaluation) {
 		this.evaluationLevel = evaluation != null ? evaluation.getCode() : null;
-	}
-
-	public UnidadMedida getUnidadMedida() {
-		return UnidadMedida.getUnidadMedida(this.unidadMedida);
-	}
-
-	public void setUnidadMedida(UnidadMedida unidad) {
-		this.unidadMedida = unidad != null ? unidad.getCode() : null;
 	}
 
 }

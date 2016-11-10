@@ -44,18 +44,21 @@ public class HttpSecurityConfiguration {
               		.group(GroupsSecurityRolesNames.ADMINS.getCode())
               			.redirectTo("/errors/access-denied.xhtml")
               				.whenForbidden()
-              .forPath("/indicadores_metas/*","Authentication") //Manager
+              .forPath("/indicadores/*","Authentication") //Manager
               	.authorizeWith()
-              		.group(GroupsSecurityRolesNames.MANAGERS.getCode())
+              		.group(GroupsSecurityRolesNames.ADMINS.getCode())
               			.redirectTo("/errors/access-denied.xhtml")
               				.whenForbidden()
-              .forPath("/validacion_postulante/*","Authentication") //Organizacional
-              	.authorizeWith() 
-              		.group(GroupsSecurityRolesNames.ORGANIZERS.getCode())
+              .forPath("/metas/*","Authentication") //Manager
+              	.authorizeWith()
+              		.group(GroupsSecurityRolesNames.ADMINS.getCode())
               			.redirectTo("/errors/access-denied.xhtml")
               				.whenForbidden()
-//              .forPath("/index.xhtml")
-//                .redirectTo("/login.xhtml")
+              .forPath("/metas_compativos/*","Authentication") //Manager
+	          	.authorizeWith()
+	          		.group(GroupsSecurityRolesNames.MANAGERS.getCode())
+	          			.redirectTo("/errors/access-denied.xhtml")
+	          				.whenForbidden()
              .forPath("/javax.faces.resource/*")
                  .unprotected();	 
 	}	

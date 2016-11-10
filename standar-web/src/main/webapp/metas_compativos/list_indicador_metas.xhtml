@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                template="/template/layout.xhtml">
+
+    <ui:define name="head">
+
+    </ui:define>
+
+    <ui:define name="subheader">
+
+    </ui:define>
+
+    <ui:define name="content">
+	
+		<h:form id="indicadorListForm">
+		
+			 <p:contextMenu id="ctxIndicador" for="indicadorListForm:indicadorTable">
+				<p:menuitem value="Verificar" icon="fa fa-pencil"
+							process="@this indicadorTable"
+							actionListener="#{managerMetasView.preparedMetas}"
+							update="metasForm metasForm:accordion:charMeta"
+							oncomplete="PF('main_list_panel').close(), PF('detail_list_panel').show()" />
+			</p:contextMenu>
+		
+		
+	       <h2>Indicadores</h2>
+	       <p:separator />
+	       <p:panel id="main_list_panel" widgetVar="main_list_panel" toggleable="false" closable="true"  closeSpeed="500" >
+		       <p:dataTable id="indicadorTable" widgetVar="indicadorTable" value="#{managerMetasView.lazyIndicadorModel}"
+	                        var="indicador" rowIndexVar="indice" 
+	                        rowKey="#{indicador.id}"
+	                        selection="#{managerMetasView.indicadorSelected}" selectionMode="single"
+	                        lazy="true"
+	                        emptyMessage="#{safiCommonBundle.ListEmpty}" 
+	                        paginator="true" rows="10" paginatorPosition="bottom"
+	                      	paginatorTemplate="{FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+	                        currentPageReportTemplate="| #{safiCommonBundle.page} {currentPage} #{safiCommonBundle.of} {totalPages} |" 
+	                        rowsPerPageTemplate="10,20,30,40"> 
+	                        
+		        		
+		        		<p:column headerText="Indicador" filterBy="#{indicador.name}">
+				        	#{indicador.name}
+				        </p:column>
+	
+						<p:column headerText="Descripción">
+				        	#{indicador.description}
+				        </p:column>
+				        
+				        <p:column headerText="Objetivo"  >
+				        	#{indicador.objective}
+				        </p:column>
+				        
+				        <p:column headerText="Significado"  >
+				        	#{indicador.meaning}
+				        </p:column>
+				        
+				         <p:column headerText="Unidad de medida" filterBy="#{indicador.unidadMedida}" filterMatchMode="in">
+				        	 <f:facet name="filter">
+				                <p:selectCheckboxMenu filter="true" label="Unidad de medida" onchange="PF('indicadorTable').filter()">
+				                    <f:selectItems value="#{indicadorView.unidadesMedidas}" var="unidad" itemLabel="#{unidad.description}" itemValue="#{unidad.code}" />
+				                </p:selectCheckboxMenu>
+	            			</f:facet>
+				        	#{indicador.unidadMedida}
+				        </p:column>
+				        
+				        <p:column headerText="Tipo de evaluación" filterBy="#{indicador.evaluationPeriod}" filterMatchMode="in">
+				        	 <f:facet name="filter">
+				                <p:selectCheckboxMenu filter="true" label="Tipo de evaluación" onchange="PF('indicadorTable').filter()">
+				                    <f:selectItems value="#{indicadorView.evaluations}" var="evaluation" itemLabel="#{evaluation.description}" itemValue="#{evaluation.code}" />
+				                </p:selectCheckboxMenu>
+	            			</f:facet>
+				        	#{indicador.evaluationPeriod}
+				        </p:column>
+				        
+		        </p:dataTable>
+	        </p:panel>
+		</h:form>
+		
+		<p:panel id="detail_list_panel" widgetVar="detail_list_panel" toggleable="false" closable="true"  closeSpeed="500" style="display:none;" >
+	        	<ui:include
+					src="./chart_metas_list.xhtml" />
+	    </p:panel>
+    </ui:define>
+
+</ui:composition>

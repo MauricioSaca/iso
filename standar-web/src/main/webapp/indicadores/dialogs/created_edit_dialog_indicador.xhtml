@@ -1,0 +1,214 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+    <ui:composition>
+        <p:dialog header="Indicador" widgetVar="indicadorDialog" id="indicadorDialog" modal="true"
+				  showEffect="blind" resizable="false" hideEffect="blind" width="35%"
+				  visible=""
+				  appendTo="@(body)" responsive="true">
+				<h:form id="createUpdateIndicadorForm">
+				
+					<p:panelGrid columns="2" columnClasses="property, val" id="panelSend" style="width: 100%; font-size:16px !important;"
+						rendered="#{indicadorView.newIndicador != null or indicadorView.indicadorSelected != null}">
+						
+						
+						<p:outputLabel value="Nombre del indicador:" for="nameIndicador" />
+						<h:panelGroup rendered="#{indicadorView.status.code == 1}">
+							<p:inputTextarea id="nameIndicador"
+								value="#{indicadorView.newIndicador.name}"
+								required="true"
+								rows="6" cols="33"
+								requiredMessage="#{safiBundle.requiredMessageNombre}"
+								validatorMessage="#{safiBundle.validateInputTextMessage}"
+								maxlength="50">
+<!-- 								<f:validateRegex pattern="^[^-\s][A-Za-z ñÑáéíóúÁÉÍÓÚ.,]*"/> -->
+							</p:inputTextarea>
+							<p:message for="nameIndicador" />
+						</h:panelGroup>
+						
+						<h:panelGroup rendered="#{indicadorView.status.code == 2}">
+							<p:inputTextarea id="indicadorUpdateName"
+								value="#{indicadorView.indicadorSelected.name}"
+								required="true"
+								rows="6" cols="33"
+								requiredMessage="#{safiBundle.requiredMessageNombre}"
+								validatorMessage="#{safiBundle.validateInputTextMessage}"
+								maxlength="50">
+<!-- 								<f:validateRegex pattern="^[^-\s][A-Za-z ñÑáéíóúÁÉÍÓÚ.,]*"/> -->
+							</p:inputTextarea>
+							<p:message for="indicadorUpdateName" />
+						</h:panelGroup>
+						
+						<p:outputLabel value="Descripción:" for="descripcionIndicador" />
+						<h:panelGroup rendered="#{indicadorView.status.code == 1}">
+							<p:inputTextarea id="descripcionIndicador"
+								value="#{indicadorView.newIndicador.description}"
+								required="true"
+								rows="6" cols="33"
+								requiredMessage="#{safiBundle.requiredMessageNombre}"
+								validatorMessage="#{safiBundle.validateInputTextMessage}"
+								maxlength="50">
+<!-- 								<f:validateRegex pattern="^[^-\s][A-Za-z ñÑáéíóúÁÉÍÓÚ.,]*"/> -->
+							</p:inputTextarea>
+							<p:message for="descripcionIndicador" />
+						</h:panelGroup>
+						
+						<h:panelGroup rendered="#{indicadorView.status.code == 2}">
+							<p:inputTextarea id="descripcionUpdateIndicador"
+								value="#{indicadorView.indicadorSelected.description}"
+								required="true"
+								rows="6" cols="33"
+								requiredMessage="#{safiBundle.requiredMessageNombre}"
+								validatorMessage="#{safiBundle.validateInputTextMessage}"
+								maxlength="50">
+<!-- 								<f:validateRegex pattern="^[^-\s][A-Za-z ñÑáéíóúÁÉÍÓÚ.,]*"/> -->
+							</p:inputTextarea>
+							<p:message for="indicadorUpdateName" />
+						</h:panelGroup>
+						
+						<p:outputLabel value="Objetivo:" for="objetivoIndicador" />
+						<h:panelGroup rendered="#{indicadorView.status.code == 1}">
+							<p:inputTextarea id="objetivoIndicador"
+								value="#{indicadorView.newIndicador.objective}"
+								required="true"
+								rows="6" cols="33"
+								requiredMessage="#{safiBundle.requiredMessageNombre}"
+								validatorMessage="#{safiBundle.validateInputTextMessage}"
+								maxlength="50">
+<!-- 								<f:validateRegex pattern="^[^-\s][A-Za-z ñÑáéíóúÁÉÍÓÚ.,]*"/> -->
+							</p:inputTextarea>
+							<p:message for="objetivoIndicador" />
+						</h:panelGroup>
+						
+						<h:panelGroup rendered="#{indicadorView.status.code == 2}">
+							<p:inputTextarea id="objetivoUpdateIndicador"
+								value="#{indicadorView.indicadorSelected.objective}"
+								required="true"
+								rows="6" cols="33"
+								requiredMessage="#{safiBundle.requiredMessageNombre}"
+								validatorMessage="#{safiBundle.validateInputTextMessage}"
+								maxlength="50">
+<!-- 								<f:validateRegex pattern="^[^-\s][A-Za-z ñÑáéíóúÁÉÍÓÚ.,]*"/> -->
+							</p:inputTextarea>
+							<p:message for="objetivoUpdateIndicador" />
+						</h:panelGroup>
+						
+						<p:outputLabel value="Significado:" for="significadoIndicador" />
+						<h:panelGroup rendered="#{indicadorView.status.code == 1}">
+							<p:inputTextarea id="significadoIndicador"
+								value="#{indicadorView.newIndicador.meaning}"
+								required="true"
+								rows="6" cols="33"
+								requiredMessage="#{safiBundle.requiredMessageNombre}"
+								validatorMessage="#{safiBundle.validateInputTextMessage}"
+								maxlength="50">
+<!-- 								<f:validateRegex pattern="^[^-\s][A-Za-z ñÑáéíóúÁÉÍÓÚ.,]*"/> -->
+							</p:inputTextarea>
+							<p:message for="significadoIndicador" />
+						</h:panelGroup>
+						
+						<h:panelGroup rendered="#{indicadorView.status.code == 2}">
+							<p:inputTextarea id="significadoUpdateIndicador"
+								value="#{indicadorView.indicadorSelected.meaning}"
+								required="true"
+								rows="6" cols="33"
+								requiredMessage="#{safiBundle.requiredMessageNombre}"
+								validatorMessage="#{safiBundle.validateInputTextMessage}"
+								maxlength="50">
+<!-- 								<f:validateRegex pattern="^[^-\s][A-Za-z ñÑáéíóúÁÉÍÓÚ.,]*"/> -->
+							</p:inputTextarea>
+							<p:message for="significadoUpdateIndicador" />
+						</h:panelGroup>
+						
+						
+						<p:outputLabel value="Unidad de medida:" for="cmbUnidadMedida" />
+						<h:panelGroup rendered="#{indicadorView.status.code == 1}">
+							<p:selectOneMenu id="cmbUnidadMedida"
+								value="#{indicadorView.newIndicador.unidadMedida}" required="true"
+								requiredMessage="seleccinar unidad de medida">
+								<f:selectItem itemValue="" itemLabel="Seleccionar unidad de medida" />
+								<f:selectItems value="#{indicadorView.unidadesMedidas}" var="unidad"
+									itemValue="#{unidad}" itemLabel="#{unidad.description}" />
+							</p:selectOneMenu>
+							<p:message for="cmbUnidadMedida" />
+						</h:panelGroup>
+						
+						<h:panelGroup rendered="#{indicadorView.status.code == 2}">
+							<p:selectOneMenu id="cmbUpdateUnidadMedida"
+								value="#{indicadorView.indicadorSelected.unidadMedida}" required="true"
+								requiredMessage="seleccinar unidad de medida">
+								<f:selectItem itemValue="" itemLabel="Seleccionar unidad de medida" />
+								<f:selectItems value="#{indicadorView.unidadesMedidas}" var="unidad"
+									itemValue="#{unidad}" itemLabel="#{unidad.description}" />
+							</p:selectOneMenu>
+							<p:message for="cmbUpdateUnidadMedida" />
+						</h:panelGroup>
+						
+						<p:outputLabel value="Tipo de evaluación:" for="cmbTipoEvaluacion" />
+						<h:panelGroup rendered="#{indicadorView.status.code == 1}">
+							<p:selectOneMenu id="cmbTipoEvaluacion"
+								value="#{indicadorView.newIndicador.evaluationPeriod}" required="true"
+								requiredMessage="seleccinar tipo de evaluación">
+								<f:selectItem itemValue="" itemLabel="Seleccionar tipo de evaluación" />
+								<f:selectItems value="#{indicadorView.evaluations}" var="evaluation"
+									itemValue="#{evaluation}" itemLabel="#{evaluation.description}" />
+							</p:selectOneMenu>
+							<p:message for="cmbTipoEvaluacion" />
+						</h:panelGroup>
+						
+						<h:panelGroup rendered="#{indicadorView.status.code == 2}">
+							<p:selectOneMenu id="cmbUpdateTipoEvaluacion"
+								value="#{indicadorView.indicadorSelected.evaluationPeriod}" required="true"
+								requiredMessage="seleccinar tipo de evaluación">
+								<f:selectItem itemValue="" itemLabel="Seleccionar tipo de evaluación" />
+								<f:selectItems value="#{indicadorView.evaluations}" var="evaluation"
+									itemValue="#{evaluation}" itemLabel="#{evaluation.description}" />
+							</p:selectOneMenu>
+							<p:message for="cmbUpdateTipoEvaluacion" />
+						</h:panelGroup>
+						
+					</p:panelGrid>
+				<p:spacer height="10" />
+				<p:separator/>
+				<center>
+					<p:outputPanel style="width: 100%; font-size:16px !important;">
+	
+						<p:commandButton
+							actionListener="#{indicadorView.saveIndicador}"
+							value="#{safiCommonBundle.Save}"
+							update=":registerIndicadorForm:indicadorTable :createUpdateIndicadorForm"
+							oncomplete="PF('indicadorDialog').hide();"
+							validateClient="true"
+							rendered="#{indicadorView.status.code ==  1}">
+							<p:confirm header="#{safiCommonBundle.ConfirmationHeader}"
+								message="#{safiCommonBundle.ConfirmCreateMessage}" icon="ui-icon-alert" />
+						</p:commandButton>
+						
+						<p:commandButton
+							actionListener="#{indicadorView.updateIndicador}"
+							value="Actualizar"
+							update=":registerIndicadorForm:indicadorTable :createUpdateIndicadorForm"
+							oncomplete="PF('indicadorDialog').hide();"
+							validateClient="true"
+							rendered="#{indicadorView.status.code ==  2}">
+							<p:confirm header="#{safiCommonBundle.ConfirmationHeader}"
+								message="#{safiCommonBundle.ConfirmCreateMessage}" icon="ui-icon-alert" />
+						</p:commandButton>
+					
+						<p:spacer width="7" />
+						<p:commandButton id="cancelButton" value="#{safiCommonBundle.Cancel}"
+							oncomplete="PF('indicadorDialog').hide();"
+							process="@this">
+							<p:resetInput target="createUpdateIndicadorForm" />
+						</p:commandButton>
+					</p:outputPanel>
+				</center>
+			</h:form>
+		</p:dialog>
+	
+    </ui:composition>
+</html>

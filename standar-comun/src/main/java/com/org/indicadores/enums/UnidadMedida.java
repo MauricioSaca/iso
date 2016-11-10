@@ -2,11 +2,11 @@ package com.org.indicadores.enums;
 
 public enum UnidadMedida {
 
-	CURRENCY("$", "DINERO"),
+	CURRENCY("$", "MONETARIO"),
 
 	PORCENTAJE("%", "PORCENTAJE"),
 
-	NUMERIC("#", "NUMERO");
+	NUMERIC("#", "NUMERICO");
 
 	String code;
 

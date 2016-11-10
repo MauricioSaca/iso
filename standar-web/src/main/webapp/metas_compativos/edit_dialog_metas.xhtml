@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+    <ui:composition>
+        <p:dialog header="Verificar Meta" widgetVar="metaDialog" id="metaDialog" modal="true"
+				  showEffect="blind" resizable="false" hideEffect="blind" width="35%"
+				  visible=""
+				  appendTo="@(body)" responsive="true">
+				<h:form id="updateMetaForm">
+				
+					<p:panelGrid columns="2" columnClasses="property, val" id="panelSend" style="width: 100%; font-size:16px !important;"
+						rendered="#{managerMetasView.metaSelected != null}">
+						
+						<p:outputLabel value="Alcanzada:" for="alcanzada" />
+						<h:panelGroup rendered="#{managerMetasView.status.code == 2}">
+							<p:selectBooleanCheckbox id="alcanzada"
+								value="#{managerMetasView.metaSelected.alcanzada}"/>
+							<p:message for="alcanzada" />
+						</h:panelGroup>
+						
+						<p:outputLabel value="Evaluacion:" for="cmbEvaluacion" />
+						<h:panelGroup rendered="#{managerMetasView.status.code == 2}">
+							<p:selectOneMenu id="cmbEvaluacion"
+								value="#{managerMetasView.metaSelected.evaluationLevel}" required="true"
+								requiredMessage="seleccinar nivel de evaluacion">
+								<f:selectItem itemValue="" itemLabel="seleccinar nivel de evaluacion" />
+								<f:selectItems value="#{managerMetasView.evaluations}" var="eva"
+									itemValue="#{eva}" itemLabel="#{eva.description}" />
+							</p:selectOneMenu>
+							<p:message for="cmbEvaluacion" />
+						</h:panelGroup>
+						
+				
+						<p:outputLabel value="Resultado meta:" for="meta"/>
+						<h:panelGroup rendered="#{managerMetasView.status.code == 2}">
+							<p:inputText id="meta"
+										value="#{managerMetasView.metaSelected.resultadoMeta}"
+										style="width:50%"
+										required="true"
+										rendered="#{managerMetasView.status.code ==  2}">
+							<f:converter converterId="javax.faces.Double" /> 
+							</p:inputText>
+						</h:panelGroup>
+					</p:panelGrid>
+				<p:spacer height="10" />
+				<p:separator/>
+				<center>
+					<p:outputPanel style="width: 100%; font-size:16px !important;">
+	
+						<p:commandButton
+							actionListener="#{managerMetasView.updateMeta}"
+							value="Actualizar"
+							update=":metasForm:metasTable :updateMetaForm :metasForm:accordion:charMeta"
+							oncomplete="PF('metaDialog').hide();"
+							validateClient="true"
+							rendered="#{managerMetasView.status.code ==  2}">
+							<p:confirm header="#{safiCommonBundle.ConfirmationHeader}"
+								message="#{safiCommonBundle.ConfirmCreateMessage}" icon="ui-icon-alert" />
+						</p:commandButton>
+					
+						<p:spacer width="7" />
+						<p:commandButton id="cancelButton" value="#{safiCommonBundle.Cancel}"
+							oncomplete="PF('metaDialog').hide();"
+							process="@this">
+							<p:resetInput target="updateMetaForm" />
+						</p:commandButton>
+					</p:outputPanel>
+				</center>
+			</h:form>
+		</p:dialog>
+	
+    </ui:composition>
+</html>
