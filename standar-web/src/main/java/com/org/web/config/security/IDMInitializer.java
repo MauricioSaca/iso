@@ -42,11 +42,11 @@ public class IDMInitializer {
 
 	@PostConstruct
 	public void create() throws Exception {
-		Realm realm = partitionManager.getPartition(Realm.class, ApplicationRealmNames.ADOPTION.getCode());
+		Realm realm = partitionManager.getPartition(Realm.class, ApplicationRealmNames.SCHOOL_APPLICATION.getCode());
 
 		if (realm == null) {
 			log.log(Level.SEVERE, null, "Couldn't find default partition, creating default partition");
-			realm = new Realm(ApplicationRealmNames.ADOPTION.getCode());
+			realm = new Realm(ApplicationRealmNames.SCHOOL_APPLICATION.getCode());
 			this.partitionManager.add(realm);
 		} else {
 			log.log(Level.WARNING, "Found default partition!!!!!!!!!!!");

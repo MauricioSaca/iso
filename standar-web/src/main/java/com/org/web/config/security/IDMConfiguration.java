@@ -49,7 +49,7 @@ public class IDMConfiguration {
 
 	private IdentityConfiguration identityConfig = null;
 
-	protected static final String APPLICATION_NAME = "Adoption Application";
+	protected static final String APPLICATION_NAME = "Manager students application";
 
 	private PartitionManager partitionManager;
 	private Realm realm;
@@ -127,7 +127,7 @@ public class IDMConfiguration {
 	private void createDefaultRealm() throws NoSuchAlgorithmException {
 		Partition partition = getDefaultPartition();
 		if (partition == null) {
-			realm = new Realm(ApplicationRealmNames.ADOPTION.getCode());
+			realm = new Realm(ApplicationRealmNames.SCHOOL_APPLICATION.getCode());
 
 			realm.setEnforceSSL(true);
 
@@ -145,7 +145,7 @@ public class IDMConfiguration {
 	@Produces
 	@PicketLink
 	public Partition getDefaultPartition() {
-		return partitionManager.getPartition(Realm.class, ApplicationRealmNames.ADOPTION.getCode());
+		return partitionManager.getPartition(Realm.class, ApplicationRealmNames.SCHOOL_APPLICATION.getCode());
 	}
 
 }

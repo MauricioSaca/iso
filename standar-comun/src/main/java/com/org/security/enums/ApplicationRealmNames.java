@@ -2,7 +2,7 @@ package com.org.security.enums;
 
 public enum ApplicationRealmNames {
 
-	ADOPTION("Adoption", "Aplicacion de adopcion de mascotas");
+	SCHOOL_APPLICATION("School", "Aplicacion de control de estudiantes");
 
 	String code;
 

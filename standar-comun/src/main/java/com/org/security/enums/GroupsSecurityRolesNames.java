@@ -4,13 +4,13 @@ public enum GroupsSecurityRolesNames {
 
 	ADMINS("admins","Administradores"),
 	
-	POSTULANDS("postulands","Postulantes"),
+	ESTUDENTS("estudents","Estudiantes"),
 	
-	ORGANIZERS("organizers","Organizacionales"),
+	TEACHERS("teachers","Maestros"),
 	
 	REPORTS("reports","Reporteria"),
 	
-	MANAGERS("managers","Gerencial");
+	MANAGERS("managers","Director");
 	
 	String code;
 
