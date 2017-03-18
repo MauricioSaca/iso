@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+
+
+	<p:panelGrid id="pgAddEditTeacher" columns="2">
+		<p:outputLabel value="Nombre" for="txtNames" />
+		<p:inputText id="txtNames" value="#{teacherView.teacher.name}" />
+
+		<p:outputLabel value="Apellidos" for="txtLastNames" />
+		<p:inputText id="txtLastNames" value="#{teacherView.teacher.lastName}" />
+
+		<p:outputLabel value="Edad" for="spAge" />
+		<p:spinner id="spAge" value="#{teacherView.teacher.age}" min="0"
+			max="100" />
+
+		<p:outputLabel value="Direccion" for="txtAddress" />
+		<p:inputText id="txtAddress" value="#{teacherView.teacher.address}" />
+
+		<p:outputLabel value="Fecha de Nacimiento" for="cDayBrth" />
+		<p:calendar id="cDayBrth"
+			value="#{teacherView.teacher.dateOfBirth}" showOn="button" />
+
+		<!-- 				<p:outputLabel value="Activo" for="bcIsActive" /> -->
+		<!-- 				<p:selectBooleanCheckbox id="bcIsActive" value="#{teacherView.teacher.isActive}" /> -->
+
+	</p:panelGrid>
+
+	<br />
+
+	<p:commandButton value="Guardar" icon="fa fa-save"
+		action="#{teacherView.save}" process="@form"
+		update="teachersForm:contentPanel" />
+
+	<p:commandButton value="Cancelar" icon="fa fa-remove" process="@this"
+		action="#{teacherView.setRenderEditView(false)}"
+		update="teachersForm:contentPanel" />
+
+	<p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+		<p:commandButton value="Si" type="button"
+			styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+		<p:commandButton value="No" type="button"
+			styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+	</p:confirmDialog>
+
+
+</ui:composition>

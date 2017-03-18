@@ -3,8 +3,11 @@ package com.org.school.model;
 import java.io.Serializable;
 import java.util.Date;
 
+import javax.persistence.Column;
 import javax.persistence.MappedSuperclass;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -23,6 +26,8 @@ public class People implements Serializable {
 
 	private int age;
 
+	@Column
+	@Temporal(TemporalType.DATE)
 	private Date dateOfBirth;
 
 	private String address;
