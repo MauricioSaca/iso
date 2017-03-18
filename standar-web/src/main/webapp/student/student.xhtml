@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui" template="/template/layout.xhtml">
+
+	<ui:define name="head">
+
+	</ui:define>
+
+	<ui:define name="subheader">
+		<h:outputText value="PRUEBAS"></h:outputText>
+	</ui:define>
+
+	<ui:define name="content">
+		<h:form id="studentsForm">
+			<p:outputPanel id="contentPanel">
+				<p:outputPanel id="panelList" rendered="#{!studentView.renderEditView}">
+
+					<p:contextMenu id="ctxMascotas" for="studentsForm:dtstudents">
+						<p:menuitem value="Editar" icon="fa fa-pencil"
+							action="#{studentView.prepareUpdate}"
+							update="studentsForm:contentPanel" />
+						<p:menuitem value="Eliminar" icon="fa fa-trash"
+							action="#{studentView.delete}" update="studentsForm:dtstudents">
+							<p:confirm header="Eliminacion"
+								message="Desea eliminar este registro?" />
+						</p:menuitem>
+					</p:contextMenu>
+
+					<h2>Listado de Estudiantes</h2>
+					<p:separator />
+
+					<p:dataTable id="dtstudents" widgetVar="dtstudents" var="student"
+						selection="#{studentView.student}" selectionMode="single"
+						value="#{studentView.studentLazyData}" rows="10" paginator="true"
+						paginatorPosition="bottom" lazy="true">
+						<f:facet name="header">
+			        		Lista de Estudiantes
+			        	</f:facet>
+
+						<p:column headerText="Nombre" filterBy="#{student.name}">
+			        		#{student.name}
+			        	</p:column>
+
+						<p:column headerText="Apellidos" filterBy="#{student.lastName}">
+			        		#{student.lastName}
+			        	</p:column>
+
+						<p:column headerText="Fecha de Nacimiento" filterBy="#{student.dateOfBirth}">
+			        		#{student.dateOfBirth}
+			        	</p:column>
+			        	
+						<p:column headerText="Edad" filterBy="#{student.age}">
+			        		#{student.age}
+			        	</p:column>
+			        	
+			        	<p:column headerText="Direccion" filterBy="#{student.address}">
+			        		#{student.address}
+			        	</p:column>
+
+					</p:dataTable>
+
+					<p:commandButton value="Nuevo" icon="fa fa-plus"
+						action="#{studentView.prepareSave}"
+						update="studentsForm:contentPanel" />
+		
+				</p:outputPanel>
+
+				<p:outputPanel id="panelAddEdit"
+					rendered="#{studentView.renderEditView}">
+					<ui:include src="./registro.xhtml" />
+				</p:outputPanel>
+
+			</p:outputPanel>
+
+			<p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+				<p:commandButton value="Si" type="button"
+					styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+				<p:commandButton value="No" type="button"
+					styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+			</p:confirmDialog>
+		</h:form>
+
+	</ui:define>
+
+</ui:composition>
