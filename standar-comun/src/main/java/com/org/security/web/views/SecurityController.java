@@ -55,24 +55,24 @@ public class SecurityController implements Serializable {
 		model = new DefaultMenuModel();
 
 		boolean isAdminUser = authorizationChecker.hasGroup(GroupsSecurityRolesNames.ADMINS.getCode());
-		boolean isPostulantUser = authorizationChecker.hasGroup(GroupsSecurityRolesNames.POSTULANDS.getCode());
+		boolean isEstudentUser = authorizationChecker.hasGroup(GroupsSecurityRolesNames.ESTUDENTS.getCode());
 		boolean isManagerUser = authorizationChecker.hasGroup(GroupsSecurityRolesNames.MANAGERS.getCode());
-		boolean isOrganizacionalUser = authorizationChecker.hasGroup(GroupsSecurityRolesNames.ORGANIZERS.getCode());
+		boolean isTeacherUser = authorizationChecker.hasGroup(GroupsSecurityRolesNames.TEACHERS.getCode());
 		
 		if (isAdminUser) {
 			adminMenu();
 		}
 
-		if (isPostulantUser) {
-			postulanteMenu();
+		if (isEstudentUser) {
+			studentMenu();
 		}
 
 		if (isManagerUser) {
 			managerMenu();
 		}
 
-		if (isOrganizacionalUser) {
-			organizacionalMenu();
+		if (isTeacherUser) {
+			teacherMenu();
 		}
 
 	}
@@ -129,7 +129,7 @@ public class SecurityController implements Serializable {
 		model.addElement(thirdSubmenu);
 	}
 
-	private void postulanteMenu() {
+	private void studentMenu() {
 		DefaultSubMenu firstSubmenu = new DefaultSubMenu("Administración");
 		firstSubmenu.setIcon("icon-menu");
 
@@ -165,7 +165,7 @@ public class SecurityController implements Serializable {
 		model.addElement(firstSubmenu);
 	}
 
-	private void organizacionalMenu() {
+	private void teacherMenu() {
 
 		DefaultSubMenu firstSubmenu = new DefaultSubMenu("Menú");
 		firstSubmenu.setIcon("icon-menu");

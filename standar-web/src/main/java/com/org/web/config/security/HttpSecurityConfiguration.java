@@ -29,14 +29,14 @@ public class HttpSecurityConfiguration {
              .forPath("/logout", "Authentication")
              	.logout()
              	.redirectTo("/login.xhtml")
-             .forPath("/mascotas/*","Authentication") //postulant
+             .forPath("/mascotas/*","Authentication") //estudent
              	.authorizeWith()
-             		.group(GroupsSecurityRolesNames.ORGANIZERS.getCode())
+             		.group(GroupsSecurityRolesNames.ESTUDENTS.getCode())
              			.redirectTo("/errors/access-denied.xhtml")
              				.whenForbidden()
-              .forPath("/postulante/*","Authentication")
+              .forPath("/postulante/*","Authentication") //teacher
               	.authorizeWith()
-              		.group(GroupsSecurityRolesNames.POSTULANDS.getCode())
+              		.group(GroupsSecurityRolesNames.TEACHERS.getCode())
               			.redirectTo("/errors/access-denied.xhtml")
               				.whenForbidden()
               .forPath("/security/*","Authentication") //Admins
