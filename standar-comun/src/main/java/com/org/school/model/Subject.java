@@ -1,6 +1,10 @@
 package com.org.school.model;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
@@ -22,8 +26,13 @@ public class Subject implements BaseModelEntity<Long>{
 	
 	private static final long serialVersionUID = 830254835292L;
 
+	@Id
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SEQ_SUBJECT")
+	@Column(nullable = false)
 	private Long id;
+	
 	private String code;
+	
 	private String name;
 	
 }

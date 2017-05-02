@@ -1,7 +1,5 @@
 package com.org.school.model;
 
-import java.util.Date;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -20,30 +18,29 @@ import lombok.Setter;
 import lombok.ToString;
 
 @Entity
-@Table(name = "STUDENTCOURSEATTENDANCE")
-@SequenceGenerator(name = "SEQ_STUDENTCOURSEATTENDANCE", sequenceName = "SEQ_STUDENTCOURSEATTENDANCE", allocationSize = 1)
+@Table(name = "SUBJECTPERCOURSE")
+@SequenceGenerator(name = "SEQ_SUBJECTPERCOURSE", sequenceName = "SEQ_SUBJECTPERCOURSE", allocationSize = 1)
 @EqualsAndHashCode(of = { "id" }, callSuper = false)
 @ToString(of = { "id" })
 @Getter
 @Setter
-public class StudentCourseAttendance implements BaseModelEntity<Long> {
+public class SubjectPerCourse implements BaseModelEntity<Long>{
 
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = 5226046395458064122L;
+	private static final long serialVersionUID = 4535072605550654743L;
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SEQ_STUDENTCOURSEATTENDANCE")
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SEQ_SUBJECTPERCOURSE")
 	@Column(nullable = false)
 	private Long id;
 	
-	private Date dateAttendance;
-	
-	private Boolean attendance;
+	@ManyToOne
+	@JoinColumn(name = "SUBJECT_ID")
+	private Subject subject;
 	
 	@ManyToOne
-	@JoinColumn(name = "STUDENTSPERCOURSE_ID")
-	private StudentsPerCourse studentsPerCourse;
-
+	@JoinColumn(name = "COURSES_ID")
+	private Courses courses;
 }
