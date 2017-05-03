@@ -8,6 +8,7 @@ import javax.persistence.Id;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
+import com.org.school.enums.StudentStatus;
 import com.org.util.domain.BaseModelEntity;
 
 import lombok.EqualsAndHashCode;
@@ -30,5 +31,19 @@ public class Student extends People implements BaseModelEntity<Long> {
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SEQ_STUDENT")
 	@Column(nullable = false)
 	private Long id;
+
+	@Column(length = 255, nullable = true)
+	private String studentStatus;
+
+	/**
+	 * Relations By Enums
+	 **/
+	public StudentStatus getStudentStatus() {
+		return StudentStatus.getStudentStatus(this.studentStatus);
+	}
+
+	public void setStudentStatus(StudentStatus studentStatus) {
+		this.studentStatus = studentStatus != null ? studentStatus.getCode() : null;
+	}
 
 }

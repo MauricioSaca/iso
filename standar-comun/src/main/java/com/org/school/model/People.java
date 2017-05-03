@@ -4,10 +4,15 @@ import java.io.Serializable;
 import java.util.Date;
 
 import javax.persistence.Column;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.MappedSuperclass;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+
+import com.org.school.enums.Gender;
+import com.org.school.enums.Shift;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -33,5 +38,34 @@ public class People implements Serializable {
 	private String address;
 
 	private int isActive;
+
+	@ManyToOne
+	@JoinColumn(name = "SCHOOL_ID")
+	private School school;
+
+	@Column(length = 255, nullable = true)
+	private String gender;
+
+	@Column(length = 255, nullable = true)
+	private String shift;
+
+	/**
+	 * Relations By Enums
+	 **/
+	public Gender getGender() {
+		return Gender.getGender(this.gender);
+	}
+
+	public void setGender(Gender gender) {
+		this.gender = gender != null ? gender.getCode() : null;
+	}
+
+	public Shift getShift() {
+		return Shift.getShift(this.shift);
+	}
+
+	public void setShift(Shift shift) {
+		this.shift = shift != null ? shift.getCode() : null;
+	}
 
 }

@@ -1,7 +1,5 @@
 package com.org.school.model;
 
-import java.util.Date;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -11,8 +9,6 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 
 import com.org.util.domain.BaseModelEntity;
 
@@ -22,33 +18,31 @@ import lombok.Setter;
 import lombok.ToString;
 
 @Entity
-@Table(name = "ASSIGMENTS")
-@SequenceGenerator(name = "SEQ_ASSIGMENTS", sequenceName = "SEQ_ASSIGMENTS", allocationSize = 1)
+@Table(name = "SCHOOL")
+@SequenceGenerator(name = "SEQ_SCHOOL", sequenceName = "SEQ_SCHOOL", allocationSize = 1)
 @EqualsAndHashCode(of = { "id" }, callSuper = false)
 @ToString(of = { "id" })
 @Getter
 @Setter
-public class Assigments implements BaseModelEntity<Long> {
+public class School implements BaseModelEntity<Long> {
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1725531125738359064L;
+	private static final long serialVersionUID = -376875654L;
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SEQ_ASSIGMENTS")
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SEQ_SCHOOL")
 	@Column(nullable = false)
 	private Long id;
 
+	private String code;
+
 	private String name;
 
-	private String description;
+	private String foundationYear;
 
-	@Column
-	@Temporal(TemporalType.DATE)
-	private Date dueDate;
+	private Boolean isActive;
 
 	@ManyToOne
-	@JoinColumn(name = "SUBJECTPERCOURSE_ID")
-	private SubjectPerCourse subjectPerCourse;
+	@JoinColumn(name = "DEPARTMENT_ID")
+	private Department department;
+
 }

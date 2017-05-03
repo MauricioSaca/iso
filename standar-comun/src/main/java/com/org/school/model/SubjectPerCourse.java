@@ -24,7 +24,7 @@ import lombok.ToString;
 @ToString(of = { "id" })
 @Getter
 @Setter
-public class SubjectPerCourse implements BaseModelEntity<Long>{
+public class SubjectPerCourse implements BaseModelEntity<Long> {
 
 	/**
 	 * 
@@ -35,11 +35,15 @@ public class SubjectPerCourse implements BaseModelEntity<Long>{
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SEQ_SUBJECTPERCOURSE")
 	@Column(nullable = false)
 	private Long id;
-	
+
+	@ManyToOne
+	@JoinColumn(name = "PERIOD_ID")
+	private Period period;
+
 	@ManyToOne
 	@JoinColumn(name = "SUBJECT_ID")
 	private Subject subject;
-	
+
 	@ManyToOne
 	@JoinColumn(name = "COURSES_ID")
 	private Courses courses;
