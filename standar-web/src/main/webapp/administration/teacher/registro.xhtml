@@ -9,6 +9,11 @@
 
 
 	<p:panelGrid id="pgAddEditTeacher" columns="2">
+	
+		<p:outputLabel value="Nombre de usuario" for="txtNombreUsuario" />
+		
+		<p:inputText id="txtNombreUsuario" required="true" value="#{teacherView.userName}" />
+	
 		<p:outputLabel value="Nombre" for="txtNames" />
 		<p:inputText id="txtNames" value="#{teacherView.teacher.name}" />
 
@@ -22,6 +27,32 @@
 		<p:outputLabel value="Direccion" for="txtAddress" />
 		<p:inputText id="txtAddress" value="#{teacherView.teacher.address}" />
 
+		
+		<p:outputLabel value="Email" for="txtEmail" />
+		<p:inputText id="txtEmail" required="true"
+			value="#{teacherView.teacher.email}" />
+			
+		<p:outputLabel value="Celular" for="txtMovil" />
+		<p:inputMask id="txtMovil" mask="9999-9999" required="true"
+			value="#{teacherView.teacher.cellPhone}" />
+		
+		<p:outputLabel value="Genero" for="orGender" />
+		<p:selectOneRadio id="orGender" required="true"
+			value="#{teacherView.teacher.gender}"
+			layout="grid" columns="1">
+			<f:selectItems value="#{teacherView.genderList}"
+				var="gender" itemValue="#{gender}" itemLabel="#{gender.description}" />
+		</p:selectOneRadio>
+		
+		<p:outputLabel value="Turno" for="orTurno" />
+		<p:selectOneRadio id="orTurno" required="true"
+			value="#{teacherView.teacher.shift}"
+			layout="grid" columns="1">
+			<f:selectItems value="#{teacherView.shiftList}"
+				var="shift" itemValue="#{shift}" itemLabel="#{shift.description}" />
+		</p:selectOneRadio>
+
+		
 		<p:outputLabel value="Fecha de Nacimiento" for="cDayBrth" />
 		<p:calendar id="cDayBrth"
 			value="#{teacherView.teacher.dateOfBirth}" showOn="button" />

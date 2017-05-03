@@ -29,12 +29,12 @@ public class HttpSecurityConfiguration {
              .forPath("/logout", "Authentication")
              	.logout()
              	.redirectTo("/login.xhtml")
-             .forPath("/mascotas/*","Authentication") //estudent
+             .forPath("/students/*","Authentication") //estudent
              	.authorizeWith()
              		.group(GroupsSecurityRolesNames.ESTUDENTS.getCode())
              			.redirectTo("/errors/access-denied.xhtml")
              				.whenForbidden()
-              .forPath("/postulante/*","Authentication") //teacher
+              .forPath("/teachers/*","Authentication") //teacher
               	.authorizeWith()
               		.group(GroupsSecurityRolesNames.TEACHERS.getCode())
               			.redirectTo("/errors/access-denied.xhtml")
@@ -44,17 +44,12 @@ public class HttpSecurityConfiguration {
               		.group(GroupsSecurityRolesNames.ADMINS.getCode())
               			.redirectTo("/errors/access-denied.xhtml")
               				.whenForbidden()
-              .forPath("/indicadores/*","Authentication") //Manager
+              .forPath("/administration/*","Authentication") //Manager
               	.authorizeWith()
               		.group(GroupsSecurityRolesNames.ADMINS.getCode())
               			.redirectTo("/errors/access-denied.xhtml")
               				.whenForbidden()
-              .forPath("/metas/*","Authentication") //Manager
-              	.authorizeWith()
-              		.group(GroupsSecurityRolesNames.ADMINS.getCode())
-              			.redirectTo("/errors/access-denied.xhtml")
-              				.whenForbidden()
-              .forPath("/metas_compativos/*","Authentication") //Manager
+              .forPath("/director/*","Authentication") //Manager
 	          	.authorizeWith()
 	          		.group(GroupsSecurityRolesNames.MANAGERS.getCode())
 	          			.redirectTo("/errors/access-denied.xhtml")

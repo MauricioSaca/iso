@@ -104,63 +104,53 @@ public class SecurityController implements Serializable {
 
 		model.addElement(firstSubmenu);
 
-		DefaultSubMenu secondSubmenu = new DefaultSubMenu("Administración de indicadores");
+		DefaultSubMenu secondSubmenu = new DefaultSubMenu("Administración de alumnos y maestros");
 		secondSubmenu.setIcon("icon-menu");
 
 		item = new DefaultMenuItem();
-		item.setValue("Lista de indicadores");
-		item.setTarget("/indicadores/list.xhtml");
+		item.setValue("Lista de estudiantes");
+		item.setTarget("/administration/student/student.xhtml");
+		item.setIcon("icon-hyperlink");
+		item.setCommand("#{securityController.onMenuSelect}");
+		secondSubmenu.addElement(item);
+		
+		item = new DefaultMenuItem();
+		item.setValue("Lista de maestros");
+		item.setTarget("/administration/teacher/teacher.xhtml");
 		item.setIcon("icon-hyperlink");
 		item.setCommand("#{securityController.onMenuSelect}");
 		secondSubmenu.addElement(item);
 
 		model.addElement(secondSubmenu);
 
-		DefaultSubMenu thirdSubmenu = new DefaultSubMenu("Asignación de metas a indicadores");
-		thirdSubmenu.setIcon("icon-menu");
-
-		item = new DefaultMenuItem();
-		item.setValue("Indicadores");
-		item.setTarget("/metas/indicador_list.xhtml");
-		item.setIcon("icon-hyperlink");
-		item.setCommand("#{securityController.onMenuSelect}");
-		thirdSubmenu.addElement(item);
-
-		model.addElement(thirdSubmenu);
 	}
 
 	private void studentMenu() {
-		DefaultSubMenu firstSubmenu = new DefaultSubMenu("Administración");
+		DefaultSubMenu firstSubmenu = new DefaultSubMenu("Menú");
 		firstSubmenu.setIcon("icon-menu");
 
 		DefaultMenuItem item = new DefaultMenuItem();
 
-		item.setValue(" Buscar");
-		item.setTarget("/postulante/buscar.xhtml");
+		item.setValue("Asistencia y conducta");
+		item.setTarget("/students/index.xhtml");
 		item.setIcon("icon-search");
 		item.setCommand("#{securityController.onMenuSelect}");
 		firstSubmenu.addElement(item);
 		
 		item = new DefaultMenuItem();
-		item.setValue(" Perfil");
-		item.setTarget("/postulante/perfil.xhtml");
+		item.setValue("Entrega de tareas ex-aula");
+		item.setTarget("/students/index.xhtml");
 		item.setIcon("icon-hyperlink");
 		item.setCommand("#{securityController.onMenuSelect}");
 		firstSubmenu.addElement(item);
 
 		item = new DefaultMenuItem();
-		item.setValue(" Solicitudes");
-		item.setTarget("/postulante/solicitudes.xhtml");
+		item.setValue("Calificaciones");
+		item.setTarget("/students/index.xhtml");
 		item.setIcon("fa fa-list-alt");
 		item.setCommand("#{securityController.onMenuSelect}");
 		firstSubmenu.addElement(item);
 
-		item = new DefaultMenuItem();
-		item.setValue(" Cuestionario");
-		item.setTarget("/postulante/cuestionario.xhtml");
-		item.setIcon("icon-book");
-		item.setCommand("#{securityController.onMenuSelect}");
-		firstSubmenu.addElement(item);
 
 		model.addElement(firstSubmenu);
 	}
@@ -171,29 +161,29 @@ public class SecurityController implements Serializable {
 		firstSubmenu.setIcon("icon-menu");
 
 		DefaultMenuItem item = new DefaultMenuItem();
-		item.setValue(" Mascotas");
-		item.setTarget("/mascotas/mascotas.xhtml");
+		item.setValue("Asistencia");
+		item.setTarget("/teachers/index.xhtml");
 		item.setIcon("icon-feather");
 		item.setCommand("#{securityController.onMenuSelect}");
 		firstSubmenu.addElement(item);
 
 		item = new DefaultMenuItem();
-		item.setValue(" Adoptantes");
-		item.setTarget("/mascotas/adoptantes.xhtml");
+		item.setValue("Actividades ex-aula");
+		item.setTarget("/teachers/index.xhtml");
 		item.setIcon("fa fa-folder-open-o");
 		item.setCommand("#{securityController.onMenuSelect}");
 		firstSubmenu.addElement(item);
 
 		item = new DefaultMenuItem();
-		item.setValue(" Solicitudes de Adopcion");
-		item.setTarget("/mascotas/solicitudes.xhtml");
+		item.setValue("Control de conducta");
+		item.setTarget("/teachers/index.xhtml");
 		item.setIcon("fa fa-folder-open-o");
 		item.setCommand("#{securityController.onMenuSelect}");
 		firstSubmenu.addElement(item);
 		
 		item = new DefaultMenuItem();
-		item.setValue("Cuestionario");
-		item.setTarget("/mascotas/preguntas.xhtml");
+		item.setValue("Calificaciones de asignaturas");
+		item.setTarget("/teachers/index.xhtml");
 		item.setIcon("icon-book");
 		item.setCommand("#{securityController.onMenuSelect}");
 		firstSubmenu.addElement(item);
@@ -202,12 +192,12 @@ public class SecurityController implements Serializable {
 	}
 
 	private void managerMenu() {
-		DefaultSubMenu firstSubmenu = new DefaultSubMenu("Verificación de metas");
+		DefaultSubMenu firstSubmenu = new DefaultSubMenu("Generación de boleta de notas");
 		firstSubmenu.setIcon("icon-menu");
 
 		DefaultMenuItem item = new DefaultMenuItem();
-		item.setValue("Indicador/Metas");
-		item.setTarget("/metas_compativos/list_indicador_metas.xhtml");
+		item.setValue("Alumnos");
+		item.setTarget("/director/index.xhtml");
 		item.setIcon("fa fa-list-alt");
 		item.setCommand("#{securityController.onMenuSelect}");
 		firstSubmenu.addElement(item);

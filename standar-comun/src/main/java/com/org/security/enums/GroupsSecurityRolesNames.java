@@ -8,8 +8,6 @@ public enum GroupsSecurityRolesNames {
 	
 	TEACHERS("teachers","Maestros"),
 	
-	REPORTS("reports","Reporteria"),
-	
 	MANAGERS("managers","Director");
 	
 	String code;
