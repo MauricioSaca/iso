@@ -26,9 +26,6 @@ import lombok.ToString;
 @Setter
 public class Courses implements BaseModelEntity<Long> {
 	
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = -8304857403626065616L;
 	
 	@Id

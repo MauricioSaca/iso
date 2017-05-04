@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+    <ui:composition>
+        <p:dialog header="Crear curso" widgetVar="courseDialog" id="courseDialog" modal="true"
+				  showEffect="blind" resizable="false" hideEffect="blind" width="35%"
+				  visible=""
+				  appendTo="@(body)" responsive="true">
+				<h:form id="createUpdateCourseForm">
+				
+					<p:panelGrid columns="2" columnClasses="property, val" id="panelSend" style="width: 100%; font-size:16px !important;"
+						rendered="#{courseView.newCourse != null or courseView.courseSelected != null}">
+						
+						<p:outputLabel value="Curso:" for="course" />
+						<h:panelGroup rendered="#{courseView.status.code == 1}">
+							<p:inputText id="course"
+								value="#{courseView.newCourse.name}"
+								required="true"
+								requiredMessage="#{safiBundle.requiredMessageNombre}"
+								validatorMessage="#{safiBundle.validateInputTextMessage}"
+								maxlength="50">
+<!-- 								<f:validateRegex pattern="^[^-\s][A-Za-z ñÑáéíóúÁÉÍÓÚ.,]*"/> -->
+							</p:inputText>
+							<p:message for="course" />
+						</h:panelGroup>
+						
+						<h:panelGroup rendered="#{courseView.status.code == 2}">
+							<p:inputText id="courseNameUpdate"
+								value="#{courseView.courseSelected.name}"
+								required="true"
+								requiredMessage="#{safiBundle.requiredMessageNombre}"
+								validatorMessage="#{safiBundle.validateInputTextMessage}"
+								maxlength="50">
+<!-- 								<f:validateRegex pattern="^[^-\s][A-Za-z ñÑáéíóúÁÉÍÓÚ.,]*"/> -->
+							</p:inputText>
+							<p:message for="courseNameUpdate" />
+						</h:panelGroup>
+						
+								
+						<p:outputLabel value="Profesor encargado:" for="cbTeacher" />
+						<h:panelGroup>
+							<p:selectOneMenu id="cbTeacher" value="#{courseView.teacherSelected}" 
+								filter="true"
+								required="true"
+								requiredMessage="#{safiBundle.requiredMessageNombre}"
+								filterMatchMode="contains" style="width:175px" effect="fold"
+								widgetVar="cbTeacher">
+								<f:selectItem itemLabel="Seleccionar" noSelectionOption="true"/>
+								<f:selectItems
+									value="#{courseView.teacherList}" var="teach"
+									itemLabel="#{teach.name} #{teach.lastName}" itemValue="#{teach}" />
+								<f:converter converterId="jsfUniversalConverter" />
+							</p:selectOneMenu>
+							<p:message for="cbTeacher" />
+						</h:panelGroup>
+						
+					</p:panelGrid>
+				<p:spacer height="10" />
+				<p:separator/>
+				<center>
+					<p:outputPanel style="width: 100%; font-size:16px !important;">
+	
+						<p:commandButton
+							actionListener="#{courseView.saveCourse}"
+							value="#{safiCommonBundle.Save}"
+							update=":registerCourseForm:courseTable :createUpdateCourseForm"
+							oncomplete="PF('courseDialog').hide();"
+							validateClient="true"
+							rendered="#{courseView.status.code ==  1}">
+							<p:confirm header="#{safiCommonBundle.ConfirmationHeader}"
+								message="#{safiCommonBundle.ConfirmCreateMessage}" icon="ui-icon-alert" />
+						</p:commandButton>
+						
+						<p:commandButton
+							actionListener="#{courseView.updateCourse}"
+							value="Actualizar"
+							update=":registerCourseForm:courseTable :createUpdateCourseForm"
+							oncomplete="PF('courseDialog').hide();"
+							validateClient="true"
+							rendered="#{courseView.status.code ==  2}">
+							<p:confirm header="#{safiCommonBundle.ConfirmationHeader}"
+								message="#{safiCommonBundle.ConfirmCreateMessage}" icon="ui-icon-alert" />
+						</p:commandButton>
+					
+						<p:spacer width="7" />
+						<p:commandButton id="cancelButton" value="#{safiCommonBundle.Cancel}"
+							oncomplete="PF('courseDialog').hide();"
+							process="@this">
+							<p:resetInput target="createUpdateCourseForm" />
+						</p:commandButton>
+					</p:outputPanel>
+				</center>
+			</h:form>
+		</p:dialog>
+	
+    </ui:composition>
+</html>

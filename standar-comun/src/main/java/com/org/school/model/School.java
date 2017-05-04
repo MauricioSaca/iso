@@ -45,4 +45,8 @@ public class School implements BaseModelEntity<Long> {
 	@JoinColumn(name = "DEPARTMENT_ID")
 	private Department department;
 
+	@ManyToOne
+	@JoinColumn(name = "MUNICIPAL_ID")
+	private Municipal municipio;
+
 }

@@ -122,6 +122,27 @@ public class SecurityController implements Serializable {
 		secondSubmenu.addElement(item);
 
 		model.addElement(secondSubmenu);
+		
+		DefaultSubMenu thirthSubmenu = new DefaultSubMenu("Administración de centros escolares");
+		thirthSubmenu.setIcon("icon-menu");
+
+		item = new DefaultMenuItem();
+		item.setValue("Lista de escuelas");
+		item.setTarget("/administration/school/list.xhtml");
+		item.setIcon("icon-hyperlink");
+		item.setCommand("#{securityController.onMenuSelect}");
+		thirthSubmenu.addElement(item);
+		
+
+		item = new DefaultMenuItem();
+		item.setValue("Lista de cursos");
+		item.setTarget("/administration/courses/list.xhtml");
+		item.setIcon("icon-hyperlink");
+		item.setCommand("#{securityController.onMenuSelect}");
+		thirthSubmenu.addElement(item);
+		
+
+		model.addElement(thirthSubmenu);
 
 	}
 

@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+    <ui:composition>
+        <p:dialog header="Crear escuela" widgetVar="schoolDialog" id="schoolDialog" modal="true"
+				  showEffect="blind" resizable="false" hideEffect="blind" width="35%"
+				  visible=""
+				  appendTo="@(body)" responsive="true">
+				<h:form id="createUpdateSchoolForm">
+				
+					<p:panelGrid columns="2" columnClasses="property, val" id="panelSend" style="width: 100%; font-size:16px !important;"
+						rendered="#{schoolView.newSchool != null or schoolView.schoolSelected != null}">
+						
+						<p:outputLabel value="Codigo de escuela:" for="schoolCode" />
+						<h:panelGroup rendered="#{schoolView.status.code == 1}">
+							<p:inputText id="schoolCode"
+								value="#{schoolView.newSchool.code}"
+								required="true"
+								requiredMessage="#{safiBundle.requiredMessageNombre}"
+								validatorMessage="#{safiBundle.validateInputTextMessage}"
+								maxlength="50">
+<!-- 								<f:validateRegex pattern="^[^-\s][A-Za-z ñÑáéíóúÁÉÍÓÚ.,]*"/> -->
+							</p:inputText>
+							<p:message for="schoolCode" />
+						</h:panelGroup>
+						
+						<h:panelGroup rendered="#{schoolView.status.code == 2}">
+							<p:inputText id="schoolCodeUpdate"
+								value="#{schoolView.schoolSelected.code}"
+								required="true"
+								requiredMessage="#{safiBundle.requiredMessageNombre}"
+								validatorMessage="#{safiBundle.validateInputTextMessage}"
+								maxlength="50">
+<!-- 								<f:validateRegex pattern="^[^-\s][A-Za-z ñÑáéíóúÁÉÍÓÚ.,]*"/> -->
+							</p:inputText>
+							<p:message for="schoolCodeUpdate" />
+						</h:panelGroup>
+						
+						<p:outputLabel value="Nombre:" for="shoolName" />
+						<h:panelGroup rendered="#{schoolView.status.code == 1}">
+							<p:inputTextarea id="shoolName"
+								value="#{schoolView.newSchool.name}"
+								required="true"
+								requiredMessage="#{safiBundle.requiredMessageNombre}"
+								validatorMessage="#{safiBundle.validateInputTextMessage}"
+ 								rows="6" cols="33">
+<!-- 								<f:validateRegex pattern="[A-Za-zñÑáéíóúÁÉÍÓÚ.,]*"/> -->
+							</p:inputTextarea>
+							<p:message for="shoolName" />
+						</h:panelGroup>
+						
+						<h:panelGroup rendered="#{schoolView.status.code == 2}">
+							<p:inputTextarea id="schoolNameUpdate"
+								value="#{schoolView.schoolSelected.name}"
+								required="true"
+								requiredMessage="#{safiBundle.requiredMessageNombre}"
+								validatorMessage="#{safiBundle.validateInputTextMessage}"
+								 rows="6" cols="33">
+<!-- 								<f:validateRegex pattern="[A-Za-zñÑáéíóúÁÉÍÓÚ.,]*"/> -->
+							</p:inputTextarea>
+							<p:message for="schoolNameUpdate" />
+						</h:panelGroup>
+						
+						<p:outputLabel value="Anio de fundacion:" for="foundationYear" />
+						<h:panelGroup rendered="#{schoolView.status.code == 1}">
+							<p:inputText id="foundationYear"
+								value="#{schoolView.newSchool.foundationYear}"
+								required="true"
+								requiredMessage="#{safiBundle.requiredMessageNombre}"
+								validatorMessage="#{safiBundle.validateInputTextMessage}"
+								maxlength="30" >
+<!-- 								<f:validateRegex pattern="[A-Za-zñÑáéíóúÁÉÍÓÚ.,]*"/> -->
+							</p:inputText>
+							<p:message for="foundationYear" />
+						</h:panelGroup>
+						
+						<h:panelGroup rendered="#{schoolView.status.code == 2}">
+							<p:inputText id="foundatioYearUpdate"
+								value="#{schoolView.schoolSelected.foundationYear}"
+								required="true"
+								requiredMessage="#{safiBundle.requiredMessageNombre}"
+								validatorMessage="#{safiBundle.validateInputTextMessage}"
+								maxlength="30" >
+<!-- 								<f:validateRegex pattern="[A-Za-zñÑáéíóúÁÉÍÓÚ.,]*"/> -->
+							</p:inputText>
+							<p:message for="foundatioYearUpdate" />
+						</h:panelGroup>
+						
+						<p:outputLabel value="Activa:" for="activa" rendered="#{schoolView.status.code == 2}" />
+						
+						<h:panelGroup rendered="#{schoolView.status.code == 2}">
+							<p:selectBooleanCheckbox id="activa"
+								value="#{schoolView.schoolSelected.isActive}"/>
+							<p:message for="activa" />
+						</h:panelGroup>
+								
+						<p:outputLabel value="Departamento:" for="departament" />
+						<h:panelGroup>
+							<p:selectOneMenu id="departament" value="#{schoolView.departmentSelected}" 
+								filter="true"
+								required="true"
+								requiredMessage="#{safiBundle.requiredMessageNombre}"
+								filterMatchMode="contains" style="width:175px" effect="fold"
+								widgetVar="cbDepartament">
+								<p:ajax listener="#{schoolView.changeDepartmentEvent}" update="municipal" />
+								<f:selectItem itemLabel="Seleccionar" noSelectionOption="true"/>
+								<f:selectItems
+									value="#{schoolView.departmentList}" var="dp"
+									itemLabel="#{dp.name}" itemValue="#{dp}" />
+								<f:converter converterId="jsfUniversalConverter" />
+							</p:selectOneMenu>
+							<p:message for="departament" />
+						</h:panelGroup>
+						
+						<p:outputLabel value="Municipio:" for="municipal" />
+						<h:panelGroup>
+							<p:selectOneMenu id="municipal" value="#{schoolView.municipalSelected}" 
+								filter="true"
+								required="true"
+								requiredMessage="#{safiBundle.requiredMessageNombre}"
+								filterMatchMode="contains" style="width:175px" effect="fold"
+								widgetVar="cbMunicipal">
+								<f:selectItem itemLabel="Seleccionar" />
+								<f:selectItems
+									value="#{schoolView.municipalList}" var="muni"
+									itemLabel="#{muni.name}" itemValue="#{muni}" />
+								<f:converter converterId="jsfUniversalConverter" />
+							</p:selectOneMenu>
+							<p:message for="municipal" />
+						</h:panelGroup>
+					</p:panelGrid>
+				<p:spacer height="10" />
+				<p:separator/>
+				<center>
+					<p:outputPanel style="width: 100%; font-size:16px !important;">
+	
+						<p:commandButton
+							actionListener="#{schoolView.saveSchool}"
+							value="#{safiCommonBundle.Save}"
+							update=":registerSchoolForm:schoolTable :createUpdateSchoolForm"
+							oncomplete="PF('schoolDialog').hide();"
+							validateClient="true"
+							rendered="#{schoolView.status.code ==  1}">
+							<p:confirm header="#{safiCommonBundle.ConfirmationHeader}"
+								message="#{safiCommonBundle.ConfirmCreateMessage}" icon="ui-icon-alert" />
+						</p:commandButton>
+						
+						<p:commandButton
+							actionListener="#{schoolView.updateSchool}"
+							value="Actualizar"
+							update=":registerSchoolForm:schoolTable :createUpdateSchoolForm"
+							oncomplete="PF('schoolDialog').hide();"
+							validateClient="true"
+							rendered="#{schoolView.status.code ==  2}">
+							<p:confirm header="#{safiCommonBundle.ConfirmationHeader}"
+								message="#{safiCommonBundle.ConfirmCreateMessage}" icon="ui-icon-alert" />
+						</p:commandButton>
+					
+						<p:spacer width="7" />
+						<p:commandButton id="cancelButton" value="#{safiCommonBundle.Cancel}"
+							oncomplete="PF('schoolDialog').hide();"
+							process="@this">
+							<p:resetInput target="createUpdateSchoolForm" />
+						</p:commandButton>
+					</p:outputPanel>
+				</center>
+			</h:form>
+		</p:dialog>
+	
+    </ui:composition>
+</html>
