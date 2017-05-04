@@ -5,8 +5,6 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
@@ -33,7 +31,4 @@ public class Teacher extends People implements BaseModelEntity<Long>  {
 	@Column(nullable = false)
 	private Long id;
 	
-	@ManyToOne
-	@JoinColumn(name = "COURSES_ID")
-	private Courses courses;
 }
