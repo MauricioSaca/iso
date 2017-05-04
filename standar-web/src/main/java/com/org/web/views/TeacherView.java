@@ -101,7 +101,7 @@ public class TeacherView implements Serializable {
 				teacherService.save(teacher);
 				
 				
-				String message = "Usted ha sigo registrado en la Fundacion Huellitas. "
+				String message = "Usted ha sigo registrado."
 						+ "Su nombre de usuario es: " + userName + " clave: " + randomPassWord + " "
 								+ "No olvide cambiar su clave al ingresar al sistema.";
 				

@@ -162,7 +162,7 @@ public class SecurityController implements Serializable {
 
 		DefaultMenuItem item = new DefaultMenuItem();
 		item.setValue("Asistencia");
-		item.setTarget("/teachers/index.xhtml");
+		item.setTarget("/teachers/asistencia.xhtml");
 		item.setIcon("icon-feather");
 		item.setCommand("#{securityController.onMenuSelect}");
 		firstSubmenu.addElement(item);
