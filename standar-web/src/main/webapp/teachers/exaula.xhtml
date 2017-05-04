@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui" template="/template/layout.xhtml">
+
+	<ui:define name="head">
+
+	</ui:define>
+
+	<ui:define name="subheader">
+		<h:outputText value="PRUEBAS"></h:outputText>
+	</ui:define>
+
+	<ui:define name="content">
+		<h:form id="asignacionesForm">
+			<p:outputPanel id="contentPanel">
+
+				<p:separator>
+					<h3>Asignacion de tareas ex-aula</h3>
+				</p:separator>
+
+				<p:panelGrid columns="2">
+					<p:outputLabel for="somCursos" value="Grado" />
+
+					<p:selectOneMenu id="somCursos"
+						value="#{actividadesExAulaView.selectedCourse}">
+						<f:selectItem itemValue="" itemLabel="Seleccione grado" />
+						<f:selectItems value="#{actividadesExAulaView.coursesList}"
+							var="curso" itemValue="#{curso}" itemLabel="#{curso.name}" />
+						<f:converter converterId="jsfUniversalConverter" />
+						<p:ajax event="change"
+							listener="#{actividadesExAulaView.loadSubjects}"
+							update="asignacionesForm" />
+					</p:selectOneMenu>
+				</p:panelGrid>
+
+				<p:dataTable id="dtAsignaciones" var="assig" paginator="true"
+					rows="5" value="#{actividadesExAulaView.assigmentsLazyData}"
+					lazy="true">
+
+					<p:column headerText="Materia">
+						#{assig.subjectPerCourse.subject.name}
+					</p:column>
+
+					<p:column headerText="Titulo">
+						#{assig.description}
+					</p:column>
+
+					<p:column headerText="Fecha Entrega">
+						#{assig.dueDate}
+					</p:column>
+
+				</p:dataTable>
+
+				<p:panelGrid columns="2">
+
+					<p:outputLabel for="somSubjects" value="Materia" />
+
+					<p:selectOneMenu id="somSubjects" required="true"
+						value="#{actividadesExAulaView.selectedAssigments.subjectPerCourse}">
+						<f:selectItem itemValue="" itemLabel="Seleccione materia" />
+						<f:selectItems
+							value="#{actividadesExAulaView.subjectPerCoursesList}"
+							var="materia" itemValue="#{materia}"
+							itemLabel="#{materia.subject.code} - #{materia.subject.name}" />
+
+						<f:converter converterId="jsfUniversalConverter" />
+
+					</p:selectOneMenu>
+
+					<p:outputLabel for="txtTitle" value="Titulo" />
+					<p:inputText id="txtTitle" required="true"
+						value="#{actividadesExAulaView.selectedAssigments.name}" />
+
+					<p:outputLabel for="txtDescription" value="Descripcion" />
+					<p:inputTextarea id="txtDescription" required="true"
+						value="#{actividadesExAulaView.selectedAssigments.description}" />
+
+					<p:outputLabel for="dueDate" value="Fecha de Entrega" />
+					<p:calendar id="dueDate" required="true"
+						value="#{actividadesExAulaView.selectedAssigments.dueDate}"
+						pattern="dd/MM/yyyy" mask="true" navigator="true" locale="es" />
+
+				</p:panelGrid>
+
+			</p:outputPanel>
+
+			<br />
+
+			<p:commandButton value="Guardar" icon="fa fa-save" update="@form"
+				validateClient="true" process="@form"
+				actionListener="#{actividadesExAulaView.save}">
+				<p:confirm header="TAREAS EX-AULA"
+					message="Desea guardar la tarea ex-aula?" />
+			</p:commandButton>
+
+			<p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+				<p:commandButton value="Si" type="button"
+					styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+				<p:commandButton value="No" type="button"
+					styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+			</p:confirmDialog>
+		</h:form>
+
+	</ui:define>
+
+</ui:composition>

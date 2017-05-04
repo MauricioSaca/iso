@@ -1,9 +1,9 @@
 package com.org.web.views;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import javax.annotation.PostConstruct;
 import javax.inject.Inject;
@@ -13,15 +13,18 @@ import org.omnifaces.cdi.ViewScoped;
 import org.omnifaces.util.Messages;
 import org.picketlink.Identity;
 
+import com.org.school.model.Assigments;
 import com.org.school.model.Courses;
-import com.org.school.model.StudentCourseAttendance;
-import com.org.school.model.StudentsPerCourse;
+import com.org.school.model.SubjectPerCourse;
 import com.org.school.model.Teacher;
+import com.org.school.services.AssigmentsService;
 import com.org.school.services.CoursesService;
 import com.org.school.services.StudentCourseAttendanceService;
 import com.org.school.services.StudentsPerCourseService;
+import com.org.school.services.SubjectPerCourseService;
 import com.org.school.services.TeacherService;
 import com.org.security.identity.stereotype.User;
+import com.org.util.safe.ValueHolder;
 import com.org.util.web.BaseLazyModel;
 
 import lombok.Getter;
@@ -31,7 +34,7 @@ import lombok.Setter;
 @ViewScoped
 @Getter
 @Setter
-public class AsistenciaView implements Serializable {
+public class ActividadesExAulaView implements Serializable {
 
 	/**
 	 * 
@@ -51,55 +54,61 @@ public class AsistenciaView implements Serializable {
 	private transient CoursesService coursesService;
 
 	@Inject
+	private transient SubjectPerCourseService subjectPerCourseService;
+
+	@Inject
+	private transient AssigmentsService assigmentsService;
+
+	@Inject
 	private transient Identity identity;
 
 	private transient Teacher teacher;
 	private transient User user;
 	private transient Courses selectedCourse;
-	private BaseLazyModel<Teacher, Long> teacherLazyData;
-	private boolean renderEditView;
+	private transient Assigments selectedAssigments;
+	private BaseLazyModel<Assigments, Long> assigmentsLazyData;
 
-	private List<StudentsPerCourse> studentsList;
+	private List<SubjectPerCourse> subjectPerCoursesList;
 	private List<Courses> coursesList;
 
 	@PostConstruct
 	public void init() {
-		renderEditView = false;
+		
+		selectedAssigments = new Assigments();
+
 		user = (User) identity.getAccount();
 		teacher = getTeacherService().findTeacherByUser(user);
 
 		coursesList = getCoursesService().findCoursesByTeacher(teacher);
-	}
 
-	public void loadStudents() {
-		if(selectedCourse != null){
-			studentsList = getStudentsPerCourseService().findStudentsListByCourse(selectedCourse);		
+	}
+	
+	public void loadAssigments(){
+		assigmentsLazyData = new BaseLazyModel<>(getAssigmentsService());
+		assigmentsLazyData.setCustomFilters(buildWhere());
+	}
+	
+	public Set<ValueHolder> buildWhere(){
+		Set<ValueHolder> holder = new HashSet<>();
+
+		if(selectedCourse != null){ 
+			holder.add(new ValueHolder("subjectPerCourse.courses.id", selectedCourse.getId()));			
+		}
+		
+		return holder;
+	}
+	
+
+	public void loadSubjects() {
+		if (selectedCourse != null) {
+			subjectPerCoursesList = getSubjectPerCourseService().findSubjectByCourse(selectedCourse);
+			loadAssigments();
 		}
 	}
 
-	public void prepareSave() {
-		renderEditView = true;
-		teacher = new Teacher();
-	}
-
-	public void saveAsistencia() {
-		List<StudentCourseAttendance> listToSave = new ArrayList<>();
-		StudentCourseAttendance studentCourseAttendance;
-
-		for (StudentsPerCourse studentsPerCourse : studentsList) {
-
-			studentCourseAttendance = new StudentCourseAttendance();
-
-			studentCourseAttendance.setStudentsPerCourse(studentsPerCourse);
-			studentCourseAttendance.setAttendance(studentsPerCourse.getAttendance());
-			studentCourseAttendance.setDateAttendance(new Date());
-
-			listToSave.add(studentCourseAttendance);
-		}
-
-		getStudentCourseAttendanceService().save(listToSave);
-
-		Messages.create("Asistencia").detail("Asistencia de alumnos almacenada").add();
+	public void save() {
+		getAssigmentsService().save(selectedAssigments);
+		Messages.create("Asignacion").detail("La tarea ex-aula ha sido almacenada").add();
 	}
 
 }

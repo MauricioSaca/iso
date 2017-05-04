@@ -190,7 +190,7 @@ public class SecurityController implements Serializable {
 
 		item = new DefaultMenuItem();
 		item.setValue("Actividades ex-aula");
-		item.setTarget("/teachers/index.xhtml");
+		item.setTarget("/teachers/exaula.xhtml");
 		item.setIcon("fa fa-folder-open-o");
 		item.setCommand("#{securityController.onMenuSelect}");
 		firstSubmenu.addElement(item);
