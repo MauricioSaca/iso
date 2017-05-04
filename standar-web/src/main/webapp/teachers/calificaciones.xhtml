@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:o="http://omnifaces.org/ui" xmlns:p="http://primefaces.org/ui"
+	template="/template/layout.xhtml">
+
+	<ui:define name="head">
+
+	</ui:define>
+
+	<ui:define name="subheader">
+		<h:outputText value="Calificaciones"></h:outputText>
+	</ui:define>
+
+	<ui:define name="content">
+		<h:form id="califForm">
+			<p:selectOneMenu id="courses" value="#{calificacionesView.courseSelected}" style="width:125px">
+	            <f:selectItem itemLabel="Seleccione" itemValue="" />
+	            <f:selectItems value="#{calificacionesView.courses}" var="course" itemLabel="#{course.name}" itemValue="#{course}" />
+	            <f:converter converterId="jsfUniversalConverter"/>
+	            <p:ajax event="change" listener="#{calificacionesView.onChangeCourse}" update="subjects"/>
+        	</p:selectOneMenu>
+        	<br/><br/>
+        	<p:selectOneMenu id="subjects" value="#{calificacionesView.subjectperCourseSelected}" style="width:125px">
+	            <f:selectItem itemLabel="Seleccione" itemValue="" />
+	            <f:selectItems value="#{calificacionesView.subjectsperCourse}" var="sub" itemLabel="#{sub.subject.name}" itemValue="#{sub}" />
+	            <f:converter converterId="jsfUniversalConverter"/>
+	            <p:ajax event="change" listener="#{calificacionesView.onChangeSubject}" update="students"/>
+        	</p:selectOneMenu>
+        <br/><br/>
+         <p:dataTable id="students"
+         	 var="student" value="#{calificacionesView.studentsgrade}" editable="true" editMode="cell" widgetVar="students" 
+         	 lazy="true" rowKey="#{student.student.id}" selectionMode="single" selection="#{calificacionesView.studentsgradeSelected}" >
+		       <f:facet name="header">
+		          Lista de Estudiantes
+		       </f:facet>
+ 
+       <p:ajax event="cellEdit" listener="#{calificacionesView.onCellEdit}"/>
+ 
+       <p:column headerText="Estudiante">
+       		<h:outputText value="#{student.student.name}"/>
+          </p:column>
+ 
+          <p:column headerText="Nota 1">
+           <p:cellEditor>
+               <f:facet name="output"><h:outputText value="#{student.nota1}" /></f:facet>
+               <f:facet name="input"><p:inputText value="#{student.nota1}"/></f:facet>
+           </p:cellEditor>
+       </p:column>
+       
+       <p:column headerText="Nota 2">
+           <p:cellEditor>
+               <f:facet name="output"><h:outputText value="#{student.nota2}" /></f:facet>
+               <f:facet name="input"><p:inputText value="#{student.nota2}"/></f:facet>
+           </p:cellEditor>
+       </p:column>
+ 
+ 
+       <p:column headerText="Nota 3">
+            <p:cellEditor> 
+               <f:facet name="output"><h:outputText value="#{student.nota3}" /></f:facet>
+               <f:facet name="input"><p:inputText value="#{student.nota3}"/></f:facet>
+           </p:cellEditor>
+       </p:column>
+   </p:dataTable>
+		</h:form>
+	</ui:define>
+</ui:composition>

@@ -219,7 +219,7 @@ public class SecurityController implements Serializable {
 		
 		item = new DefaultMenuItem();
 		item.setValue("Calificaciones de asignaturas");
-		item.setTarget("/teachers/index.xhtml");
+		item.setTarget("/teachers/calificaciones.xhtml");
 		item.setIcon("icon-book");
 		item.setCommand("#{securityController.onMenuSelect}");
 		firstSubmenu.addElement(item);
