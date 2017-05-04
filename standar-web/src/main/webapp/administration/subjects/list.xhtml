@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                template="/template/layout.xhtml">
+
+    <ui:define name="head">
+
+    </ui:define>
+
+    <ui:define name="subheader">
+
+    </ui:define>
+
+    <ui:define name="content">
+	
+		<h:form id="registerSubjectForm">
+		
+			 <p:contextMenu id="ctxSubject" for="registerSubjectForm:subjectTable">
+				<p:menuitem value="Editar" icon="fa fa-pencil"
+							process="@this subjectTable"
+							actionListener="#{subjectView.preparedEditSubject}"
+							update="createUpdateSubjectForm" 
+							oncomplete="PF('subjectDialog').show()"/>
+				
+				<p:menuitem value="Eliminar" icon="fa fa-trash"
+					process="@this subjectTable" update="subjectTable" 
+					actionListener="#{subjectView.deleteSubject}">
+						<p:confirm header="Eliminacion"
+							message="Desea eliminar este registro?" />
+				</p:menuitem>
+			</p:contextMenu>
+		
+		
+	        <h2>Listado de materias</h2>
+	        <p:separator />
+	        
+	       <p:dataTable id="subjectTable" value="#{subjectView.lazySubjectModel}"
+                        var="subject" rowIndexVar="indice" 
+                        rowKey="#{subject.id}"
+                        lazy="true"
+                        selection="#{subjectView.subjectSelected}" selectionMode="single"
+                        emptyMessage="#{safiCommonBundle.ListEmpty}" 
+                        paginator="true" rows="10" paginatorPosition="bottom"
+                      	paginatorTemplate="{FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                        currentPageReportTemplate="| #{safiCommonBundle.page} {currentPage} #{safiCommonBundle.of} {totalPages} |" 
+                        rowsPerPageTemplate="10,20,30,40"> 
+	        		
+	        		<p:column headerText="Codigo" filterBy="#{subject.code}">
+			        	#{subject.code}
+			        </p:column>
+
+					<p:column headerText="Nombre de la materia">
+			        	#{subject.name}
+			        </p:column>
+	        </p:dataTable>
+	        
+	        <p:commandButton
+				value="#{safiCommonBundle.addLabel}"
+				actionListener="#{subjectView.preparedCreatedSubject}"
+				icon="fa fa-plus-circle" update="createUpdateSubjectForm"
+				oncomplete="PF('subjectDialog').show()" />
+				
+			<p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+				<p:commandButton value="Si" type="button"
+					styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+				<p:commandButton value="No" type="button"
+					styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+			</p:confirmDialog>
+		</h:form>
+		
+		<ui:include
+			src="./dialogs/created_edit_dialog_subject.xhtml" />
+    </ui:define>
+
+</ui:composition>

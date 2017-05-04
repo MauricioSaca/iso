@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+    <ui:composition>
+        <p:dialog header="Crear periodo escolar" widgetVar="periodDialog" id="periodDialog" modal="true"
+				  showEffect="blind" resizable="false" hideEffect="blind" width="35%"
+				  visible=""
+				  appendTo="@(body)" responsive="true">
+				<h:form id="createUpdatePeriodForm">
+				
+					<p:panelGrid columns="2" columnClasses="property, val" id="panelSend" style="width: 100%; font-size:16px !important;"
+						rendered="#{periodView.newPeriod != null or periodView.periodSelected != null}">
+						
+						<p:outputLabel value="Nombre del periodo escolar:" for="periodName" />
+						<h:panelGroup rendered="#{periodView.status.code == 1}">
+							<p:inputTextarea id="periodName"
+								value="#{periodView.newPeriod.name}"
+								required="true"
+								requiredMessage="#{safiBundle.requiredMessageNombre}"
+								validatorMessage="#{safiBundle.validateInputTextMessage}"
+								rows="6" cols="33">
+<!-- 								<f:validateRegex pattern="^[^-\s][A-Za-z ñÑáéíóúÁÉÍÓÚ.,]*"/> -->
+							</p:inputTextarea>
+							<p:message for="periodName" />
+						</h:panelGroup>
+						
+						<h:panelGroup rendered="#{periodView.status.code == 2}">
+							<p:inputTextarea id="periodNameUpdate"
+								value="#{periodView.periodSelected.name}"
+								required="true"
+								requiredMessage="#{safiBundle.requiredMessageNombre}"
+								validatorMessage="#{safiBundle.validateInputTextMessage}"
+								rows="6" cols="33">
+<!-- 								<f:validateRegex pattern="^[^-\s][A-Za-z ñÑáéíóúÁÉÍÓÚ.,]*"/> -->
+							</p:inputTextarea>
+							<p:message for="periodNameUpdate" />
+						</h:panelGroup>
+						
+						<p:outputLabel value="Fecha de inicio:" for="vigenteDesde"/>
+						<h:panelGroup rendered="#{periodView.status.code == 1}">
+							<p:calendar 
+								id="vigenteDesde" 
+								value="#{periodView.newPeriod.initialDate}"
+								pattern="dd/MM/yyyy" 
+								mask="true" 
+								navigator="true"
+								locale="es" />
+							<p:message for="vigenteDesde" />
+						</h:panelGroup>
+						
+						<h:panelGroup rendered="#{periodView.status.code == 2}">
+							<p:calendar 
+								id="vigenteDesdeUpdate" 
+								value="#{periodView.periodSelected.initialDate}"
+								pattern="dd/MM/yyyy" 
+								mask="true" 
+								navigator="true"
+								locale="es" />
+							<p:message for="vigenteDesdeUpdate" />
+						</h:panelGroup>
+						
+						<p:outputLabel value="Fecha de fin:" for="vigenteHasta"/>
+						<h:panelGroup rendered="#{periodView.status.code == 1}">
+							<p:calendar 
+								id="vigenteHasta" 
+								value="#{periodView.newPeriod.finalDate}"
+								pattern="dd/MM/yyyy" 
+								mask="true" 
+								navigator="true"
+								locale="es" />
+							<p:message for="vigenteHasta" />
+						</h:panelGroup>
+						
+						<h:panelGroup rendered="#{periodView.status.code == 2}">
+							<p:calendar 
+								id="vigenteHastaUpdate" 
+								value="#{periodView.periodSelected.finalDate}"
+								pattern="dd/MM/yyyy" 
+								mask="true" 
+								navigator="true"
+								locale="es" />
+							<p:message for="vigenteHastaUpdate" />
+						</h:panelGroup>
+						
+					</p:panelGrid>
+				<p:spacer height="10" />
+				<p:separator/>
+				<center>
+					<p:outputPanel style="width: 100%; font-size:16px !important;">
+	
+						<p:commandButton
+							actionListener="#{periodView.savePeriod}"
+							value="#{safiCommonBundle.Save}"
+							update=":registerPeriodForm:periodTable :createUpdatePeriodForm"
+							oncomplete="PF('periodDialog').hide();"
+							validateClient="true"
+							rendered="#{periodView.status.code ==  1}">
+							<p:confirm header="#{safiCommonBundle.ConfirmationHeader}"
+								message="#{safiCommonBundle.ConfirmCreateMessage}" icon="ui-icon-alert" />
+						</p:commandButton>
+						
+						<p:commandButton
+							actionListener="#{periodView.updatePeriod}"
+							value="Actualizar"
+							update=":registerPeriodForm:periodTable :createUpdatePeriodForm"
+							oncomplete="PF('periodDialog').hide();"
+							validateClient="true"
+							rendered="#{periodView.status.code ==  2}">
+							<p:confirm header="#{safiCommonBundle.ConfirmationHeader}"
+								message="#{safiCommonBundle.ConfirmCreateMessage}" icon="ui-icon-alert" />
+						</p:commandButton>
+					
+						<p:spacer width="7" />
+						<p:commandButton id="cancelButton" value="#{safiCommonBundle.Cancel}"
+							oncomplete="PF('periodDialog').hide();"
+							process="@this">
+							<p:resetInput target="createUpdatePeriodForm" />
+						</p:commandButton>
+					</p:outputPanel>
+				</center>
+			</h:form>
+		</p:dialog>
+	
+    </ui:composition>
+</html>

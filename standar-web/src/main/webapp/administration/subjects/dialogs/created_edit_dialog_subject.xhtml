@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+    <ui:composition>
+        <p:dialog header="Crear materia" widgetVar="subjectDialog" id="subjectDialog" modal="true"
+				  showEffect="blind" resizable="false" hideEffect="blind" width="35%"
+				  visible=""
+				  appendTo="@(body)" responsive="true">
+				<h:form id="createUpdateSubjectForm">
+				
+					<p:panelGrid columns="2" columnClasses="property, val" id="panelSend" style="width: 100%; font-size:16px !important;"
+						rendered="#{subjectView.newSubject != null or subjectView.subjectSelected != null}">
+						
+						<p:outputLabel value="Curso:" for="subjectCode" />
+						<h:panelGroup rendered="#{subjectView.status.code == 1}">
+							<p:inputText id="subjectCode"
+								value="#{subjectView.newSubject.code}"
+								required="true"
+								requiredMessage="#{safiBundle.requiredMessageNombre}"
+								validatorMessage="#{safiBundle.validateInputTextMessage}"
+								maxlength="50">
+<!-- 								<f:validateRegex pattern="^[^-\s][A-Za-z ñÑáéíóúÁÉÍÓÚ.,]*"/> -->
+							</p:inputText>
+							<p:message for="subjectCode" />
+						</h:panelGroup>
+						
+						<h:panelGroup rendered="#{subjectView.status.code == 2}">
+							<p:inputText id="subjectCodeUpdate"
+								value="#{subjectView.subjectSelected.code}"
+								required="true"
+								requiredMessage="#{safiBundle.requiredMessageNombre}"
+								validatorMessage="#{safiBundle.validateInputTextMessage}"
+								maxlength="50">
+<!-- 								<f:validateRegex pattern="^[^-\s][A-Za-z ñÑáéíóúÁÉÍÓÚ.,]*"/> -->
+							</p:inputText>
+							<p:message for="subjectCodeUpdate" />
+						</h:panelGroup>
+						
+						<p:outputLabel value="Nombre materia:" for="subjectName" />
+						<h:panelGroup rendered="#{subjectView.status.code == 1}">
+							<p:inputTextarea id="subjectName"
+								value="#{subjectView.newSubject.name}"
+								required="true"
+								requiredMessage="#{safiBundle.requiredMessageNombre}"
+								validatorMessage="#{safiBundle.validateInputTextMessage}"
+ 								rows="6" cols="33">
+<!-- 								<f:validateRegex pattern="[A-Za-zñÑáéíóúÁÉÍÓÚ.,]*"/> -->
+							</p:inputTextarea>
+							<p:message for="subjectName" />
+						</h:panelGroup>
+						
+						<h:panelGroup rendered="#{subjectView.status.code == 2}">
+							<p:inputTextarea id="subjectNameUpdate"
+								value="#{subjectView.subjectSelected.name}"
+								required="true"
+								requiredMessage="#{safiBundle.requiredMessageNombre}"
+								validatorMessage="#{safiBundle.validateInputTextMessage}"
+								 rows="6" cols="33">
+<!-- 								<f:validateRegex pattern="[A-Za-zñÑáéíóúÁÉÍÓÚ.,]*"/> -->
+							</p:inputTextarea>
+							<p:message for="subjectNameUpdate" />
+						</h:panelGroup>
+						
+					</p:panelGrid>
+				<p:spacer height="10" />
+				<p:separator/>
+				<center>
+					<p:outputPanel style="width: 100%; font-size:16px !important;">
+	
+						<p:commandButton
+							actionListener="#{subjectView.saveSubject}"
+							value="#{safiCommonBundle.Save}"
+							update=":registerSubjectForm:subjectTable :createUpdateSubjectForm"
+							oncomplete="PF('subjectDialog').hide();"
+							validateClient="true"
+							rendered="#{subjectView.status.code ==  1}">
+							<p:confirm header="#{safiCommonBundle.ConfirmationHeader}"
+								message="#{safiCommonBundle.ConfirmCreateMessage}" icon="ui-icon-alert" />
+						</p:commandButton>
+						
+						<p:commandButton
+							actionListener="#{subjectView.updateSubject}"
+							value="Actualizar"
+							update=":registerSubjectForm:subjectTable :createUpdateSubjectForm"
+							oncomplete="PF('subjectDialog').hide();"
+							validateClient="true"
+							rendered="#{subjectView.status.code ==  2}">
+							<p:confirm header="#{safiCommonBundle.ConfirmationHeader}"
+								message="#{safiCommonBundle.ConfirmCreateMessage}" icon="ui-icon-alert" />
+						</p:commandButton>
+					
+						<p:spacer width="7" />
+						<p:commandButton id="cancelButton" value="#{safiCommonBundle.Cancel}"
+							oncomplete="PF('subjectDialog').hide();"
+							process="@this">
+							<p:resetInput target="createUpdateSubjectForm" />
+						</p:commandButton>
+					</p:outputPanel>
+				</center>
+			</h:form>
+		</p:dialog>
+	
+    </ui:composition>
+</html>
