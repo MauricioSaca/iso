@@ -109,6 +109,8 @@ public class ActividadesExAulaView implements Serializable {
 	public void save() {
 		getAssigmentsService().save(selectedAssigments);
 		Messages.create("Asignacion").detail("La tarea ex-aula ha sido almacenada").add();
+		
+		selectedAssigments = new Assigments();
 	}
 
 }
