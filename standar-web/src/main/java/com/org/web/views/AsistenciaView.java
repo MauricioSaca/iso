@@ -41,65 +41,66 @@ public class AsistenciaView implements Serializable {
 
 	@Inject
 	private transient StudentCourseAttendanceService studentCourseAttendanceService;
-	
+
 	@Inject
 	private transient TeacherService teacherService;
-	
+
 	@Inject
 	private transient StudentsPerCourseService studentsPerCourseService;
-	
+
 	@Inject
 	private transient CoursesService coursesService;
-	
+
 	@Inject
 	private transient Identity identity;
-	
+
 	private transient Teacher teacher;
 	private transient User user;
 	private transient Courses selectedCourse;
 	private BaseLazyModel<Teacher, Long> teacherLazyData;
 	private boolean renderEditView;
-	
+
 	private List<StudentsPerCourse> studentsList;
 	private List<Courses> coursesList;
-	
+
 	@PostConstruct
-	public void init(){
+	public void init() {
 		renderEditView = false;
 		user = (User) identity.getAccount();
 		teacher = getTeacherService().findTeacherByUser(user);
-		
+
 		coursesList = getCoursesService().findCoursesByTeacher(teacher);
 	}
-	
-	public void loadStudents(){
-		//Cargar el listado de alumnos del curso del profesor
-				studentsList = getStudentsPerCourseService().findStudentsListByCourse(selectedCourse);
+
+	public void loadStudents() {
+		if(selectedCourse != null){
+			studentsList = getStudentsPerCourseService().findStudentsListByCourse(selectedCourse);		
+		}
 	}
-	
-	public void prepareSave(){
+
+	public void prepareSave() {
 		renderEditView = true;
 		teacher = new Teacher();
 	}
-	
-	public void saveAsistencia(){
+
+	public void saveAsistencia() {
 		List<StudentCourseAttendance> listToSave = new ArrayList<>();
 		StudentCourseAttendance studentCourseAttendance;
-		
-		for(StudentsPerCourse studentsPerCourse : studentsList){
-			
+
+		for (StudentsPerCourse studentsPerCourse : studentsList) {
+
 			studentCourseAttendance = new StudentCourseAttendance();
-			
+
 			studentCourseAttendance.setStudentsPerCourse(studentsPerCourse);
 			studentCourseAttendance.setAttendance(studentsPerCourse.getAttendance());
 			studentCourseAttendance.setDateAttendance(new Date());
-			
+
 			listToSave.add(studentCourseAttendance);
 		}
-		
+
 		getStudentCourseAttendanceService().save(listToSave);
-		
+
 		Messages.create("Asistencia").detail("Asistencia de alumnos almacenada").add();
 	}
-	
+
 }

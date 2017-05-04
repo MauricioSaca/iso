@@ -15,38 +15,59 @@
 	</ui:define>
 
 	<ui:define name="content">
-		<h:form id="AsistenciaForm">
+		<h:form id="asistenciaForm">
 			<p:outputPanel id="contentPanel">
 
-				<p:dataTable id="dtAsistencia"
-					value="#{asistenciaView.studentsList}" var="asistencia"
-					editable="true" editMode="cell">
-					<p:column headerText="Apellidos">
-						#{asistencia.student.lastName}
-					</p:column>
-					<p:column headerText="Nombres">
-						#{asistencia.student.name}
-					</p:column>
+				
+				<p:separator>
+					<h3>Asistencia de Estudiantes</h3>
+				</p:separator>
+				
+				<p:panelGrid columns="2">
+					<p:outputLabel for="somCursos" value="Grado" />
 
-					<p:column headerText="Asistió">
-						<p:cellEditor>
-							<f:facet name="output">
-								<h:outputText value="#{asistencia.attendance}" />
-							</f:facet>
-							<f:facet name="input">
-								<p:selectOneRadio value="#{asistencia.attendance}">
-									<f:selectItem itemValue="true" itemLabel="Si"/>
-									<f:selectItem itemValue="false" itemLabel="No"/>
-								</p:selectOneRadio>
-							</f:facet>
-						</p:cellEditor>
-						
-					</p:column>
-				</p:dataTable>
+					<p:selectOneMenu id="somCursos"
+						value="#{asistenciaView.selectedCourse}">
+						<f:selectItem itemValue="" itemLabel="Seleccione grado" />
+						<f:selectItems value="#{asistenciaView.coursesList}" var="curso"
+							itemValue="#{curso}" itemLabel="#{curso.name}" />
+						<f:converter converterId="jsfUniversalConverter" />
+						<p:ajax event="change" listener="#{asistenciaView.loadStudents}"
+							update="asistenciaForm" />
+					</p:selectOneMenu>
+				</p:panelGrid>
+
+				<br/>
+				<p:panelGrid style="width: 100%;">
+					<f:facet name="header">
+						<p:row>
+							<p:column>Estudiante</p:column>
+							<p:column>Asistio</p:column>
+						</p:row>
+					</f:facet>
+					<ui:repeat var="asistencia" value="#{asistenciaView.studentsList}">
+						<p:row>
+							<p:column headerText="Estudiante">
+								#{asistencia.student.lastName}, #{asistencia.student.name}
+							</p:column>
+							
+							<p:column headerText="Estudiante">
+<!-- 								<p:selectBooleanButton offLabel="No" onLabel="Si" value="#{asistencia.attendance}"/> -->
+								
+								<p:selectBooleanCheckbox value="#{asistencia.attendance}"/>
+							
+							</p:column>
+						</p:row>
+					</ui:repeat>
+				</p:panelGrid>
+
 
 			</p:outputPanel>
 
-			<p:commandButton value="Guardar" icon="fa fa-save">
+			<br/>
+			
+			<p:commandButton value="Guardar" icon="fa fa-save"
+				update="asistenciaForm" actionListener="#{asistenciaView.saveAsistencia}">
 				<p:confirm header="Asistencia"
 					message="Desea guardar la asistencia de los alumnos?" />
 			</p:commandButton>
