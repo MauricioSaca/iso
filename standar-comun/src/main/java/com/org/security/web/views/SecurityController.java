@@ -228,12 +228,12 @@ public class SecurityController implements Serializable {
 	}
 
 	private void managerMenu() {
-		DefaultSubMenu firstSubmenu = new DefaultSubMenu("Generación de boleta de notas");
+		DefaultSubMenu firstSubmenu = new DefaultSubMenu("Asociaciones");
 		firstSubmenu.setIcon("icon-menu");
 
 		DefaultMenuItem item = new DefaultMenuItem();
-		item.setValue("Alumnos");
-		item.setTarget("/director/index.xhtml");
+		item.setValue(" Curso - Materia");
+		item.setTarget("/director/asociar_curso_materias.xhtml");
 		item.setIcon("fa fa-list-alt");
 		item.setCommand("#{securityController.onMenuSelect}");
 		firstSubmenu.addElement(item);

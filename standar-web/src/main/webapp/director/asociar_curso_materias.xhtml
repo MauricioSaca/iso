@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui" template="/template/layout.xhtml">
+
+	<ui:define name="head">
+
+	</ui:define>
+
+	<ui:define name="subheader">
+		<h:outputText value="Escuela Venezuela"></h:outputText>
+	</ui:define>
+
+	<ui:define name="content">
+		<h:form id="asociacionCursoMateriaForm">
+			<p:outputPanel id="contentPanel">
+
+
+				<p:separator>
+					<h3>Asociar materias a curso</h3>
+				</p:separator>
+
+				<p:panelGrid columns="4">
+					<p:outputLabel for="somCursos" value="Grado" />
+
+					<p:selectOneMenu id="somCursos"
+						value="#{courseSubjectView.courseSelected}">
+						<f:selectItem itemValue="" itemLabel="Seleccione grado" />
+						<f:selectItems value="#{courseSubjectView.coursesList}" var="curso"
+							itemValue="#{curso}" itemLabel="#{curso.name}" />
+						<f:converter converterId="jsfUniversalConverter" />
+						<p:ajax event="change" listener="#{courseSubjectView.onChangeCourseEvent}"
+							update="asociacionCursoMateriaForm" />
+					</p:selectOneMenu>
+					
+					<p:outputLabel for="txtPeriodo" value="Periodo" />
+
+					<h:outputText id="txtPeriodo" value="#{courseSubjectView.periodVigente.name}" />
+				</p:panelGrid>
+				
+				<p:panelGrid columns="2">
+					
+				</p:panelGrid>
+
+				<br />
+				
+			<p:dataTable id="subjectTable" value="#{courseSubjectView.lazySubjectModel}"
+                        var="subject" rowIndexVar="indice" 
+                        rowKey="#{subject.id}"
+                        lazy="true"
+                        selection="#{courseSubjectView.subjectsListSelected}"
+                        emptyMessage="#{safiCommonBundle.ListEmpty}" 
+                        paginator="true" rows="10" paginatorPosition="bottom"
+                      	paginatorTemplate="{FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                        currentPageReportTemplate="| #{safiCommonBundle.page} {currentPage} #{safiCommonBundle.of} {totalPages} |" 
+                        rowsPerPageTemplate="10,20,30,40"> 
+	        		
+	        		<f:facet name="header">
+            			Materias
+        			</f:facet>
+	        		
+	        		<p:column selectionMode="multiple" style="width:16px;text-align:center"/>
+	        		
+	        		<p:column headerText="Codigo" filterBy="#{subject.code}">
+			        	#{subject.code}
+			        </p:column>
+
+					<p:column headerText="Nombre">
+			        	#{subject.name}
+			        </p:column>
+	        </p:dataTable>
+	        
+	        <p:separator />
+	        
+	        <p:dataTable id="courseSubjectTable" value="#{courseSubjectView.lazySubjecCoursetModel}"
+                        var="subjectCourse" rowIndexVar="indice" 
+                        rowKey="#{subjectCourse.id}"
+                        lazy="true"
+                        selection="#{courseSubjectView.subjectCourseListSelected}"
+                        emptyMessage="#{safiCommonBundle.ListEmpty}" 
+                        paginator="true" rows="10" paginatorPosition="bottom"
+                      	paginatorTemplate="{FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                        currentPageReportTemplate="| #{safiCommonBundle.page} {currentPage} #{safiCommonBundle.of} {totalPages} |" 
+                        rowsPerPageTemplate="10,20,30,40"> 
+	        		
+	        		<f:facet name="header">
+            			Materias asociadas
+        			</f:facet>
+	        		<p:column selectionMode="multiple" style="width:16px;text-align:center"/>
+	        		
+	        		<p:column headerText="Nombre" filterBy="#{subjectCourse.subject.name}">
+			        	#{subjectCourse.subject.name}
+			        </p:column>
+
+					<p:column headerText="Periodo">
+			        	#{subjectCourse.period.name}
+			        </p:column>
+	        </p:dataTable>
+
+
+			</p:outputPanel>
+
+			<br />
+
+			<p:commandButton value="Guardar asociacion" icon="fa fa-save"
+				process="asociacionCursoMateriaForm asociacionCursoMateriaForm:subjectTable"
+				update="asociacionCursoMateriaForm"
+				actionListener="#{courseSubjectView.saveAsociationCourseSubject}">
+				<p:confirm header="Asistencia"
+					message="Desea guardar las asociacion de materias?" />
+			</p:commandButton>
+			
+			<p:commandButton value="Eliminar asociacion" icon="fa fa-remove"
+				process="asociacionCursoMateriaForm asociacionCursoMateriaForm:courseSubjectTable"
+				update="asociacionCursoMateriaForm"
+				actionListener="#{courseSubjectView.deleteAsociationCourseSubject}">
+				<p:confirm header="Asistencia"
+					message="Desea eliminar las asociacion de materias?" />
+			</p:commandButton>
+
+			<p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+				<p:commandButton value="Si" type="button"
+					styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+				<p:commandButton value="No" type="button"
+					styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+			</p:confirmDialog>
+		</h:form>
+
+	</ui:define>
+
+</ui:composition>

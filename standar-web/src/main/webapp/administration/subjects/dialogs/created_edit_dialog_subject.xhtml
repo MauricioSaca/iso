@@ -15,7 +15,7 @@
 					<p:panelGrid columns="2" columnClasses="property, val" id="panelSend" style="width: 100%; font-size:16px !important;"
 						rendered="#{subjectView.newSubject != null or subjectView.subjectSelected != null}">
 						
-						<p:outputLabel value="Curso:" for="subjectCode" />
+						<p:outputLabel value="Codigo:" for="subjectCode" />
 						<h:panelGroup rendered="#{subjectView.status.code == 1}">
 							<p:inputText id="subjectCode"
 								value="#{subjectView.newSubject.code}"

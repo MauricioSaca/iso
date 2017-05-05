@@ -33,6 +33,10 @@ public class Trimesters implements BaseModelEntity<Long> {
 	@Column(nullable = false)
 	private Long id;
 
+	private String name;
+
+	private String months;
+
 	@ManyToOne
 	@JoinColumn(name = "PERIOD_ID")
 	private Period period;

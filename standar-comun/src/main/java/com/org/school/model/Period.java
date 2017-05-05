@@ -40,6 +40,8 @@ public class Period implements BaseModelEntity<Long> {
 
 	private String name;
 
+	private Boolean vigente;
+
 	@Column
 	@Temporal(TemporalType.DATE)
 	private Date initialDate;

@@ -8,7 +8,7 @@ public enum RolesSecurityNames {
 
 	TEACHER("teacher", "Maestro"),
 
-	MANAGER("manager", "Gerente");
+	MANAGER("manager", "Director");
 
 	String code;
 
