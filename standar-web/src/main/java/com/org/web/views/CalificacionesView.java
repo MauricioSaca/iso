@@ -16,6 +16,7 @@ import org.omnifaces.cdi.ViewScoped;
 import org.omnifaces.util.Messages;
 import org.picketlink.Identity;
 import org.picketlink.idm.credential.Password;
+import org.primefaces.event.CellEditEvent;
 
 import com.org.school.enums.Gender;
 import com.org.school.enums.Shift;
@@ -56,29 +57,27 @@ public class CalificacionesView implements Serializable {
 
 	@Inject
 	private transient SecurityManagedService securityManagedService;
-	
+
 	@Inject
 	private transient Identity identity;
 
 	@Inject
 	private transient StudentService studentService;
-	
-	
+
 	@Inject
 	private transient TeacherService teacherService;
-	
+
 	@Inject
 	private transient CoursesService coursesService;
-	
+
 	@Inject
 	private transient SubjectPerCourseService subjectPerCourseService;
-	
+
 	@Inject
 	private transient StudentGradesPerSubjectService studentGradesPerSubjectService;
-	
+
 	@Inject
 	private transient StudentsPerCourseService studentsPerCourseService;
-
 
 	private transient Student student;
 
@@ -93,7 +92,6 @@ public class CalificacionesView implements Serializable {
 	private List<SubjectPerCourse> subjectsperCourse;
 	private SubjectPerCourse subjectperCourseSelected;
 	private Teacher teacher;
-	
 
 	@PostConstruct
 	public void init() {
@@ -101,46 +99,49 @@ public class CalificacionesView implements Serializable {
 		teacher = teacherService.findTeacherByUser(user);
 		courses = coursesService.findCoursesByTeacher(teacher);
 	}
-	
-	public void onChangeCourse(){
+
+	public void onChangeCourse() {
 		subjectsperCourse = subjectPerCourseService.findSubjectByCourse(courseSelected);
 	}
-	
-	public void onChangeSubject(){
+
+	public void onChangeSubject() {
 		studentsgrade = new ArrayList<>();
 		StudentGradesPojo studentgradeElement = new StudentGradesPojo();
 		StudentGradesPerSubject studentGrades;
-		
+
 		studentsPerCourse = studentsPerCourseService.findStudentsListByCourse(courseSelected);
-		
-		if(studentsPerCourse!=null){
+
+		if (studentsPerCourse != null) {
 			for (StudentsPerCourse studentsPerCourse : studentsPerCourse) {
 				studentgradeElement.setStudent(studentsPerCourse.getStudent());
-				studentGrades = studentGradesPerSubjectService.findbyStudentAndSubject(studentsPerCourse.getStudent(), subjectperCourseSelected);
-				if(studentGrades !=null) {
+				studentGrades = studentGradesPerSubjectService.findbyStudentAndSubject(studentsPerCourse.getStudent(),
+						subjectperCourseSelected);
+				if (studentGrades != null) {
 					studentgradeElement.setNota1(studentGrades.getFirstGrade());
 					studentgradeElement.setNota2(studentGrades.getSecondGrade());
 					studentgradeElement.setNota3(studentGrades.getThirdGrade());
 				}
-				studentgradeElement.setSc(subjectperCourseSelected);
+				studentgradeElement.setSubjectPerCourse(subjectperCourseSelected);
 				studentsgrade.add(studentgradeElement);
 			}
-			
+
 		}
-		
+
 	}
-	
-	public void onCellEdit(){
+
+	public void onCellEdit(CellEditEvent event) {
+
+		// Buscar si ya existe en la tabla studentgradePerSubject
 		
 		StudentGradesPerSubject studentGradesPerSubject = new StudentGradesPerSubject();
 		studentGradesPerSubject.setStudent(studentsgradeSelected.getStudent());
 		studentGradesPerSubject.setFirstGrade(studentsgradeSelected.getNota1());
 		studentGradesPerSubject.setSecondGrade(studentsgradeSelected.getNota2());
 		studentGradesPerSubject.setThirdGrade(studentsgradeSelected.getNota3());
-		studentGradesPerSubject.setSubjectPerCourse(studentsgradeSelected.getSc());
-		
+		studentGradesPerSubject.setSubjectPerCourse(studentsgradeSelected.getSubjectPerCourse());
+
 		studentGradesPerSubjectService.save(studentGradesPerSubject);
-		
+
 		Messages.create("INFO").detail("Nota Guardada exitosamente").add();
 	}
 }

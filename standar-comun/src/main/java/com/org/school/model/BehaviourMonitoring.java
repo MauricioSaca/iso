@@ -10,7 +10,6 @@ import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
-import com.org.school.enums.Behaviour;
 import com.org.util.domain.BaseModelEntity;
 
 import lombok.EqualsAndHashCode;
@@ -34,24 +33,14 @@ public class BehaviourMonitoring implements BaseModelEntity<Long> {
 	@Column(nullable = false)
 	private Long id;
 
-	private String description;
-
-	@Column(length = 255, nullable = true)
-	private String behaviour;
-
 	@ManyToOne
 	@JoinColumn(name = "STUDENTSPERCOURSE_ID")
 	private StudentsPerCourse studentsPerCourse;
+	
+	@ManyToOne
+	@JoinColumn(name = "CATALOGOCODIGOS_ID")
+	private CatalogoCodigos catalogoCodigos;
 
-	/**
-	 * Relations By Enums
-	 **/
-	public Behaviour getBehaviour() {
-		return Behaviour.getBehaviour(this.behaviour);
-	}
 
-	public void setStudentStatus(Behaviour behaviour) {
-		this.behaviour = behaviour != null ? behaviour.getCode() : null;
-	}
 
 }

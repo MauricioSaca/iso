@@ -37,9 +37,8 @@
 					</p:selectOneMenu>
 				</p:panelGrid>
 
-				<p:dataTable id="dtAlumnos" var="alumn" paginator="true"
-					rows="5" value="#{controlConductaView.studentsList}"
-					lazy="true">
+				<p:dataTable id="dtAlumnos" var="alumn" paginator="true" rows="5"
+					value="#{controlConductaView.studentsList}" lazy="true">
 
 					<p:column headerText="Estudiante">
 						#{alumn.student.lastName}, #{alumn.student.name}
@@ -49,8 +48,12 @@
 						#{alumn.courses.name}
 					</p:column>
 
-					<p:column headerText="Accion">
-						codigo
+					<p:column headerText="Accion"
+						style="text-align:center; width: 100px;">
+						<p:commandButton icon="fa fa-pencil" actionListener="#{controlConductaView.setSelectedStudentsPerCourse(alumn)}"
+							oncomplete="PF('dlgCodigos').show();" />
+						<p:commandButton icon="fa fa-search" actionListener="#{controlConductaView.setSelectedStudentsPerCourse(alumn)}"
+							oncomplete="PF('dlgCodigosAplicados').show();" />
 					</p:column>
 
 				</p:dataTable>
@@ -66,6 +69,46 @@
 			</p:confirmDialog>
 		</h:form>
 
+		<p:dialog id="dlgCodigos" widgetVar="dlgCodigos" modal="true">
+			<h:form id="codigosForm">
+
+				<p:panelGrid id="pgCodigos" columns="2">
+					<p:outputLabel for="somTCodigos" value="Tipo de codigo" />
+
+					<p:selectOneMenu id="somTCodigos" required="true"
+						value="#{controlConductaView.selectedTipoCodigo}">
+						<f:selectItem itemValue="" itemLabel="Seleccione grado" />
+						<f:selectItem itemValue="P" itemLabel="Positivo" />
+						<f:selectItem itemValue="N" itemLabel="Negativo" />
+
+
+						<p:ajax event="change"
+							listener="#{controlConductaView.loadCodigos}" />
+					</p:selectOneMenu>
+
+					<p:outputLabel value="Codigos" />
+					<p:selectManyCheckbox id="smcCodes" required="true"
+						value="#{controlConductaView.selectedCodesList}" columns="1">
+						<f:selectItems value="#{controlConductaView.codesList}" var="code"
+							itemValue="#{code}" itemLabel="#{code.codigo}" />
+					</p:selectManyCheckbox>
+
+				</p:panelGrid>
+
+				<p:commandButton value="Guardar" icon="fa fa-save" update="@form"
+					validateClient="true" process="@form"
+					actionListener="#{controlConductaView.save}">
+					<p:confirm header="CODIGOS"
+						message="Desea aplicar el codigo" />
+				</p:commandButton>
+
+			</h:form>
+		</p:dialog>
+
+		<p:dialog id="dlgCodigosAplicados" widgetVar="dlgCodigosAplicados"
+			modal="true">
+
+		</p:dialog>
 	</ui:define>
 
 </ui:composition>
