@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui" template="/template/layout.xhtml">
+
+	<ui:define name="head">
+
+	</ui:define>
+
+	<ui:define name="subheader">
+		<h:outputText value="Escuela Venezuela"></h:outputText>
+	</ui:define>
+
+	<ui:define name="content">
+		<h:form id="asociacionCursoEstudianteForm">
+			<p:outputPanel id="contentPanel">
+
+
+				<p:separator>
+					<h3>Asociar estudiantes a curso</h3>
+				</p:separator>
+				<p:panelGrid columns="2">
+					<p:outputLabel for="txtPeriodo" value="Periodo" />
+
+					<h:outputText id="txtPeriodo" value="#{studentCourseView.periodVigente.name}" />
+				</p:panelGrid>
+				
+				<p:panelGrid columns="2">
+					<p:outputLabel value="Ciclo de estudio:" for="cmbCicloEstudio" />
+						<h:panelGroup>
+							<p:selectOneMenu id="cmbCicloEstudio"
+								value="#{studentCourseView.studentLevelSelected}">
+								<f:selectItem itemValue="" itemLabel="Seleccionar ciclo" />
+								<f:selectItems value="#{studentCourseView.studentLevelList}" var="level"
+									itemValue="#{level}" itemLabel="#{level.description}" />
+									<p:ajax event="change" listener="#{studentCourseView.onChangeLevelEvent}"
+										update="asociacionCursoEstudianteForm asociacionCursoEstudianteForm:somCursos" />
+							</p:selectOneMenu>
+						</h:panelGroup>
+				</p:panelGrid>
+
+				<p:panelGrid columns="2">
+					<p:outputLabel for="somCursos" value="Grado" />
+
+					<p:selectOneMenu id="somCursos"
+						value="#{studentCourseView.courseSelected}">
+						<f:selectItem itemValue="" itemLabel="Seleccione grado" />
+						<f:selectItems value="#{studentCourseView.coursesList}" var="curso"
+							itemValue="#{curso}" itemLabel="#{curso.name}" />
+						<f:converter converterId="jsfUniversalConverter" />
+						<p:ajax event="change" listener="#{studentCourseView.onChangeCourseEvent}"
+							update="asociacionCursoEstudianteForm" />
+					</p:selectOneMenu>
+					
+				</p:panelGrid>
+				
+				
+
+				<br />
+				
+			<p:dataTable id="studentTable" value="#{studentCourseView.lazysStudentModel}"
+                        var="student" rowIndexVar="indice" 
+                        rowKey="#{student.id}"
+                        lazy="true"
+                        selection="#{studentCourseView.studentListSelected}"
+                        emptyMessage="#{safiCommonBundle.ListEmpty}" 
+                        paginator="true" rows="10" paginatorPosition="bottom"
+                      	paginatorTemplate="{FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                        currentPageReportTemplate="| #{safiCommonBundle.page} {currentPage} #{safiCommonBundle.of} {totalPages} |" 
+                        rowsPerPageTemplate="10,20,30,40"> 
+	        		
+	        		<f:facet name="header">
+            			Estudiantes
+        			</f:facet>
+	        		
+	        		<p:column selectionMode="multiple" style="width:16px;text-align:center"/>
+	        		
+	        		<p:column headerText="Nombre" filterBy="#{student.name}">
+			        	#{student.name}
+			        </p:column>
+
+					<p:column headerText="Apellido">
+			        	#{student.lastName}
+			        </p:column>
+	        </p:dataTable>
+	        
+	        <p:separator />
+	        
+	        <p:dataTable id="studentCourseTable" value="#{studentCourseView.lazyStudentCourseModel}"
+                        var="studentCourse" rowIndexVar="indice" 
+                        rowKey="#{studentCourse.id}"
+                        lazy="true"
+                        selection="#{studentCourseView.studentCourseListSelected}"
+                        emptyMessage="#{safiCommonBundle.ListEmpty}" 
+                        paginator="true" rows="10" paginatorPosition="bottom"
+                      	paginatorTemplate="{FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                        currentPageReportTemplate="| #{safiCommonBundle.page} {currentPage} #{safiCommonBundle.of} {totalPages} |" 
+                        rowsPerPageTemplate="10,20,30,40"> 
+	        		
+	        		<f:facet name="header">
+            			Estudiantes inscritos
+        			</f:facet>
+	        		<p:column selectionMode="multiple" style="width:16px;text-align:center"/>
+	        		
+	        		<p:column headerText="Nombre" filterBy="#{studentCourse.student.name}">
+			        	#{studentCourse.student.name} 
+			        </p:column>
+			        
+			        <p:column headerText="Apellido" filterBy="#{studentCourse.student.lastName}">
+			        	#{studentCourse.student.lastName} 
+			        </p:column>
+
+					<p:column headerText="Periodo">
+			        	#{studentCourse.period.name}
+			        </p:column>
+	        </p:dataTable>
+
+
+			</p:outputPanel>
+
+			<br />
+
+			<p:commandButton value="Guardar asociacion" icon="fa fa-save"
+				process="asociacionCursoEstudianteForm asociacionCursoEstudianteForm:studentTable"
+				update="asociacionCursoEstudianteForm"
+				actionListener="#{studentCourseView.saveAsociationCourseStudent}">
+				<p:confirm header="Asistencia"
+					message="Desea guardar las asociacion de materias?" />
+			</p:commandButton>
+			
+			<p:commandButton value="Eliminar asociacion" icon="fa fa-remove"
+				process="asociacionCursoEstudianteForm asociacionCursoEstudianteForm:studentCourseTable"
+				update="asociacionCursoEstudianteForm"
+				actionListener="#{studentCourseView.deleteAsociationCourseStudent}">
+				<p:confirm header="Asistencia"
+					message="Desea eliminar las asociacion de materias?" />
+			</p:commandButton>
+
+			<p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+				<p:commandButton value="Si" type="button"
+					styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+				<p:commandButton value="No" type="button"
+					styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+			</p:confirmDialog>
+		</h:form>
+
+	</ui:define>
+
+</ui:composition>

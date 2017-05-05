@@ -40,6 +40,22 @@
 							<p:message for="courseNameUpdate" />
 						</h:panelGroup>
 						
+						<p:outputLabel value="Nivel de educacion:" for="cbLevel" />
+						<h:panelGroup>
+							<p:selectOneMenu id="cbLevel" value="#{courseView.studentLevelSelected}" 
+								filter="true"
+								required="true"
+								requiredMessage="#{safiBundle.requiredMessageNombre}"
+								filterMatchMode="contains" style="width:175px" effect="fold"
+								widgetVar="cbLevel">
+								<f:selectItem itemLabel="Seleccionar" noSelectionOption="true"/>
+								<f:selectItems
+									value="#{courseView.studentLevelList}" var="level"
+									itemLabel="#{level.description}" itemValue="#{level}" />
+							</p:selectOneMenu>
+							<p:message for="cbLevel" />
+						</h:panelGroup>
+						
 								
 						<p:outputLabel value="Profesor encargado:" for="cbTeacher" />
 						<h:panelGroup>

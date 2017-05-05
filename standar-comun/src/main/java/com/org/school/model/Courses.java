@@ -10,6 +10,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
+import com.org.school.enums.StudentLevel;
 import com.org.util.domain.BaseModelEntity;
 
 import lombok.EqualsAndHashCode;
@@ -35,7 +36,21 @@ public class Courses implements BaseModelEntity<Long> {
 	
 	private String name;
 	
+	private String studentLevel;
+	
 	@ManyToOne
 	@JoinColumn(name = "TEACHER_ID")
 	private Teacher teacher;
+	
+	/**
+	 * Relations By Enums
+	 **/
+	
+	public StudentLevel getStudentLevel() {
+		return StudentLevel.getStudentLevel(this.studentLevel);
+	}
+
+	public void setStudentLevel(StudentLevel studentLevel) {
+		this.studentLevel = studentLevel != null ? studentLevel.getCode() : null;
+	}
 }

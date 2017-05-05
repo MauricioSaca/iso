@@ -18,6 +18,7 @@ import org.picketlink.idm.credential.Password;
 
 import com.org.school.enums.Gender;
 import com.org.school.enums.Shift;
+import com.org.school.enums.StudentLevel;
 import com.org.school.model.Student;
 import com.org.school.services.StudentService;
 import com.org.security.enums.GroupsSecurityRolesNames;
@@ -53,6 +54,7 @@ public class StudentView implements Serializable {
 
 	private List<Gender> genderList;
 	private List<Shift> shiftList;
+	private List<StudentLevel> studentLevelList;
 
 	private BaseLazyModel<Student, Long> studentLazyData;
 	private boolean renderEditView;
@@ -71,6 +73,7 @@ public class StudentView implements Serializable {
 
 		genderList = Arrays.asList(Gender.values());
 		shiftList = Arrays.asList(Shift.values());
+		studentLevelList = Arrays.asList(StudentLevel.values());
 
 		loadTeachers();
 
@@ -96,18 +99,18 @@ public class StudentView implements Serializable {
 	public void save() {
 		try {
 			if (student != null) {
-				
+
 				UserTypeEntity studentUserType = createUserForStudent();
 				student.setUserTypeEntity(studentUserType);
-				
+
 				getStudentService().save(student);
-				
-				String message = "Usted ha sigo registrado en la Fundacion Huellitas. "
-						+ "Su nombre de usuario es: " + userName + " clave: " + randomPassWord + " "
-								+ "No olvide cambiar su clave al ingresar al sistema.";
-				
+
+				String message = "Usted ha sigo registrado en la Fundacion Huellitas. " + "Su nombre de usuario es: "
+						+ userName + " clave: " + randomPassWord + " "
+						+ "No olvide cambiar su clave al ingresar al sistema.";
+
 				System.out.println(message);
-				
+
 				renderEditView = false;
 				Messages.create("INFO").detail("Guardado exitosamente").add();
 			}
@@ -115,7 +118,7 @@ public class StudentView implements Serializable {
 			// log
 		}
 	}
-	
+
 	private UserTypeEntity createUserForStudent() {
 
 		studentUser = new User(userName);
@@ -140,7 +143,6 @@ public class StudentView implements Serializable {
 	private String generateRandomPass() {
 		return new BigInteger(130, random).toString(32);
 	}
-
 
 	public void prepareUpdate() {
 		renderEditView = true;

@@ -1,6 +1,7 @@
 package com.org.web.views;
 
 import java.io.Serializable;
+import java.util.Arrays;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
@@ -11,6 +12,7 @@ import javax.inject.Named;
 import org.omnifaces.cdi.ViewScoped;
 import org.omnifaces.util.Messages;
 
+import com.org.school.enums.StudentLevel;
 import com.org.school.model.Courses;
 import com.org.school.model.Teacher;
 import com.org.school.services.CoursesService;
@@ -49,6 +51,9 @@ public class CourseView extends SecurityBaseView implements Serializable {
 	private List<Teacher> teacherList;
 	private Teacher teacherSelected;
 
+	private List<StudentLevel> studentLevelList;
+	private StudentLevel studentLevelSelected;
+
 	@PostConstruct
 	public void init() {
 		loadLazyDataModels();
@@ -57,6 +62,7 @@ public class CourseView extends SecurityBaseView implements Serializable {
 	private void loadLazyDataModels() {
 		lazyCourseModel = new BaseLazyModel<Courses, Long>(coursesService);
 		teacherList = teacherService.findAll();
+		studentLevelList = Arrays.asList(StudentLevel.values());
 	}
 
 	public void preparedCreatedCourse() {
@@ -70,7 +76,8 @@ public class CourseView extends SecurityBaseView implements Serializable {
 
 	public void saveCourse() {
 		if (isNotNullNewCouse()) {
-			if (isNotNullTeacher()) {
+			if (isNotNullTeacher() && isNotNullLevel()) {
+				newCourse.setStudentLevel(studentLevelSelected);
 				newCourse.setTeacher(teacherSelected);
 				coursesService.save(newCourse);
 				Messages.create("Información").detail("Registro ingresado exitosamente").add();
@@ -80,7 +87,8 @@ public class CourseView extends SecurityBaseView implements Serializable {
 
 	public void updateCourse() {
 		if (isNotNullCourseSelected()) {
-			if (isNotNullTeacher()) {
+			if (isNotNullTeacher() && isNotNullLevel()) {
+				courseSelected.setStudentLevel(studentLevelSelected);
 				courseSelected.setTeacher(teacherSelected);
 				coursesService.save(courseSelected);
 				Messages.create("Información").detail("Registro actualizada exitosamente").add();
@@ -105,6 +113,10 @@ public class CourseView extends SecurityBaseView implements Serializable {
 
 	private boolean isNotNullTeacher() {
 		return teacherSelected != null;
+	}
+	
+	private boolean isNotNullLevel() {
+		return studentLevelSelected != null;
 	}
 
 }

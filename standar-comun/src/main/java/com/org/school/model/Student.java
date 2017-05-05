@@ -8,6 +8,7 @@ import javax.persistence.Id;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
+import com.org.school.enums.StudentLevel;
 import com.org.school.enums.StudentStatus;
 import com.org.util.domain.BaseModelEntity;
 
@@ -35,6 +36,9 @@ public class Student extends People implements BaseModelEntity<Long> {
 	@Column(length = 255, nullable = true)
 	private String studentStatus;
 
+	@Column(length = 255, nullable = true)
+	private String studentLevel;
+
 	/**
 	 * Relations By Enums
 	 **/
@@ -44,6 +48,14 @@ public class Student extends People implements BaseModelEntity<Long> {
 
 	public void setStudentStatus(StudentStatus studentStatus) {
 		this.studentStatus = studentStatus != null ? studentStatus.getCode() : null;
+	}
+
+	public StudentLevel getStudentLevel() {
+		return StudentLevel.getStudentLevel(this.studentLevel);
+	}
+
+	public void setStudentLevel(StudentLevel studentLevel) {
+		this.studentLevel = studentLevel != null ? studentLevel.getCode() : null;
 	}
 
 }

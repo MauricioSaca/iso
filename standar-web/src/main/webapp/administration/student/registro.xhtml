@@ -10,9 +10,9 @@
 
 	<p:panelGrid id="pgAddEditstudent" columns="2">
 	
-		<p:outputLabel value="Nombre de usuario" for="txtNombreUsuario" />
+		<p:outputLabel value="Nombre de usuario" rendered="#{!studentView.renderEditView}" for="txtNombreUsuario" />
 		
-		<p:inputText id="txtNombreUsuario" required="true" value="#{studentView.userName}" />
+		<p:inputText id="txtNombreUsuario" required="true" value="#{studentView.userName}" rendered="#{!studentView.renderEditView}" />
 	
 		<p:outputLabel value="Nombre" for="txtNames" />
 		<p:inputText id="txtNames" value="#{studentView.student.name}" />
@@ -49,6 +49,14 @@
 			layout="grid" columns="1">
 			<f:selectItems value="#{studentView.shiftList}"
 				var="shift" itemValue="#{shift}" itemLabel="#{shift.description}" />
+		</p:selectOneRadio>
+		
+		<p:outputLabel value="Ciclo de estudio" for="orCiclo" />
+		<p:selectOneRadio id="orCiclo" required="true"
+			value="#{studentView.student.studentLevel}"
+			layout="grid" columns="1">
+			<f:selectItems value="#{studentView.studentLevelList}"
+				var="level" itemValue="#{level}" itemLabel="#{level.description}" />
 		</p:selectOneRadio>
 
 		<p:outputLabel value="Fecha de Nacimiento" for="cDayBrth" />

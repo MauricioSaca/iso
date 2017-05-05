@@ -238,6 +238,13 @@ public class SecurityController implements Serializable {
 		item.setCommand("#{securityController.onMenuSelect}");
 		firstSubmenu.addElement(item);
 		
+		item = new DefaultMenuItem();
+		item.setValue(" Estudiante - Curso");
+		item.setTarget("/director/asociacion_estudiante_curso.xhtml");
+		item.setIcon("fa fa-list-alt");
+		item.setCommand("#{securityController.onMenuSelect}");
+		firstSubmenu.addElement(item);
+		
 		model.addElement(firstSubmenu);
 	}
 
