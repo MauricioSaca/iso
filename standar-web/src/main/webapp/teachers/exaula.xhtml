@@ -37,8 +37,12 @@
 					</p:selectOneMenu>
 				</p:panelGrid>
 
+				<br />
+
 				<p:dataTable id="dtAsignaciones" var="assig" paginator="true"
 					rows="5" value="#{actividadesExAulaView.assigmentsLazyData}"
+					paginatorPosition="bottom" rowsPerPageTemplate="5, 10, 15"
+					paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
 					lazy="true">
 
 					<p:column headerText="Materia">
@@ -53,49 +57,27 @@
 						#{assig.dueDate}
 					</p:column>
 
+					<p:column headerText="Accion"
+						style="width: 100px; text-align:center;">
+						<p:commandButton icon="fa fa-pencil"
+							update="exAulasForm:pgData" oncomplete="PF('dlgAdd').show();"
+							actionListener="#{actividadesExAulaView.prepareEdit(assig)}" />
+
+						<p:commandButton icon="fa fa-close" update="asignacionesForm:dtAsignaciones"
+							actionListener="#{actividadesExAulaView.remove(assig)}">
+							<p:confirm header="Eliminacion"
+								message="Desea eliminar este registro?" />
+						</p:commandButton>
+					</p:column>
+
 				</p:dataTable>
 
-				<p:panelGrid columns="2">
+				<br />
 
-					<p:outputLabel for="somSubjects" value="Materia" />
-
-					<p:selectOneMenu id="somSubjects" required="true"
-						value="#{actividadesExAulaView.selectedAssigments.subjectPerCourse}">
-						<f:selectItem itemValue="" itemLabel="Seleccione materia" />
-						<f:selectItems
-							value="#{actividadesExAulaView.subjectPerCoursesList}"
-							var="materia" itemValue="#{materia}"
-							itemLabel="#{materia.subject.code} - #{materia.subject.name}" />
-
-						<f:converter converterId="jsfUniversalConverter" />
-
-					</p:selectOneMenu>
-
-					<p:outputLabel for="txtTitle" value="Titulo" />
-					<p:inputText id="txtTitle" required="true"
-						value="#{actividadesExAulaView.selectedAssigments.name}" />
-
-					<p:outputLabel for="txtDescription" value="Descripcion" />
-					<p:inputTextarea id="txtDescription" required="true"
-						value="#{actividadesExAulaView.selectedAssigments.description}" />
-
-					<p:outputLabel for="dueDate" value="Fecha de Entrega" />
-					<p:calendar id="dueDate" required="true"
-						value="#{actividadesExAulaView.selectedAssigments.dueDate}"
-						pattern="dd/MM/yyyy" mask="true" navigator="true" locale="es" />
-
-				</p:panelGrid>
-
+				<p:commandButton oncomplete="PF('dlgAdd').show();" value="Agregar"
+					icon="fa fa-plus"
+					actionListener="#{actividadesExAulaView.prepareCreate}" />
 			</p:outputPanel>
-
-			<br />
-
-			<p:commandButton value="Guardar" icon="fa fa-save" update="@form"
-				validateClient="true" process="@form"
-				actionListener="#{actividadesExAulaView.save}">
-				<p:confirm header="TAREAS EX-AULA"
-					message="Desea guardar la tarea ex-aula?" />
-			</p:commandButton>
 
 			<p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
 				<p:commandButton value="Si" type="button"
@@ -105,6 +87,70 @@
 			</p:confirmDialog>
 		</h:form>
 
+		<p:dialog id="dlgAdd" widgetVar="dlgAdd" modal="true"
+			responsive="true" draggable="false" resizable="false" width="700"
+			position="center">
+			<h:form id="exAulasForm">
+				<p:panelGrid id="pgData">
+					<p:row>
+						<p:column>
+							<p:outputLabel for="somSubjects" value="Materia" />
+						</p:column>
+
+						<p:column>
+							<p:selectOneMenu id="somSubjects" required="true"
+								value="#{actividadesExAulaView.selectedAssigments.subjectPerCourse}">
+								<f:selectItem itemValue="" itemLabel="Seleccione materia" />
+								<f:selectItems
+									value="#{actividadesExAulaView.subjectPerCoursesList}"
+									var="materia" itemValue="#{materia}"
+									itemLabel="#{materia.subject.code} - #{materia.subject.name}" />
+
+								<f:converter converterId="jsfUniversalConverter" />
+
+							</p:selectOneMenu>
+						</p:column>
+						<p:column>
+							<p:outputLabel for="txtTitle" value="Titulo" />
+						</p:column>
+						<p:column>
+							<p:inputText id="txtTitle" required="true"
+								value="#{actividadesExAulaView.selectedAssigments.name}" />
+						</p:column>
+
+					</p:row>
+					<p:row>
+						<p:column>
+							<p:outputLabel for="dueDate" value="Fecha de Entrega" />
+						</p:column>
+						<p:column colspan="3">
+							<p:calendar id="dueDate" required="true"
+								value="#{actividadesExAulaView.selectedAssigments.dueDate}"
+								pattern="dd/MM/yyyy" mask="true" navigator="true" locale="es" />
+						</p:column>
+					</p:row>
+					<p:row>
+						<p:column>
+							<p:outputLabel for="txtDescription" value="Descripcion" />
+						</p:column>
+						<p:column colspan="3">
+							<p:inputTextarea id="txtDescription" cols="50" required="true"
+								value="#{actividadesExAulaView.selectedAssigments.description}" />
+						</p:column>
+					</p:row>
+				</p:panelGrid>
+
+				<br />
+
+				<p:commandButton value="Guardar" icon="fa fa-save" update="@form"
+					validateClient="true" process="@form"
+					actionListener="#{actividadesExAulaView.save}">
+					<p:confirm header="TAREAS EX-AULA"
+						message="Desea guardar la tarea ex-aula?" />
+				</p:commandButton>
+
+			</h:form>
+		</p:dialog>
 	</ui:define>
 
 </ui:composition>

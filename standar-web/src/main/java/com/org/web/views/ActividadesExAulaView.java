@@ -73,7 +73,7 @@ public class ActividadesExAulaView implements Serializable {
 
 	@PostConstruct
 	public void init() {
-		
+
 		selectedAssigments = new Assigments();
 
 		user = (User) identity.getAccount();
@@ -82,22 +82,21 @@ public class ActividadesExAulaView implements Serializable {
 		coursesList = getCoursesService().findCoursesByTeacher(teacher);
 
 	}
-	
-	public void loadAssigments(){
+
+	public void loadAssigments() {
 		assigmentsLazyData = new BaseLazyModel<>(getAssigmentsService());
 		assigmentsLazyData.setCustomFilters(buildWhere());
 	}
-	
-	public Set<ValueHolder> buildWhere(){
+
+	public Set<ValueHolder> buildWhere() {
 		Set<ValueHolder> holder = new HashSet<>();
 
-		if(selectedCourse != null){ 
-			holder.add(new ValueHolder("subjectPerCourse.courses.id", selectedCourse.getId()));			
+		if (selectedCourse != null) {
+			holder.add(new ValueHolder("subjectPerCourse.courses.id", selectedCourse.getId()));
 		}
-		
+
 		return holder;
 	}
-	
 
 	public void loadSubjects() {
 		if (selectedCourse != null) {
@@ -106,11 +105,26 @@ public class ActividadesExAulaView implements Serializable {
 		}
 	}
 
+	public void prepareCreate(){
+		selectedAssigments = new Assigments();
+	}
+	
 	public void save() {
 		getAssigmentsService().save(selectedAssigments);
 		Messages.create("Asignacion").detail("La tarea ex-aula ha sido almacenada").add();
-		
+
 		selectedAssigments = new Assigments();
+	}
+	
+	public void prepareEdit(Assigments assigments) {
+		selectedAssigments = assigments;
+	}
+
+	public void remove(Assigments assigments) {
+		if (assigments != null) {
+			getAssigmentsService().delete(assigments);
+			Messages.create("Asignacion eliminada").detail("Tarea ex-aula eliminada").add();
+		}
 	}
 
 }
