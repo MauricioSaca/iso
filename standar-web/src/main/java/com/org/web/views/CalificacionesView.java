@@ -16,6 +16,7 @@ import org.omnifaces.cdi.ViewScoped;
 import org.omnifaces.util.Messages;
 import org.picketlink.Identity;
 import org.picketlink.idm.credential.Password;
+import org.primefaces.component.datatable.DataTable;
 import org.primefaces.event.CellEditEvent;
 
 import com.org.school.enums.Gender;
@@ -130,18 +131,32 @@ public class CalificacionesView implements Serializable {
 	}
 
 	public void onCellEdit(CellEditEvent event) {
+		Double newValue = (Double) event.getNewValue();
+		Double oldValue = (Double) event.getOldValue();
+		studentsgradeSelected = (StudentGradesPojo) ((DataTable)event.getComponent()).getRowData();
 
-		// Buscar si ya existe en la tabla studentgradePerSubject
-		
-		StudentGradesPerSubject studentGradesPerSubject = new StudentGradesPerSubject();
-		studentGradesPerSubject.setStudent(studentsgradeSelected.getStudent());
-		studentGradesPerSubject.setFirstGrade(studentsgradeSelected.getNota1());
-		studentGradesPerSubject.setSecondGrade(studentsgradeSelected.getNota2());
-		studentGradesPerSubject.setThirdGrade(studentsgradeSelected.getNota3());
-		studentGradesPerSubject.setSubjectPerCourse(studentsgradeSelected.getSubjectPerCourse());
+		if (newValue.compareTo(oldValue) != 0) {
+			if (newValue > 10 || newValue < 0) {
+				Messages.create("ERROR").detail("Las notas deben ser del 0 al 10").error().add();
+				newValue = oldValue;
+			} else {
+				StudentGradesPerSubject studentGradesPerSubject;
+				studentGradesPerSubject = studentGradesPerSubjectService
+						.findbyStudentAndSubject(studentsgradeSelected.getStudent(), subjectperCourseSelected);
+				if (studentGradesPerSubject == null) {
+					studentGradesPerSubject = new StudentGradesPerSubject();
+					studentGradesPerSubject.setStudent(studentsgradeSelected.getStudent());
+					studentGradesPerSubject.setSubjectPerCourse(studentsgradeSelected.getSubjectPerCourse());
+				}
+				studentGradesPerSubject.setFirstGrade(studentsgradeSelected.getNota1());
+				studentGradesPerSubject.setSecondGrade(studentsgradeSelected.getNota2());
+				studentGradesPerSubject.setThirdGrade(studentsgradeSelected.getNota3());
 
-		studentGradesPerSubjectService.save(studentGradesPerSubject);
+				studentGradesPerSubjectService.save(studentGradesPerSubject);
 
-		Messages.create("INFO").detail("Nota Guardada exitosamente").add();
+				Messages.create("INFO").detail("Nota Guardada exitosamente").add();
+			}
+		}
+
 	}
 }
