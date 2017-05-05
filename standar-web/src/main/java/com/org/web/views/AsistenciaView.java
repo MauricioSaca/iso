@@ -61,6 +61,7 @@ public class AsistenciaView implements Serializable {
 
 	private List<StudentsPerCourse> studentsList;
 	private List<Courses> coursesList;
+	private List<StudentCourseAttendance> studentCourseAttendancesList;
 
 	@PostConstruct
 	public void init() {
@@ -69,11 +70,31 @@ public class AsistenciaView implements Serializable {
 		teacher = getTeacherService().findTeacherByUser(user);
 
 		coursesList = getCoursesService().findCoursesByTeacher(teacher);
+
 	}
 
 	public void loadStudents() {
-		if(selectedCourse != null){
-			studentsList = getStudentsPerCourseService().findStudentsListByCourse(selectedCourse);		
+		studentCourseAttendancesList = new ArrayList<>();
+		if (selectedCourse != null) {
+			studentsList = getStudentsPerCourseService().findStudentsListByCourse(selectedCourse);
+
+			makePojo();
+		}
+	}
+
+	public void makePojo() {
+		for (StudentsPerCourse student : studentsList) {
+			StudentCourseAttendance studentCourseAttendance = getStudentCourseAttendanceService()
+					.findByStudents(student.getId());
+
+			if (studentCourseAttendance == null) {
+				studentCourseAttendance = new StudentCourseAttendance();
+				studentCourseAttendance.setAttendance(false);
+				studentCourseAttendance.setStudentsPerCourse(student);
+
+			}
+
+			studentCourseAttendancesList.add(studentCourseAttendance);
 		}
 	}
 
@@ -84,17 +105,12 @@ public class AsistenciaView implements Serializable {
 
 	public void saveAsistencia() {
 		List<StudentCourseAttendance> listToSave = new ArrayList<>();
-		StudentCourseAttendance studentCourseAttendance;
 
-		for (StudentsPerCourse studentsPerCourse : studentsList) {
+		for (StudentCourseAttendance attendance : studentCourseAttendancesList) {
 
-			studentCourseAttendance = new StudentCourseAttendance();
+			attendance.setDateAttendance(new Date());
 
-			studentCourseAttendance.setStudentsPerCourse(studentsPerCourse);
-			studentCourseAttendance.setAttendance(studentsPerCourse.getAttendance());
-			studentCourseAttendance.setDateAttendance(new Date());
-
-			listToSave.add(studentCourseAttendance);
+			listToSave.add(attendance);
 		}
 
 		getStudentCourseAttendanceService().save(listToSave);

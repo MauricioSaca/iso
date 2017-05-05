@@ -45,8 +45,5 @@ public class StudentsPerCourse implements BaseModelEntity<Long> {
 	@ManyToOne
 	@JoinColumn(name = "COURSES_ID")
 	private Courses courses;
-	
-	@Transient
-	private Boolean attendance;
 
 }

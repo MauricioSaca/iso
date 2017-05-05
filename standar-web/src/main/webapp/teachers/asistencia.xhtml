@@ -18,11 +18,11 @@
 		<h:form id="asistenciaForm">
 			<p:outputPanel id="contentPanel">
 
-				
+
 				<p:separator>
 					<h3>Asistencia de Estudiantes</h3>
 				</p:separator>
-				
+
 				<p:panelGrid columns="2">
 					<p:outputLabel for="somCursos" value="Grado" />
 
@@ -37,7 +37,7 @@
 					</p:selectOneMenu>
 				</p:panelGrid>
 
-				<br/>
+				<br />
 				<p:panelGrid style="width: 100%;">
 					<f:facet name="header">
 						<p:row>
@@ -45,17 +45,17 @@
 							<p:column>Asistio</p:column>
 						</p:row>
 					</f:facet>
-					<ui:repeat var="asistencia" value="#{asistenciaView.studentsList}">
+					<ui:repeat var="asistencia"
+						value="#{asistenciaView.studentCourseAttendancesList}">
 						<p:row>
 							<p:column headerText="Estudiante">
-								#{asistencia.student.lastName}, #{asistencia.student.name}
+								#{asistencia.studentsPerCourse.student.lastName}, #{asistencia.studentsPerCourse.student.name}
 							</p:column>
-							
+
 							<p:column headerText="Estudiante">
-<!-- 								<p:selectBooleanButton offLabel="No" onLabel="Si" value="#{asistencia.attendance}"/> -->
 								
-								<p:selectBooleanCheckbox value="#{asistencia.attendance}"/>
-							
+								<p:selectBooleanCheckbox value="#{asistencia.attendance}" />
+
 							</p:column>
 						</p:row>
 					</ui:repeat>
@@ -64,10 +64,11 @@
 
 			</p:outputPanel>
 
-			<br/>
-			
+			<br />
+
 			<p:commandButton value="Guardar" icon="fa fa-save"
-				update="asistenciaForm" actionListener="#{asistenciaView.saveAsistencia}">
+				update="asistenciaForm"
+				actionListener="#{asistenciaView.saveAsistencia}">
 				<p:confirm header="Asistencia"
 					message="Desea guardar la asistencia de los alumnos?" />
 			</p:commandButton>

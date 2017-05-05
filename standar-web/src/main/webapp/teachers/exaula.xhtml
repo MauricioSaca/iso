@@ -75,7 +75,7 @@
 				<br />
 
 				<p:commandButton oncomplete="PF('dlgAdd').show();" value="Agregar"
-					icon="fa fa-plus"
+					icon="fa fa-plus" update="exAulasForm:pgData"
 					actionListener="#{actividadesExAulaView.prepareCreate}" />
 			</p:outputPanel>
 
@@ -124,7 +124,7 @@
 							<p:outputLabel for="dueDate" value="Fecha de Entrega" />
 						</p:column>
 						<p:column colspan="3">
-							<p:calendar id="dueDate" required="true"
+							<p:calendar id="dueDate" required="true" mindate="new Date();"
 								value="#{actividadesExAulaView.selectedAssigments.dueDate}"
 								pattern="dd/MM/yyyy" mask="true" navigator="true" locale="es" />
 						</p:column>
@@ -142,8 +142,8 @@
 
 				<br />
 
-				<p:commandButton value="Guardar" icon="fa fa-save" update="@form"
-					validateClient="true" process="@form"
+				<p:commandButton value="Guardar" icon="fa fa-save" update="@form asignacionesForm:dtAsignaciones"
+					validateClient="true" process="@form" oncomplete="PF('dlgAdd').hide();"
 					actionListener="#{actividadesExAulaView.save}">
 					<p:confirm header="TAREAS EX-AULA"
 						message="Desea guardar la tarea ex-aula?" />
