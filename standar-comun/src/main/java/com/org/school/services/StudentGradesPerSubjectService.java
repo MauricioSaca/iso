@@ -1,5 +1,7 @@
 package com.org.school.services;
 
+import java.util.List;
+
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 
@@ -29,6 +31,11 @@ public class StudentGradesPerSubjectService extends BaseService<StudentGradesPer
 		BooleanExpression byStudent = qStudentGradesPerSubject.student.eq(student);
 		BooleanExpression bySubject = qStudentGradesPerSubject.subjectPerCourse.eq(spc);
 		return newJpaQuery().from(qStudentGradesPerSubject).where(byStudent.and(bySubject)).singleResult(qStudentGradesPerSubject);
+	}
+	
+	public List<StudentGradesPerSubject> findbyStudent(Student student){
+		BooleanExpression byStudent = qStudentGradesPerSubject.student.eq(student);
+		return newJpaQuery().from(qStudentGradesPerSubject).where(byStudent).list(qStudentGradesPerSubject);
 	}
 
 }

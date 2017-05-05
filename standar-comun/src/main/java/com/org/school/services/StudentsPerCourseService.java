@@ -1,6 +1,5 @@
 package com.org.school.services;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.ejb.Stateless;
@@ -8,10 +7,8 @@ import javax.inject.Inject;
 
 import com.org.school.model.Courses;
 import com.org.school.model.QStudentsPerCourse;
-import com.org.school.model.StudentGradesPerSubject;
-import com.org.school.model.StudentGradesPojo;
+import com.org.school.model.Student;
 import com.org.school.model.StudentsPerCourse;
-import com.org.school.model.SubjectPerCourse;
 import com.org.school.repository.StudentsPerCourseRepository;
 import com.org.util.repository.BaseRepository;
 import com.org.util.service.BaseService;
@@ -34,5 +31,9 @@ public class StudentsPerCourseService extends BaseService<StudentsPerCourse, Lon
 				.list(qStudentsPerCourse);
 	}
 
+	public Courses findCoursesByStudent(Student student) {
+		return newJpaQuery().from(qStudentsPerCourse).where(qStudentsPerCourse.student.id.eq(student.getId()))
+				.singleResult(qStudentsPerCourse.courses);
+	}
    
 }

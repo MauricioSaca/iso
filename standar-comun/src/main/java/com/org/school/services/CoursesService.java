@@ -7,6 +7,7 @@ import javax.inject.Inject;
 
 import com.org.school.model.Courses;
 import com.org.school.model.QCourses;
+import com.org.school.model.Student;
 import com.org.school.model.Teacher;
 import com.org.school.repository.CoursesRepository;
 import com.org.util.repository.BaseRepository;

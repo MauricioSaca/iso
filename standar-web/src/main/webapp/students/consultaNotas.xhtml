@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:o="http://omnifaces.org/ui" xmlns:p="http://primefaces.org/ui"
+	template="/template/layout.xhtml">
+
+	<ui:define name="head">
+
+	</ui:define>
+
+	<ui:define name="subheader">
+		<h:outputText value="Consulta Calificaciones"></h:outputText>
+	</ui:define>
+
+	<ui:define name="content">
+		<h:form id="califForm">
+			<h:outputText value="Estudiante: #{consultaNotasView.student.lastName}, #{consultaNotasView.student.name}"/>
+			<br />
+			<br />
+			<p:dataTable id="students" var="grades"
+				value="#{consultaNotasView.studentGradesPerSubjectList}" editable="true"
+				editMode="cell" widgetVar="students" lazy="true"
+				paginator="true" paginatorPosition="bottom"
+				rowsPerPageTemplate="15, 30, 45"
+				sortBy="#{student.student.lastName}"
+				paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}">
+				<f:facet name="header">
+		          Lista de Materias
+		       </f:facet>
+
+				<p:column headerText="Materia">
+					<h:outputText
+						value="#{grades.subjectPerCourse.subject.name}" />
+				</p:column>
+
+				<p:column headerText="Nota 1">
+						<h:outputText value="#{grades.firstGrade}" />
+				</p:column>
+
+				<p:column headerText="Nota 2">
+					<h:outputText value="#{grades.secondGrade}" />
+				</p:column>
+
+
+				<p:column headerText="Nota 3">
+					<h:outputText value="#{grades.thirdGrade}" />
+				</p:column>
+				
+				<p:column headerText="Promedio">
+					<h:outputText value="#{(grades.firstGrade+grades.secondGrade+grades.thirdGrade)/3}">
+						<f:convertNumber pattern="#0.00" />
+					</h:outputText>
+				</p:column>
+			</p:dataTable>
+		</h:form>
+	</ui:define>
+</ui:composition>

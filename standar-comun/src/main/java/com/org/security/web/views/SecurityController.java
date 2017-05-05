@@ -182,7 +182,7 @@ public class SecurityController implements Serializable {
 
 		item = new DefaultMenuItem();
 		item.setValue("Calificaciones");
-		item.setTarget("/students/index.xhtml");
+		item.setTarget("/students/consultaNotas.xhtml");
 		item.setIcon("fa fa-list-alt");
 		item.setCommand("#{securityController.onMenuSelect}");
 		firstSubmenu.addElement(item);
