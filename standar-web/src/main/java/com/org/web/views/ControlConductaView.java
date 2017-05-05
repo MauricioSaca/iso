@@ -2,6 +2,7 @@ package com.org.web.views;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -83,7 +84,7 @@ public class ControlConductaView implements Serializable {
 	private List<SubjectPerCourse> subjectPerCoursesList;
 	private List<Courses> coursesList;
 	private List<StudentsPerCourse> studentsList;
-	
+	private List<BehaviourMonitoring> behaviourMonitoringsList;
 	private List<CatalogoCodigos> codesList;
 	private List<CatalogoCodigos> selectedCodesList;
 
@@ -114,30 +115,31 @@ public class ControlConductaView implements Serializable {
 		return holder;
 	}
 
-	public void loadStudents() {
-		if(Strings.isNullOrEmpty(selectedTipoCodigo)){
+	public void loadCodigos() {
+		if(!Strings.isNullOrEmpty(selectedTipoCodigo)){
 			codesList = getCatalogoCodigosService().findCatalogoByTipo(selectedTipoCodigo);		
 		}
 	}
 	
-	public void loadCodigos() {
+	public void loadStudents() {
 		if(selectedCourse != null){
 			studentsList = getStudentsPerCourseService().findStudentsListByCourse(selectedCourse);		
 		}
 	}
 	
-//	public List<SelectItem> getPositiveCodes(){
-//		
-//		codesList.add(new SelectItem("1", "test codigo"));
-//	}
+	public void getCodigosStudent(StudentsPerCourse studentsPerCourse){
+		behaviourMonitoringsList = getBehaviourMonitoringService().findBehaviourMonitoringByStudent(studentsPerCourse);
+	}
 
 	public void save() {
 		List<BehaviourMonitoring> listToSave = new ArrayList<>();
 		
-		for(CatalogoCodigos codigo : selectedCodesList){
+		for (int i = 0; i < selectedCodesList.size() ; i++) {
+	
 			selectedBehaviourMonitoring = new BehaviourMonitoring();
-			selectedBehaviourMonitoring.setCatalogoCodigos(codigo);
+			selectedBehaviourMonitoring.setCatalogoCodigos(selectedCodesList.get(i));
 			selectedBehaviourMonitoring.setStudentsPerCourse(selectedStudentsPerCourse);
+			selectedBehaviourMonitoring.setFechaAplicado(new Date());
 			
 			listToSave.add(selectedBehaviourMonitoring);
 			

@@ -1,5 +1,7 @@
 package com.org.school.model;
 
+import java.util.Date;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -9,6 +11,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 import com.org.util.domain.BaseModelEntity;
 
@@ -41,6 +45,8 @@ public class BehaviourMonitoring implements BaseModelEntity<Long> {
 	@JoinColumn(name = "CATALOGOCODIGOS_ID")
 	private CatalogoCodigos catalogoCodigos;
 
-
+	@Column
+	@Temporal(TemporalType.DATE)
+	private Date fechaAplicado;
 
 }

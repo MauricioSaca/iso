@@ -38,7 +38,10 @@
 				</p:panelGrid>
 
 				<p:dataTable id="dtAlumnos" var="alumn" paginator="true" rows="5"
-					value="#{controlConductaView.studentsList}" lazy="true">
+					value="#{controlConductaView.studentsList}"
+					paginatorPosition="bottom" rowsPerPageTemplate="5, 10, 15"
+					paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+					lazy="true">
 
 					<p:column headerText="Estudiante">
 						#{alumn.student.lastName}, #{alumn.student.name}
@@ -50,9 +53,12 @@
 
 					<p:column headerText="Accion"
 						style="text-align:center; width: 100px;">
-						<p:commandButton icon="fa fa-pencil" actionListener="#{controlConductaView.setSelectedStudentsPerCourse(alumn)}"
+						<p:commandButton icon="fa fa-pencil"
+							actionListener="#{controlConductaView.setSelectedStudentsPerCourse(alumn)}"
 							oncomplete="PF('dlgCodigos').show();" />
-						<p:commandButton icon="fa fa-search" actionListener="#{controlConductaView.setSelectedStudentsPerCourse(alumn)}"
+						<p:commandButton icon="fa fa-search"
+							update="codigosAplicadosForm:dtCodesAct"
+							actionListener="#{controlConductaView.getCodigosStudent(alumn)}"
 							oncomplete="PF('dlgCodigosAplicados').show();" />
 					</p:column>
 
@@ -69,7 +75,9 @@
 			</p:confirmDialog>
 		</h:form>
 
-		<p:dialog id="dlgCodigos" widgetVar="dlgCodigos" modal="true">
+		<p:dialog id="dlgCodigos" widgetVar="dlgCodigos" modal="true"
+			responsive="true" draggable="false" resizable="false" width="500"
+			position="center">
 			<h:form id="codigosForm">
 
 				<p:panelGrid id="pgCodigos" columns="2">
@@ -77,36 +85,58 @@
 
 					<p:selectOneMenu id="somTCodigos" required="true"
 						value="#{controlConductaView.selectedTipoCodigo}">
-						<f:selectItem itemValue="" itemLabel="Seleccione grado" />
+						<f:selectItem itemValue="" itemLabel="Seleccione tipo codigo" />
 						<f:selectItem itemValue="P" itemLabel="Positivo" />
 						<f:selectItem itemValue="N" itemLabel="Negativo" />
 
 
-						<p:ajax event="change"
+						<p:ajax event="change" update="codigosForm:pgCodigos"
 							listener="#{controlConductaView.loadCodigos}" />
 					</p:selectOneMenu>
 
 					<p:outputLabel value="Codigos" />
-					<p:selectManyCheckbox id="smcCodes" required="true"
+					<p:selectManyCheckbox id="smcCodes" required="true" layout="grid"
 						value="#{controlConductaView.selectedCodesList}" columns="1">
 						<f:selectItems value="#{controlConductaView.codesList}" var="code"
 							itemValue="#{code}" itemLabel="#{code.codigo}" />
+
+						<f:converter converterId="jsfUniversalConverter" />
 					</p:selectManyCheckbox>
 
 				</p:panelGrid>
 
+				<br />
 				<p:commandButton value="Guardar" icon="fa fa-save" update="@form"
-					validateClient="true" process="@form"
-					actionListener="#{controlConductaView.save}">
+					actionListener="#{controlConductaView.save}" validateClient="true"
+					oncomplete="PF('dlgCodigos').hide();">
 					<p:confirm header="CODIGOS"
-						message="Desea aplicar el codigo" />
+						message="Desea aplicar el/los codigo(s)" />
 				</p:commandButton>
 
 			</h:form>
 		</p:dialog>
 
 		<p:dialog id="dlgCodigosAplicados" widgetVar="dlgCodigosAplicados"
-			modal="true">
+			modal="true" responsive="true" draggable="false" resizable="false"
+			width="500" position="center">
+
+			<h:form id="codigosAplicadosForm">
+				<p:dataTable id="dtCodesAct" var="codes"
+					value="#{controlConductaView.behaviourMonitoringsList}"
+					paginator="true" rows="10">
+					<p:column headerText="Codigo">
+						#{codes.catalogoCodigos.codigo}
+					</p:column>
+
+					<p:column headerText="Tipo de Codigo">
+						#{codes.catalogoCodigos.tipo=='P' ? 'Positivo' : 'Negativo'}
+					</p:column>
+
+					<p:column headerText="Fecha Aplicada">
+						#{codes.fechaAplicado}
+					</p:column>
+				</p:dataTable>
+			</h:form>
 
 		</p:dialog>
 	</ui:define>

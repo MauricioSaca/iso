@@ -27,7 +27,7 @@ public class CatalogoCodigos implements BaseModelEntity<Long> {
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = 1725531125738359064L;
+	private static final long serialVersionUID = 6786206162115405892L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SEQ_CATALOGOCODIGOS")
