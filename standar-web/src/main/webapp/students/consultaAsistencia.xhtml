@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:o="http://omnifaces.org/ui" xmlns:p="http://primefaces.org/ui"
+	template="/template/layout.xhtml">
+
+	<ui:define name="head">
+
+	</ui:define>
+
+	<ui:define name="subheader">
+		<h:outputText value="Consulta Asistencia"></h:outputText>
+	</ui:define>
+
+	<ui:define name="content">
+		<h:form id="attendanceForm">
+			<h:outputText
+				value="Estudiante: #{consultaAsistenciaView.student.lastName}, #{consultaAsistenciaView.student.name}" />
+			<br />
+			<br />
+			
+		    <p:tabView orientation="left">
+		        <p:tab title="Asistencia">
+					<p:dataTable id="attendance" var="attendance"
+						value="#{consultaAsistenciaView.studentCourseAttendanceList}"
+						editable="true" editMode="cell" widgetVar="attendance" lazy="true"
+						paginator="true" paginatorPosition="bottom"
+						rowsPerPageTemplate="15, 30, 45"
+						paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}">
+						<f:facet name="header">
+				          Lista de Asistencia
+				       </f:facet>
+
+						<p:column headerText="Fecha">
+							<h:outputText value="#{attendance.dateAttendance}">
+								<f:convertDateTime type="date" pattern="dd-MM-yyyy"/>
+							</h:outputText>
+						</p:column>
+
+						<p:column headerText="Asistio">
+							<p:selectBooleanCheckbox value="#{attendance.attendance}" />
+						</p:column>
+					</p:dataTable>
+				</p:tab>
+		        <p:tab title="Conducta">
+					<p:dataTable id="conducta" var="behaviour"
+						value="#{consultaAsistenciaView.behaviourMonitoringList}"
+						editable="true" editMode="cell" widgetVar="behaviour" lazy="true"
+						paginator="true" paginatorPosition="bottom"
+						rowsPerPageTemplate="15, 30, 45"
+						paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}">
+						<f:facet name="header">
+				          Lista de Codigos Aplicados
+				       </f:facet>
+
+						<p:column headerText="Fecha">
+							<h:outputText value="#{behaviour.fechaAplicado}">
+								<f:convertDateTime type="date" pattern="dd-MM-yyyy"/>
+							</h:outputText>
+						</p:column>
+						<p:column headerText="Tipo">
+							<h:outputText
+								value="#{behaviour.catalogoCodigos.tipo}" />
+						</p:column>
+						<p:column headerText="Asistio">
+							<h:outputText
+								value="#{behaviour.catalogoCodigos.codigo}" />
+						</p:column>
+					</p:dataTable>
+				</p:tab>
+		    </p:tabView>
+		</h:form>
+	</ui:define>
+</ui:composition>

@@ -30,6 +30,11 @@ public class StudentsPerCourseService extends BaseService<StudentsPerCourse, Lon
 		return newJpaQuery().from(qStudentsPerCourse).where(qStudentsPerCourse.courses.id.eq(courses.getId()))
 				.list(qStudentsPerCourse);
 	}
+	
+	public StudentsPerCourse findByStudent(Student student) {
+		return newJpaQuery().from(qStudentsPerCourse).where(qStudentsPerCourse.student.id.eq(student.getId()))
+				.singleResult(qStudentsPerCourse);
+	}
 
 	public Courses findCoursesByStudent(Student student) {
 		return newJpaQuery().from(qStudentsPerCourse).where(qStudentsPerCourse.student.id.eq(student.getId()))

@@ -28,5 +28,10 @@ public class StudentCourseAttendanceService extends BaseService<StudentCourseAtt
 		return newJpaQuery().from(qStudentCourseAttendance).where(qStudentCourseAttendance.studentsPerCourse.id.eq(id))
 				.singleResult(qStudentCourseAttendance);
 	}
+	
+	public List<StudentCourseAttendance> findListByStudents(Long id) {
+		return newJpaQuery().from(qStudentCourseAttendance).where(qStudentCourseAttendance.studentsPerCourse.id.eq(id))
+				.list(qStudentCourseAttendance);
+	}
 
 }
