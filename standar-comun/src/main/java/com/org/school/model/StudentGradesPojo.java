@@ -19,10 +19,9 @@ public class StudentGradesPojo implements Serializable {
 
 	public StudentGradesPojo() {
 		student = new Student();
-		nota1 = null;
-		nota2 = null;
-		nota3 = null;
-
+		nota1 = 0D;
+		nota2 = 0D;
+		nota3 = 0D;
 	}
 
 	public StudentGradesPojo(Student student, Double note1, Double note2, Double note3,
