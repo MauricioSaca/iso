@@ -175,7 +175,7 @@ public class SecurityController implements Serializable {
 		
 		item = new DefaultMenuItem();
 		item.setValue("Entrega de tareas ex-aula");
-		item.setTarget("/students/index.xhtml");
+		item.setTarget("/students/subirtareas.xhtml");
 		item.setIcon("icon-hyperlink");
 		item.setCommand("#{securityController.onMenuSelect}");
 		firstSubmenu.addElement(item);

@@ -41,7 +41,7 @@
 						</p:column>
 
 						<p:column headerText="Asistio">
-							<p:selectBooleanCheckbox value="#{attendance.attendance}" />
+							<p:selectBooleanCheckbox value="#{attendance.attendance}" disabled="true" />
 						</p:column>
 					</p:dataTable>
 				</p:tab>
@@ -63,7 +63,7 @@
 						</p:column>
 						<p:column headerText="Tipo">
 							<h:outputText
-								value="#{behaviour.catalogoCodigos.tipo}" />
+								value="#{behaviour.catalogoCodigos.tipo == 'P' ? 'Positivo' : 'Negativo'}" />
 						</p:column>
 						<p:column headerText="Asistio">
 							<h:outputText

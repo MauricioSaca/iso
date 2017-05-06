@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:o="http://omnifaces.org/ui" xmlns:p="http://primefaces.org/ui"
+	template="/template/layout.xhtml">
+
+	<ui:define name="head">
+
+	</ui:define>
+
+	<ui:define name="subheader">
+		<h:outputText value="Consulta Asistencia"></h:outputText>
+	</ui:define>
+
+	<ui:define name="content">
+		<h:form id="subirArchivosForm">
+			<h:outputText
+				value="Estudiante: #{subirArchivosView.student.lastName}, #{subirArchivosView.student.name}" />
+			<br />
+			<br />
+
+			<p:panelGrid columns="4">
+
+				<h:outputText value="Materia: " />
+				<p:selectOneMenu id="subjects"
+					value="#{subirArchivosView.selectedSubjectPerCourse}"
+					style="width:125px">
+
+					<f:selectItem itemLabel="Seleccione" itemValue="" />
+
+					<f:selectItems value="#{subirArchivosView.subjectPerCoursesList}"
+						var="sub" itemLabel="#{sub.subject.name}" itemValue="#{sub}" />
+					<f:converter converterId="jsfUniversalConverter" />
+
+					<p:ajax event="change"
+						listener="#{subirArchivosView.loadAssigments}" update="@form" />
+
+				</p:selectOneMenu>
+
+			</p:panelGrid>
+
+			<p:outputPanel id="opDataTable">
+
+				<p:dataTable id="dtAsignaciones" var="assig" paginator="true"
+					rendered="#{subirArchivosView.selectedSubjectPerCourse != null}"
+					rows="5" value="#{subirArchivosView.assigmentsLazyData}"
+					paginatorPosition="bottom" rowsPerPageTemplate="5, 10, 15"
+					paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+					lazy="true">
+
+					<p:column headerText="Materia">
+						#{assig.subjectPerCourse.subject.name}
+					</p:column>
+
+					<p:column headerText="Titulo">
+						#{assig.description}
+					</p:column>
+
+					<p:column headerText="Fecha Entrega">
+						#{assig.dueDate}
+					</p:column>
+
+					<p:column headerText="Accion"
+						style="width: 100px; text-align:center;">
+
+						<p:commandButton icon="fa fa-upload"
+							actionListener="#{subirArchivosView.setSelectedAssigments(assig)}"
+							oncomplete="PF('dlgUpload').show();" />
+					</p:column>
+
+				</p:dataTable>
+
+			</p:outputPanel>
+
+		</h:form>
+
+		<p:dialog id="dlgUpload" widgetVar="dlgUpload"
+			header="Subir Asignacion" modal="true" responsive="true"
+			draggable="false" resizable="false" width="600" position="center">
+
+			<h:form id="upForm">
+				<p:fileUpload fileUploadListener="#{subirArchivosView.uploadFile}"
+					label="Seleccionar" uploadLabel="Subir" cancelLabel="Cancelar"
+					required="true" oncomplete="PF('dlgUpload').hide();"
+					mode="advanced" dragDropSupport="false" sizeLimit="1000000000"
+					fileLimit="1" allowTypes="/(\.|\/)(doc|docx|pdf)$/" />
+
+			</h:form>
+
+		</p:dialog>
+	</ui:define>
+</ui:composition>
