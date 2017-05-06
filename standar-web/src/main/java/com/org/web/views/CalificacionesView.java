@@ -102,30 +102,38 @@ public class CalificacionesView implements Serializable {
 	}
 
 	public void onChangeCourse() {
-		subjectsperCourse = subjectPerCourseService.findSubjectByCourse(courseSelected);
+		if(courseSelected != null){
+			subjectsperCourse = subjectPerCourseService.findSubjectByCourse(courseSelected);			
+		}
 	}
 
 	public void onChangeSubject() {
-		studentsgrade = new ArrayList<>();
-		StudentGradesPojo studentgradeElement = new StudentGradesPojo();
-		StudentGradesPerSubject studentGrades;
 
-		studentsPerCourse = studentsPerCourseService.findStudentsListByCourse(courseSelected);
+		if (subjectperCourseSelected != null) {
+			studentsgrade = new ArrayList<>();
+			StudentGradesPojo studentgradeElement = new StudentGradesPojo();
+			StudentGradesPerSubject studentGrades;
 
-		if (studentsPerCourse != null) {
-			for (StudentsPerCourse studentsPerCourse : studentsPerCourse) {
-				studentgradeElement.setStudent(studentsPerCourse.getStudent());
-				studentGrades = studentGradesPerSubjectService.findbyStudentAndSubject(studentsPerCourse.getStudent(),
-						subjectperCourseSelected);
-				if (studentGrades != null) {
-					studentgradeElement.setNota1(studentGrades.getFirstGrade());
-					studentgradeElement.setNota2(studentGrades.getSecondGrade());
-					studentgradeElement.setNota3(studentGrades.getThirdGrade());
+			studentsPerCourse = studentsPerCourseService.findStudentsListByCourse(courseSelected);
+
+			if (studentsPerCourse != null) {
+				for (StudentsPerCourse studentsPerCourse : studentsPerCourse) {
+					studentgradeElement = new StudentGradesPojo();
+					studentgradeElement.setStudent(studentsPerCourse.getStudent());
+					studentGrades = studentGradesPerSubjectService
+							.findbyStudentAndSubject(studentsPerCourse.getStudent(), subjectperCourseSelected);
+					if (studentGrades != null) {
+						studentgradeElement.setNota1(studentGrades.getFirstGrade());
+						studentgradeElement.setNota2(studentGrades.getSecondGrade());
+						studentgradeElement.setNota3(studentGrades.getThirdGrade());
+					}
+					studentgradeElement.setSubjectPerCourse(subjectperCourseSelected);
+					studentsgrade.add(studentgradeElement);
 				}
-				studentgradeElement.setSubjectPerCourse(subjectperCourseSelected);
-				studentsgrade.add(studentgradeElement);
-			}
 
+			}
+		} else {
+			studentsgrade = new ArrayList<>();
 		}
 
 	}
@@ -133,7 +141,7 @@ public class CalificacionesView implements Serializable {
 	public void onCellEdit(CellEditEvent event) {
 		Double newValue = (Double) event.getNewValue();
 		Double oldValue = (Double) event.getOldValue();
-		studentsgradeSelected = (StudentGradesPojo) ((DataTable)event.getComponent()).getRowData();
+		studentsgradeSelected = (StudentGradesPojo) ((DataTable) event.getComponent()).getRowData();
 
 		if (newValue.compareTo(oldValue) != 0) {
 			if (newValue > 10 || newValue < 0) {
