@@ -32,7 +32,7 @@
 							var="curso" itemValue="#{curso}" itemLabel="#{curso.name}" />
 						<f:converter converterId="jsfUniversalConverter" />
 						<p:ajax event="change"
-							listener="#{actividadesExAulaView.loadSubjects}"
+							listener="#{actividadesExAulaView.loadAssigments}"
 							update="asignacionesForm" />
 					</p:selectOneMenu>
 				</p:panelGrid>

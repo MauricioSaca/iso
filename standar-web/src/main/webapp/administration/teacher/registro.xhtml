@@ -10,9 +10,9 @@
 
 	<p:panelGrid id="pgAddEditTeacher" columns="2">
 	
-		<p:outputLabel value="Nombre de usuario" for="txtNombreUsuario" rendered="#{!teacherViewrenderEditView}" />
+		<p:outputLabel value="Nombre de usuario" for="txtNombreUsuario"  />
 		
-		<p:inputText id="txtNombreUsuario" required="true" value="#{teacherView.userName}" rendered="#{!teacherView.renderEditView}"/>
+		<p:inputText id="txtNombreUsuario" required="true" value="#{teacherView.userName}" disabled="#{!teacherView.renderEditView}"/>
 	
 		<p:outputLabel value="Nombre" for="txtNames" />
 		<p:inputText id="txtNames" value="#{teacherView.teacher.name}" />

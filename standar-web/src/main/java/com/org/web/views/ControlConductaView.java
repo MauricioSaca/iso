@@ -132,7 +132,6 @@ public class ControlConductaView implements Serializable {
 	}
 
 	public void save() {
-		List<BehaviourMonitoring> listToSave = new ArrayList<>();
 		
 		for (int i = 0; i < selectedCodesList.size() ; i++) {
 	
@@ -141,11 +140,10 @@ public class ControlConductaView implements Serializable {
 			selectedBehaviourMonitoring.setStudentsPerCourse(selectedStudentsPerCourse);
 			selectedBehaviourMonitoring.setFechaAplicado(new Date());
 			
-			listToSave.add(selectedBehaviourMonitoring);
+			getBehaviourMonitoringService().save(selectedBehaviourMonitoring);
 			
 		}
 		
-		getBehaviourMonitoringService().save(listToSave);
 		Messages.create("Asignacion").detail("Codigo(s) ingresado(s) correctamente").add();
 
 		selectedBehaviourMonitoring = new BehaviourMonitoring();
