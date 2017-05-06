@@ -44,6 +44,9 @@ public class EntregaTareas implements BaseModelEntity<Long> {
 	@Column
 	@Temporal(TemporalType.DATE)
 	private Date fechaEntrega;
+	
+	@Column(name = "FILENAME")
+	private String fileName;
 
 	@Lob
 	@Column(name = "ARCHIVO")

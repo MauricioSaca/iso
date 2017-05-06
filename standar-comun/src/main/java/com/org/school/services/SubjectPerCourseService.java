@@ -6,7 +6,6 @@ import javax.ejb.Stateless;
 import javax.inject.Inject;
 
 import com.mysema.query.types.expr.BooleanExpression;
-import com.org.school.model.SubjectPerCourse;
 import com.org.school.model.Courses;
 import com.org.school.model.QSubjectPerCourse;
 import com.org.school.model.Subject;

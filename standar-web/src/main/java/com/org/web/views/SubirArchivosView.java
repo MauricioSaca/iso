@@ -78,6 +78,7 @@ public class SubirArchivosView implements Serializable {
 	private transient SubjectPerCourse selectedSubjectPerCourse;
 	private transient EntregaTareas selectedEntregaTareas;
 	private byte[] file;
+	private String nameFile;
 	private transient Assigments selectedAssigments;
 	private BaseLazyModel<Assigments, Long> assigmentsLazyData;
 	private boolean showSave = false;
@@ -115,6 +116,7 @@ public class SubirArchivosView implements Serializable {
 
 	public void uploadFile(FileUploadEvent event) {
 		file = event.getFile().getContents();
+		nameFile = event.getFile().getFileName();
 		save();
 	}
 
@@ -131,6 +133,7 @@ public class SubirArchivosView implements Serializable {
 		}
 
 		selectedEntregaTareas.setFile(file);
+		selectedEntregaTareas.setFileName(nameFile);
 		getEntregaTareasService().save(selectedEntregaTareas);
 
 		Messages.create("Tarea").detail("Subida correctamente").add();

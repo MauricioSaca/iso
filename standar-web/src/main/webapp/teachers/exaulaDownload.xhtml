@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui" template="/template/layout.xhtml">
+
+	<ui:define name="head">
+
+	</ui:define>
+
+	<ui:define name="subheader">
+		<h:outputText value="PRUEBAS"></h:outputText>
+	</ui:define>
+
+	<ui:define name="content">
+		<h:form id="downloadForm">
+			<p:outputPanel id="contentPanel">
+
+				<p:separator>
+					<h3>Descargar de tareas</h3>
+				</p:separator>
+
+				<p:panelGrid columns="4">
+					<p:outputLabel for="somCursos" value="Grado" />
+
+					<p:selectOneMenu id="somCursos"
+						value="#{actividadesExAulaView.selectedCourse}">
+						<f:selectItem itemValue="" itemLabel="Seleccione grado" />
+						<f:selectItems value="#{actividadesExAulaView.coursesList}"
+							var="curso" itemValue="#{curso}" itemLabel="#{curso.name}" />
+						<f:converter converterId="jsfUniversalConverter" />
+						<p:ajax event="change"
+							listener="#{actividadesExAulaView.loadSubjects}"
+							update="downloadForm" />
+					</p:selectOneMenu>
+
+					<p:outputLabel for="somSubjects" value="Grado" />
+
+					<p:selectOneMenu id="somSubjects"
+						value="#{actividadesExAulaView.selectedSubjectPerCourse}">
+						<f:selectItem itemValue="" itemLabel="Seleccione materia" />
+						<f:selectItems
+							value="#{actividadesExAulaView.subjectPerCoursesList}" var="subj"
+							itemValue="#{subj}" itemLabel="#{subj.subject.name}" />
+						<f:converter converterId="jsfUniversalConverter" />
+						<p:ajax event="change"
+							listener="#{actividadesExAulaView.loadEntregas}"
+							update="downloadForm:dtDownload" />
+					</p:selectOneMenu>
+				</p:panelGrid>
+
+				<br />
+
+				<p:dataTable id="dtDownload" var="down" paginator="true" rows="5"
+					value="#{actividadesExAulaView.entregaTareasLazyData}"
+					paginatorPosition="bottom" rowsPerPageTemplate="5, 10, 15"
+					paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+					lazy="true">
+
+					<p:column headerText="Alumno">
+						#{down.studentsPerCourse.student.lastName}, #{down.studentsPerCourse.student.name}
+					</p:column>
+
+					<p:column headerText="Titulo tarea">
+						#{down.assigments.description}
+					</p:column>
+
+					<p:column headerText="Grado">
+						#{down.studentsPerCourse.courses.name}
+					</p:column>
+
+					<p:column headerText="Accion"
+						style="width: 100px; text-align:center;">
+
+						<p:commandButton ajax="false"
+							actionListener="#{actividadesExAulaView.download(down)}"
+							onclick="PrimeFaces.monitorDownload(start, stop);"
+							icon="ui-icon-arrowthick-1-s">
+							<p:fileDownload value="#{actividadesExAulaView.file}" />
+						</p:commandButton>
+
+					</p:column>
+
+				</p:dataTable>
+
+			</p:outputPanel>
+
+			<p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+				<p:commandButton value="Si" type="button"
+					styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+				<p:commandButton value="No" type="button"
+					styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+			</p:confirmDialog>
+		</h:form>
+
+	</ui:define>
+
+</ui:composition>

@@ -12,13 +12,21 @@ import javax.inject.Named;
 import org.omnifaces.cdi.ViewScoped;
 import org.omnifaces.util.Messages;
 import org.picketlink.Identity;
+import org.primefaces.model.DefaultStreamedContent;
+import org.primefaces.model.StreamedContent;
 
+import java.io.ByteArrayInputStream;
+import java.io.InputStream;
+import javax.faces.bean.ManagedBean;
+import javax.faces.context.FacesContext;
 import com.org.school.model.Assigments;
 import com.org.school.model.Courses;
+import com.org.school.model.EntregaTareas;
 import com.org.school.model.SubjectPerCourse;
 import com.org.school.model.Teacher;
 import com.org.school.services.AssigmentsService;
 import com.org.school.services.CoursesService;
+import com.org.school.services.EntregaTareasService;
 import com.org.school.services.StudentCourseAttendanceService;
 import com.org.school.services.StudentsPerCourseService;
 import com.org.school.services.SubjectPerCourseService;
@@ -60,6 +68,9 @@ public class ActividadesExAulaView implements Serializable {
 	private transient AssigmentsService assigmentsService;
 
 	@Inject
+	private transient EntregaTareasService entregaTareasService;
+
+	@Inject
 	private transient Identity identity;
 
 	private transient Teacher teacher;
@@ -67,9 +78,12 @@ public class ActividadesExAulaView implements Serializable {
 	private transient Courses selectedCourse;
 	private transient Assigments selectedAssigments;
 	private BaseLazyModel<Assigments, Long> assigmentsLazyData;
-
+	private BaseLazyModel<EntregaTareas, Long> entregaTareasLazyData;
+	private SubjectPerCourse selectedSubjectPerCourse;
 	private List<SubjectPerCourse> subjectPerCoursesList;
 	private List<Courses> coursesList;
+
+	private StreamedContent file;
 
 	@PostConstruct
 	public void init() {
@@ -98,24 +112,39 @@ public class ActividadesExAulaView implements Serializable {
 		return holder;
 	}
 
+	public void loadEntregas() {
+		entregaTareasLazyData = new BaseLazyModel<>(getEntregaTareasService());
+		entregaTareasLazyData.setCustomFilters(buildWhereDownload());
+	}
+
+	public Set<ValueHolder> buildWhereDownload() {
+		Set<ValueHolder> holder = new HashSet<>();
+
+		if (selectedCourse != null && selectedSubjectPerCourse != null) {
+			holder.add(new ValueHolder("studentsPerCourse.courses.id", selectedCourse.getId()));
+			holder.add(new ValueHolder("assigments.subjectPerCourse.id", selectedSubjectPerCourse.getId()));
+		}
+
+		return holder;
+	}
+
 	public void loadSubjects() {
 		if (selectedCourse != null) {
 			subjectPerCoursesList = getSubjectPerCourseService().findSubjectByCourse(selectedCourse);
-			loadAssigments();
 		}
 	}
 
-	public void prepareCreate(){
+	public void prepareCreate() {
 		selectedAssigments = new Assigments();
 	}
-	
+
 	public void save() {
 		getAssigmentsService().save(selectedAssigments);
 		Messages.create("Asignacion").detail("La tarea ex-aula ha sido almacenada").add();
 
 		selectedAssigments = new Assigments();
 	}
-	
+
 	public void prepareEdit(Assigments assigments) {
 		selectedAssigments = assigments;
 	}
@@ -125,6 +154,11 @@ public class ActividadesExAulaView implements Serializable {
 			getAssigmentsService().delete(assigments);
 			Messages.create("Asignacion eliminada").detail("Tarea ex-aula eliminada").add();
 		}
+	}
+
+	public void download(EntregaTareas tarea) {
+		file = new DefaultStreamedContent(new ByteArrayInputStream(tarea.getFile()), "application/pdf",
+				tarea.getFileName() + ".pdf");
 	}
 
 }

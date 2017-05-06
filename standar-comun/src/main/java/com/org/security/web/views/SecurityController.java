@@ -209,6 +209,13 @@ public class SecurityController implements Serializable {
 		item.setIcon("fa fa-folder-open-o");
 		item.setCommand("#{securityController.onMenuSelect}");
 		firstSubmenu.addElement(item);
+		
+		item = new DefaultMenuItem();
+		item.setValue("Descargar tareas");
+		item.setTarget("/teachers/exaulaDownload.xhtml");
+		item.setIcon("fa fa-folder-open-o");
+		item.setCommand("#{securityController.onMenuSelect}");
+		firstSubmenu.addElement(item);
 
 		item = new DefaultMenuItem();
 		item.setValue("Control de conducta");
